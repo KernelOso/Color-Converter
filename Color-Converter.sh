@@ -23,6 +23,7 @@ type_of_param=""
 
 # arg verify
 file_arg=""
+bsname=""
 
 # File verify
 file_type_detected=false
@@ -47,6 +48,9 @@ trigg_help=false
 
 trigg_get=false
 
+trigg_install=false
+trigg_convert=false
+
 trigg_kitty=false
 
 # triggers values : 
@@ -59,6 +63,7 @@ fileExist=false
 fileEmpty=false
 fileAccess=false
 dataVerified=false
+canDownload=false
 
 #colors :
 background=""
@@ -159,16 +164,15 @@ function exit_Code () {
       echo -e "    $bWHITE└── $bRED¤ ERROR : Using a trigger like an argument $Reset"
     ;;
 
+    "10")
+      echo -e "    $bWHITE└─ $bRED¤ ERROR : can't access to the file...$Reset"
+    ;;
+
     
 
   esac
 
-
-
   exit $1
-
-
-
 }
 
 
@@ -200,15 +204,17 @@ $bWHITE│   $bCYAN║$Reset   $bBLUE Color-Converter.sh $bCYAN[help(s)] $bRED[p
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bCYAN ## Helps :
 $bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset   $bCYAN ¤ [ -h | --help ]  $bWHITE :  $bCYAN Show THIS manual.
-$bWHITE│   $bCYAN║$Reset   $bCYAN ¤ [ -d | --debug ] $bWHITE :  $bCYAN Show the extra debbug messages.
+$bWHITE│   $bCYAN║$Reset    ¤$bCYAN [ -h | --help ]  $bWHITE :  $bCYAN Show THIS manual.
+$bWHITE│   $bCYAN║$Reset    ¤$bCYAN [ -d | --debug ] $bWHITE :  $bCYAN Show the extra debug messages.
 $bWHITE│   $bCYAN║$Reset    
 $bWHITE│   $bCYAN║$Reset $bRED ## Processes :
 $bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset   $bRED ¤ SHOW $bWHITE<file>              $bWHITE :$bRED   Only SHOW the information in one $bWHITE<file>$bRED.
-$bWHITE│   $bCYAN║$Reset   $bRED ¤ FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED   Process only one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset    ¤$bRED SHOW $bWHITE<file>              $bWHITE :$bRED   Only SHOW the information in one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset    ¤$bRED FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED   Process only one $bWHITE<file>$bRED.
 $bWHITE│   $bCYAN║$Reset    
 $bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'FILE' process$bYELLOW triggers :
+$bWHITE│   $bCYAN║$Reset  
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET 
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
 $bWHITE│   $bCYAN║$Reset
@@ -519,6 +525,11 @@ function verify_Params () {
       "--help")
         trigg_help=true
         ;;
+      "--get")
+        trigg_get=true
+        ;;
+
+        
     esac
 
   done 
@@ -536,7 +547,7 @@ function verify_Params () {
   fi
 
   # verify if args isn't a trigger
-  if [[ "$file_arg" == *"--help"* || "$file_arg" == *"--debug"* ]]; then
+  if [[ "$file_arg" == *"--help"* || "$file_arg" == *"--debug"* || "$file_arg" == *"--get"* ]]; then
     echo -e "$bWHITE│   $bBLUE└──$bRED ¤ Error : Using a trigger like the <file> arg $Reset"
     exit_Code 8
   fi
@@ -998,6 +1009,50 @@ function exec_Reader () {
 #          88  88          88   `"YbbdP"Y8   `"YbbdP"Y8   `"Ybbd8"'  88          `"YbbdP"'            
 #                               aa,    ,88   aa,    ,88                                               
 #                                "Y8bbdP"     "Y8bbdP"                                                
+
+
+
+# _____      _    ______ _ _      
+#|  __ \    | |   |  ___(_) |     
+#| |  \/ ___| |_  | |_   _| | ___ 
+#| | __ / _ \ __| |  _| | | |/ _ \
+#| |_\ \  __/ |_  | |   | | |  __/
+# \____/\___|\__| \_|   |_|_|\___|
+function get_File () {
+
+
+  if [[ "$trigg_get" == true ]]; then
+
+    echo -e "$bWHITE├── $bGREEN¤ Getting file...$Reset"
+
+    status_code=$(curl -s -o /dev/null -w "%{http_code}" "$file_arg")
+    if [[ "$status_code" == 200 ]]; then
+
+      bsname=$(basename "$1")
+
+      curl -sSL -o "$bsname" "$file_arg"
+
+      file_arg="$bsname"
+
+      canDownload=true
+
+    else 
+
+      echo -e "$bWHITE│   $bGREEN└─ $bRED¤ ERROR : can't access to the file...$Reset"
+
+    fi
+
+  fi
+}
+
+
+
+# _____              
+#|  ___|             
+#| |____  _____  ___ 
+#|  __\ \/ / _ \/ __|
+#| |___>  <  __/ (__ 
+#\____/_/\_\___|\___|           
 function exec_Triggers () {
 
   echo -e "$bWHITE│   $bRED│   $bCYAN├── $bBLUE¤ Executing triggers...$Reset"
@@ -1028,10 +1083,16 @@ function exec_Triggers () {
 #          88888888888  8P'     `Y8  `"Ybbd8"'   `"Ybbd8"'   `"YbbdP'Y8    "Y888  `"YbbdP"'   88          `"YbbdP"'                                                                                                                                  
 function exec_FILE () {
 
+  #get the file
+  get_File $file_arg
+  if [[ "$canDownload"  == false ]]; then
+    exit_Code 10
+  fi
+
   echo -e "$bWHITE├── $bRED¤ Executing \"FILE\" process...$Reset"
+  echo -e "$bWHITE│   $bRED├── $bCYAN¤ Proccessing file :$bWHITE $file_arg $bCYAN: ...$Reset"
 
-  echo -e "$bWHITE│   $bRED├── $bCYAN¤ Proccessing file : $file_arg : ...$Reset"
-
+  #Verify the file
   verify_File_whit_Exit $file_arg
 
   # Scannn the file
@@ -1062,22 +1123,28 @@ function exec_FILE () {
 
 function exec_THIS () {
 
-  echo -e "$bWHITE├── $bYELLOW¤ Executing \"THIS\" process...$Reset"
+  echo -e "$bWHITE├── $bRED¤ Executing \"THIS\" process...$Reset"
 
 }
 
 function exec_BADDIES () {
 
-  echo -e "$bWHITE├── $bYELLOW¤ Executing \"BADDIES\" process...$Reset"
+  echo -e "$bWHITE├── $bRED¤ Executing \"BADDIES\" process...$Reset"
 
 }
 
 function exec_SHOW () {
 
+  #get the file
+  get_File $file_arg
+  if [[ "$canDownload"  == false ]]; then
+    exit_Code 10
+  fi
+
   echo -e "$bWHITE├── $bRED¤ Executing \"SHOW\" process...$Reset"
+  echo -e "$bWHITE│   $bRED├── $bCYAN¤ Proccessing file :$bWHITE $file_arg $bCYAN: ...$Reset"
 
-  echo -e "$bWHITE│   $bRED├── $bCYAN¤ Proccessing file : $file_arg : ...$Reset"
-
+  #Verify the file
   verify_File_whit_Exit $file_arg
 
   # Scann the file

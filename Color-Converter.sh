@@ -14,23 +14,20 @@
 #                           \:.. ./|::.|:. |::.|:. |::.|::.|:. |::.. .  |::.. . |::.. . |::.. . |                         
 #                            `---' `--- ---`--- ---`---`--- ---`-------'`-------`-------`-------'                         
 
-# params
-F_param_was_used=false
-T_param_was_used=false
-B_param_was_used=false
-
+# Param verify
 param_with_args_was_used=false
 arg_position=-1
 type_of_param=""
 
+# arg verify
 file_arg=""
 
-
+# File verify
 file_type_detected=false
 file_type=""
 are_missing_values=false
 
-#caracteres de escape :
+# esc characters
 bRED="\033[0;31m"
 bGREEN="\033[0;32m"
 bYELLOW="\033[0;33m"
@@ -44,10 +41,17 @@ Reset="\033[0m"
 trigg_preserv_name=false
 trigg_kitty=false
 
+# triggers values : 
+
+  # trigg preserv name : 
+  original_name=""
+
+
+
 #colors :
 background=""
 foreground=""
-cursor=""foreground
+cursor=""
 b_black=""
 b_red=""
 b_green=""
@@ -68,7 +72,7 @@ l_white=""
 # caracteres ascii : 
 #─ 
 #│ 
-#┌  type_of_param
+#┌  
 #┐  
 #└  
 #┘  
@@ -90,6 +94,11 @@ l_white=""
 # 1 : missing dependency
 # 2 : more than 1 param
 # 3 : missing arg
+# 4 : missing values
+# 5 : empty file
+# 6 : color-scheme format undetected
+# 7 : file doesn't exist
+# 8 : unaccsesbile file
 
 #                          _______ ___ ___ ______  _______ ___ _______ ______  _______                          
 #                         |   _   |   Y   |   _  \|       |   |   _   |   _  \|   _   |    
@@ -123,6 +132,7 @@ function verify_Dependencies () {
 #|  __/ _` | '__/ _` | '_ ` _ \/ __|
 #| | | (_| | | | (_| | | | | | \__ \
 #\_|  \__,_|_|  \__,_|_| |_| |_|___/
+
 function verify_Params () {
   params_used=0
   index=0
@@ -139,8 +149,6 @@ function verify_Params () {
 
         ((params_used++))
 
-        F_param_was_used=true
-
         arg_position=$index
         ((arg_position++))
         ;;
@@ -149,7 +157,6 @@ function verify_Params () {
 
         ((params_used++))
 
-        T_param_was_used=true
         ;;
       BADDIES)
         type_of_param="BADDIES"
@@ -157,9 +164,17 @@ function verify_Params () {
         param_with_args_was_used=true
 
         ((params_used++))
-
-        B_param_was_used=true
         
+        arg_position=$index
+        ((arg_position++))
+        ;;
+      SHOW)
+        type_of_param="SHOW"
+
+        param_with_args_was_used=true
+
+        ((params_used++))
+
         arg_position=$index
         ((arg_position++))
         ;;
@@ -209,6 +224,17 @@ function verify_If_File_Exist () {
       echo -e "$bWHITE│   $bYELLOW│   $bBLUE└────────  $Reset"
       echo -e "$bWHITE│   $bYELLOW└──────────────  $Reset"
       exit_Code 7
+  fi
+
+}
+
+function verify_If_Empty () {
+
+  if [[ ! -s "$1" ]]; then
+    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
+    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: is empty! $Reset"
+    echo -e "$bWHITE│   $bYELLOW└──────── $Reset"
+    exit_Code 5
   fi
 
 }
@@ -306,27 +332,19 @@ function exec_Scanners () {
 
   verify_If_File_Exist $1
 
-  # Verify if the file isn't empty
-  if [[ ! -s "$1" ]]; then
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: is empty! $Reset"
-    echo -e "$bWHITE│   $bYELLOW└──────── $Reset"
-    exit_Code 5
-  fi
+  verify_If_Empty $1
 
-
-  # scanners...Background
-
-  #XResources scanner
+  #XResources Scanner
   if [[ "$file_type_detected" == false ]]; then
     XResources_Scanner $1
   fi
 
+  # Oso's Base16 Scanner
   if [[ "$file_type_detected" == false ]]; then
     OsoB16_Scanner $1
   fi
 
-  #format message
+  #Format message
   if [[ "$file_type_detected" == true ]]; then
 
     echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
@@ -451,7 +469,7 @@ function print_Colors () {
 
 
   cat <<EOF
-$(printf "$bWHITE│   $bYELLOW│   $bBLUE│ $bRED                                    
+$(printf "$bWHITE│   $bYELLOW│   $bBLUE│                                   
 $bWHITE│   $bYELLOW│   $bBLUE│
 $bWHITE│   $bYELLOW│   $bBLUE│   $Reset BackGround : \e[48;2;${rBackground};${gBackground};${bBackground}m    $Reset  | ForeGround : \e[48;2;${rForeground};${gForeground};${bForeground}m    $Reset 
 $bWHITE│   $bYELLOW│   $bBLUE│
@@ -480,36 +498,34 @@ EOF
 #| |\ \  __/ (_| | (_| |  __/ |  \__ \
 #\_| \_\___|\__,_|\__,_|\___|_|  |___/
 
-function OsoB16_Reader() {
 
-  # guardar los valores en variables
+function verify_Data () {
 
-  if grep -qE '^background: *($|""$)' "$1" ||
-   grep -qE '^foreground: *($|""$)' "$1" ||
-   grep -qE '^cursor: *($|""$)' "$1" ||
-   grep -qE '^b_black: *($|""$)' "$1" ||
-   grep -qE '^b_red: *($|""$)' "$1" ||
-   grep -qE '^b_green: *($|""$)' "$1" ||
-   grep -qE '^b_yellow: *($|""$)' "$1" ||
-   grep -qE '^b_blue: *($|""$)' "$1" ||
-   grep -qE '^b_magenta: *($|""$)' "$1" ||
-   grep -qE '^b_cyan: *($|""$)' "$1" ||
-   grep -qE '^b_white: *($|""$)' "$1" ||
-   grep -qE '^l_black: *($|""$)' "$1" ||
-   grep -qE '^l_red: *($|""$)' "$1" ||
-   grep -qE '^l_green: *($|""$)' "$1" ||
-   grep -qE '^l_yellow: *($|""$)' "$1" ||
-   grep -qE '^l_blue: *($|""$)' "$1" ||
-   grep -qE '^l_magenta: *($|""$)' "$1" ||
-   grep -qE '^l_cyan: *($|""$)' "$1" ||
-   grep -qE '^l_white: *($|""$)' "$1"
-  then
+  # Verify data
+  if [ -z "$background" ] || [ "$background" = "null" ] || \
+   [ -z "$foreground" ] || [ "$foreground" = "null" ] || \
+   [ -z "$cursor" ] || [ "$cursor" = "null" ] || \
+   [ -z "$b_black" ] || [ "$b_black" = "null" ] || [ -z "$l_black" ] || [ "$l_black" = "null" ] || \
+   [ -z "$b_red" ] || [ "$b_red" = "null" ] || [ -z "$l_red" ] || [ "$l_red" = "null" ] || \
+   [ -z "$b_green" ] || [ "$b_green" = "null" ] || [ -z "$l_green" ] || [ "$l_green" = "null" ] || \
+   [ -z "$b_yellow" ] || [ "$b_yellow" = "null" ] || [ -z "$l_yellow" ] || [ "$l_yellow" = "null" ] || \
+   [ -z "$b_blue" ] || [ "$b_blue" = "null" ] || [ -z "$l_blue" ] || [ "$l_blue" = "null" ] || \
+   [ -z "$b_magenta" ] || [ "$b_magenta" = "null" ] || [ -z "$l_magenta" ] || [ "$l_magenta" = "null" ] || \
+   [ -z "$b_cyan" ] || [ "$b_cyan" = "null" ] || [ -z "$l_cyan" ] || [ "$l_cyan" = "null" ] || \
+   [ -z "$b_white" ] || [ "$b_white" = "null" ] || [ -z "$l_white" ] || [ "$l_white" = "null" ]; then
+
     echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR : Missing values...$Reset"
+    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR : Missing or null values...$Reset"
     echo -e "$bWHITE│   $bYELLOW└────────$Reset"
     exit_Code 4
+
   fi
 
+}
+
+function OsoB16_Reader() {
+
+  # Save values on variables
   background=$(yq -r '.background' "$1" )
   foreground=$(yq -r '.foreground' "$1" )
   cursor=$(yq -r '.cursor' "$1" )
@@ -532,13 +548,13 @@ function OsoB16_Reader() {
   l_cyan=$(yq -r '.l_cyan' "$1" )
   l_white=$(yq -r '.l_white' "$1" )
 
+  # Verify data
+  verify_Data
 }
 
 function XResources_Reader () {
 
-
-
-  # guardar los valores en variables
+  # Save values on variables
   background=$(grep '\*.background:' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
   foreground=$(grep '\*.foreground:' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
   cursor=$(grep '\*.cursorColor:' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
@@ -567,22 +583,8 @@ function XResources_Reader () {
   b_white=$(grep '\*.color7:' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
   l_white=$(grep '\*.color15:' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
 
-  if [ -z "$background" ] || [ -z "$foreground" ] || [ -z "$cursor" ] || \
-   [ -z "$b_black" ] || [ -z "$l_black" ] || \
-   [ -z "$b_red" ] || [ -z "$l_red" ] || \
-   [ -z "$b_green" ] || [ -z "$l_green" ] || \
-   [ -z "$b_yellow" ] || [ -z "$l_yellow" ] || \
-   [ -z "$b_blue" ] || [ -z "$l_blue" ] || \
-   [ -z "$b_magenta" ] || [ -z "$l_magenta" ] || \
-   [ -z "$b_cyan" ] || [ -z "$l_cyan" ] || \
-   [ -z "$b_white" ] || [ -z "$l_white" ]; then
-    
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR : Missing values...$Reset"
-    echo -e "$bWHITE│   $bYELLOW└────────$Reset"
-    exit_Code 4
-
-  fi
+  # Verify data
+  verify_Data
 
 }
 
@@ -634,6 +636,21 @@ function exec_Reader () {
 }
 
 
+# _____    _                           
+#|_   _|  (_)                          
+#  | |_ __ _  __ _  __ _  ___ _ __ ___ 
+#  | | '__| |/ _` |/ _` |/ _ \ '__/ __|
+#  | | |  | | (_| | (_| |  __/ |  \__ \
+#  \_/_|  |_|\__, |\__, |\___|_|  |___/
+#             __/ | __/ |              
+#            |___/ |___/               
+
+function exec_Triggers () {
+
+  echo "test"
+
+}
+
 # _____                    _                 
 #|  ___|                  | |                
 #| |____  _____  ___ _   _| |_ ___  _ __ ___ 
@@ -657,8 +674,6 @@ function exec_FILE () {
 
   # Exec triggers...
 
-  
-
 }
 
 function exec_THIS () {
@@ -673,9 +688,28 @@ function exec_BADDIES () {
 
 }
 
-function exec_Engine () {
+function exec_SHOW () {
 
-  #1. case to exec each function
+   echo -e "$bWHITE├── $bYELLOW¤ Executing \"SHOW\" process...$Reset"
+
+  # Scann the file
+  exec_Scanners $file_arg
+
+  # Read the file
+  if [[ "$file_type_detected" == true ]]; then
+    exec_Reader $file_arg $file_type
+  fi
+
+  # Show colors
+  print_Colors
+
+  echo -e "$bWHITE│   $bYELLOW└─────────────────────────────────────────────────"
+
+  exit_Code 0
+
+}
+
+function exec_Engine () {
 
   case "$type_of_param" in 
 
@@ -689,6 +723,10 @@ function exec_Engine () {
 
     "BADDIES")
       exec_BADDIES
+      ;;
+    
+    "SHOW")
+      exec_SHOW
       ;;
 
   esac
@@ -720,23 +758,12 @@ $bRED _______       __                   _______
 EOF
 echo -e "$bWHITE¤ Wellcome!$Reset"
 
-
-
-# 3. verify params
 echo -e "$bWHITE├── $bYELLOW¤ Verifiying params...$Reset"
 verify_Params $@ 
 
-  
-
-# 4. verify dependencies
 echo -e "$bWHITE├── $bYELLOW¤ Verifiying dependencies...$Reset"
-#verifying functions...
 verify_Dependencies
 
-
-
-# 4. Exec logic / # 5. exec escanners
 exec_Engine
-
 
 exit_Code 0

@@ -43,6 +43,7 @@ triggers_counter=0
 trigg_preserv_name=false
 trigg_kitty=false
 trigg_debug=false
+trigg_help=false
 
 # triggers values : 
 
@@ -102,6 +103,7 @@ l_white=""
 # 6 : color-scheme format undetected
 # 7 : file doesn't exist
 # 8 : unaccsesbile file
+# 9 : ussing a trigger like an arg
 
 #                          _______ ___ ___ ______  _______ ___ _______ ______  _______                          
 #                         |   _   |   Y   |   _  \|       |   |   _   |   _  \|   _   |    
@@ -192,6 +194,12 @@ function verify_Params () {
         arg_position=$index
         ((arg_position++))
         ;;
+      "--debug")
+        trigg_debug=true
+        ;;
+      "--help")
+        trigg_help=true
+        ;;
     esac
 
   done 
@@ -208,46 +216,22 @@ function verify_Params () {
     file_arg="${!arg_position}"
   fi
 
+  # verify if args isn't a trigger
+  if [[ "$file_arg" == *"--help"* || "$file_arg" == *"--debug"* ]]; then
+    echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Using a trigger like the <file> arg $Reset"
+    exit_Code 8
+  fi
+
+
   # verify missing args
   if [[ "$param_with_args_was_used" == true && "$file_arg" == "" ]]; then
     echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Missing Arguments \`$type_of_param <file>\` $Reset"
-    exit_Code 3
+    exit_Code 4
   fi
 
-}
-
-
-
-# _____    _                           
-#|_   _|  (_)                          
-#  | |_ __ _  __ _  __ _  ___ _ __ ___ 
-#  | | '__| |/ _` |/ _` |/ _ \ '__/ __|
-#  | | |  | | (_| | (_| |  __/ |  \__ \
-#  \_/_|  |_|\__, |\__, |\___|_|  |___/
-#             __/ | __/ |              
-#            |___/ |___/               
-function verify_Triggers () {
-
-  index=0
-  for arg in "$@"; do
-
-    ((index++))
-
-    if [ "$index" -le "$arg_position" ]; then
-      continue
-    fi
-
-    case "$arg" in 
-      "--debug")
-        trigg_debug=true
-      ;;
-    esac
-
-  done
+  
 
 }
-
-
 
 # _____                                     
 #/  ___|                                    
@@ -812,7 +796,6 @@ echo -e "$bWHITE¤ Wellcome!$Reset"
 
 echo -e "$bWHITE├── $bYELLOW¤ Verifiying params...$Reset"
 verify_Params $@ 
-verify_Triggers $@
 
 debug_Message "$bWHITE├── $bYELLOW¤ Verifiying dependencies...$Reset"
 verify_Dependencies

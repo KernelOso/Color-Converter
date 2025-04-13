@@ -54,7 +54,10 @@ trigg_kitty=false
   # trigg preserv name : 
   original_name=""
 
-
+#Files verification
+fileExist=false
+fileEmpty=false
+fileAccess=false
 
 #colors :
 background=""
@@ -112,18 +115,17 @@ l_white=""
 # 9 : ussing a trigger like an arg
 
 
-                                                                                                        
-#          88888888888                                88                                                 
-#          88                                  ,d     ""                                                 
-#          88                                  88                                                        
-#          88aaaaa  88       88  8b,dPPYba,  MM88MMM  88   ,adPPYba,   8b,dPPYba,   ,adPPYba,            
-#aaaaaaaa  88"""""  88       88  88P'   `"8a   88     88  a8"     "8a  88P'   `"8a  I8[    ""  aaaaaaaa  
-#""""""""  88       88       88  88       88   88     88  8b       d8  88       88   `"Y8ba,   """"""""  
-#          88       "8a,   ,a88  88       88   88,    88  "8a,   ,a8"  88       88  aa    ]8I            
-#          88        `"YbbdP'Y8  88       88   "Y888  88   `"YbbdP"'   88       88  `"YbbdP"'            
-
-
-
+                                                                                                                                                                                         
+#          88888888888  88  88                 8b           d8                       88     ad88  88                                   88                                                 
+#          88           ""  88                 `8b         d8'                       ""    d8"    ""                            ,d     ""                                                 
+#          88               88                  `8b       d8'                              88                                   88                                                        
+#          88aaaaa      88  88   ,adPPYba,       `8b     d8'  ,adPPYba,  8b,dPPYba,  88  MM88MMM  88   ,adPPYba,  ,adPPYYba,  MM88MMM  88   ,adPPYba,   8b,dPPYba,   ,adPPYba,            
+#aaaaaaaa  88"""""      88  88  a8P_____88        `8b   d8'  a8P_____88  88P'   "Y8  88    88     88  a8"     ""  ""     `Y8    88     88  a8"     "8a  88P'   `"8a  I8[    ""  aaaaaaaa  
+#""""""""  88           88  88  8PP"""""""         `8b d8'   8PP"""""""  88          88    88     88  8b          ,adPPPPP88    88     88  8b       d8  88       88   `"Y8ba,   """"""""  
+#          88           88  88  "8b,   ,aa          `888'    "8b,   ,aa  88          88    88     88  "8a,   ,aa  88,    ,88    88,    88  "8a,   ,a8"  88       88  aa    ]8I            
+#          88           88  88   `"Ybbd8"'           `8'      `"Ybbd8"'  88          88    88     88   `"Ybbd8"'  `"8bbdP"Y8    "Y888  88   `"YbbdP"'   88       88  `"YbbdP"'            
+                                                                                                                                                                                         
+                                                                                                                                                                                         
 # _____                _        ___  
 #|  ___|              | |      |__ \ 
 #| |__ _ __ ___  _ __ | |_ _   _  ) |
@@ -134,16 +136,23 @@ l_white=""
 #               |_|        |___/     
 function verify_If_Empty () {
 
+  debug_Message "$bWHITE│   $bYELLOW├── $bMAGN¤ Verifying if file is empty... $Reset"
+
   if [[ ! -s "$1" ]]; then
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: is empty! $Reset"
-    echo -e "$bWHITE│   $bYELLOW└──────── $Reset"
-    exit_Code 5
+
+    debug_Message "$bWHITE│   $bYELLOW│   $bMAGN└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: is empty! $Reset"
+    
+    fileEmpty=true
+
+  else 
+
+    debug_Message "$bWHITE│   $bYELLOW│   $bMAGN└── $bGREEN¤ File :$bWHITE $1 $bGREEN: is not empty! $Reset"
+
+    fileEmpty=false
+
   fi
 
 }
-
-
 
 #______ _ _        _____     _     _  ___  
 #|  ___(_) |      |  ___|   (_)   | ||__ \ 
@@ -153,24 +162,103 @@ function verify_If_Empty () {
 #\_|   |_|_|\___| \____/_/\_\_|___/\__(_)                                       
 function verify_If_File_Exist () {
 
-  debug_Message "$bWHITE│   $bYELLOW│   $bBLUE├── $bMAGN¤ Verifying if file exist... $Reset"
+  debug_Message "$bWHITE│   $bYELLOW├── $bMAGN¤ Verifying if file exist... $Reset"
   
   if [ -f "$1" ]; then
 
-      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bGREEN¤ File :$bWHITE $1 $bGREEN: Exist! $Reset"
+      debug_Message "$bWHITE│   $bYELLOW│   $bMAGN└── $bGREEN¤ File :$bWHITE $1 $bGREEN: Exist! $Reset"
+
+      fileExist=true
 
   else
+      debug_Message "$bWHITE│   $bYELLOW│   $bMAGN└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: doesn't Exist! $Reset"
+      
 
-      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: doesn't Exist! $Reset"
-      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE└────────  $Reset"
-      debug_Message "$bWHITE│   $bYELLOW└──────────────  $Reset"
-
-      exit_Code 7
+      fileExist=false
   fi
 
 }
 
 
+
+#  ___                       ___  
+# / _ \                     |__ \ 
+#/ /_\ \ ___ ___ ___  ___ ___  ) |
+#|  _  |/ __/ __/ _ \/ __/ __|/ / 
+#| | | | (_| (_|  __/\__ \__ \_|  
+#\_| |_/\___\___\___||___/___(_)  
+function verify_If_Access () {
+
+  debug_Message "$bWHITE│   $bYELLOW├── $bMAGN¤ Verifying if can acces to file... $Reset"
+  
+  if [ -r "$1" ]; then
+
+      debug_Message "$bWHITE│   $bYELLOW│   $bMAGN└── $bGREEN¤ File :$bWHITE $1 $bGREEN: can be accessed! $Reset"
+
+      fileAccess=true
+
+  else
+      debug_Message "$bWHITE│   $bYELLOW│   $bMAGN└── $bRED¤ ERROR... can't access to file :$bWHITE $1 $bRED: ! $Reset"
+      
+
+      fileAccess=false
+  fi
+
+}
+
+
+
+# _   _           _  __         _____     _ _   
+#| | | |         (_)/ _|       |  ___|   (_) |  
+#| | | | ___ _ __ _| |_ _   _  | |____  ___| |_ 
+#| | | |/ _ \ '__| |  _| | | | |  __\ \/ / | __|
+#\ \_/ /  __/ |  | | | | |_| | | |___>  <| | |_ 
+# \___/ \___|_|  |_|_|  \__, | \____/_/\_\_|\__|
+#                        __/ |                  
+#                       |___/                   
+function verify_File_whit_Exit () {
+
+  # mensaje debug de : verificando archivo
+
+  # Reset Variables
+  fileExist=false
+  fileEmpty=false
+  fileAccess=false
+
+  #Exist?
+  verify_If_File_Exist $1
+  if [[ "$fileExist" == false ]]; then
+    debug_Message "$bWHITE│   $bYELLOW└──────────────  $Reset"
+    exit_Code 7
+  fi
+
+  #Access?
+  verify_If_Access $1
+  if [[ "$fileAccess" == false ]]; then
+    debug_Message "$bWHITE│   $bYELLOW└──────────────  $Reset"
+    exit_Code 5
+  fi
+
+  #Empty?
+  verify_If_Empty $1
+  if [[ "$fileEmpty" == true ]]; then
+    debug_Message "$bWHITE│   $bYELLOW└──────────────  $Reset"
+    exit_Code 5
+  fi
+
+  
+
+
+}
+                                                                                                        
+#          88888888888                                88                                                 
+#          88                                  ,d     ""                                                 
+#          88                                  88                                                        
+#          88aaaaa  88       88  8b,dPPYba,  MM88MMM  88   ,adPPYba,   8b,dPPYba,   ,adPPYba,            
+#aaaaaaaa  88"""""  88       88  88P'   `"8a   88     88  a8"     "8a  88P'   `"8a  I8[    ""  aaaaaaaa  
+#""""""""  88       88       88  88       88   88     88  8b       d8  88       88   `"Y8ba,   """"""""  
+#          88       "8a,   ,a88  88       88   88,    88  "8a,   ,a8"  88       88  aa    ]8I            
+#          88        `"YbbdP'Y8  88       88   "Y888  88   `"YbbdP"'   88       88  `"YbbdP"'            
 
 # _   _           _  __        ______      _        
 #| | | |         (_)/ _|       |  _  \    | |       
@@ -305,13 +393,15 @@ function verify_Dependencies () {
 }
 
 
-#______                             
-#| ___ \                            
-#| |_/ /_ _ _ __ __ _ _ __ ___  ___ 
-#|  __/ _` | '__/ _` | '_ ` _ \/ __|
-#| | | (_| | | | (_| | | | | | \__ \
-#\_|  \__,_|_|  \__,_|_| |_| |_|___/
-
+                                                                                               
+#          88888888ba                                                                                
+#          88      "8b                                                                               
+#          88      ,8P                                                                               
+#          88aaaaaa8P'  ,adPPYYba,  8b,dPPYba,  ,adPPYYba,  88,dPYba,,adPYba,   ,adPPYba,            
+#aaaaaaaa  88""""""'    ""     `Y8  88P'   "Y8  ""     `Y8  88P'   "88"    "8a  I8[    ""  aaaaaaaa  
+#""""""""  88           ,adPPPPP88  88          ,adPPPPP88  88      88      88   `"Y8ba,   """"""""  
+#          88           88,    ,88  88          88,    ,88  88      88      88  aa    ]8I            
+#          88           `"8bbdP"Y8  88          `"8bbdP"Y8  88      88      88  `"YbbdP"'            
 function verify_Params () {
   params_used=0
   index=0
@@ -519,12 +609,7 @@ function XResources_Scanner () {
 function exec_Scanners () {
 
   echo -e "$bWHITE│   $bYELLOW├── $bBLUE¤ Scanning file :$bWHITE $1 $bBLUE: ...$Reset"
-
   file_type_detected=false
-
-  verify_If_File_Exist $1
-
-  verify_If_Empty $1
 
   #XResources Scanner
   if [[ "$file_type_detected" == false ]]; then
@@ -828,6 +913,18 @@ function exec_Reader () {
 }
 
 
+                                                                                                                
+#          88                                               88  88                                               
+#          88                            ,d                 88  88                                               
+#          88                            88                 88  88                                               
+#          88  8b,dPPYba,   ,adPPYba,  MM88MMM  ,adPPYYba,  88  88   ,adPPYba,  8b,dPPYba,  ,adPPYba,            
+#aaaaaaaa  88  88P'   `"8a  I8[    ""    88     ""     `Y8  88  88  a8P_____88  88P'   "Y8  I8[    ""  aaaaaaaa  
+#""""""""  88  88       88   `"Y8ba,     88     ,adPPPPP88  88  88  8PP"""""""  88           `"Y8ba,   """"""""  
+#          88  88       88  aa    ]8I    88,    88,    ,88  88  88  "8b,   ,aa  88          aa    ]8I            
+#          88  88       88  `"YbbdP"'    "Y888  `"8bbdP"Y8  88  88   `"Ybbd8"'  88          `"YbbdP"'            
+                                                                                                                
+                                                                                                                
+
                                                                                                      
 #     888888888888         88                                                                         
 #          88              ""                                                                         
@@ -848,7 +945,11 @@ function exec_Triggers () {
     echo -e "$bWHITE│   $bYELLOW└──────────────────────────────────$Reset"
   fi
 
-  exit_Code 0
+  # ejecutar installs
+
+  # toma las variables, y crea directamente el archivo en la ubicacion de la terminal
+
+  # ejecutar converts
 
 }
 
@@ -865,6 +966,10 @@ function exec_Triggers () {
 function exec_FILE () {
 
   echo -e "$bWHITE├── $bYELLOW¤ Executing \"FILE\" process...$Reset"
+
+  # procesando archivo :  ... 
+
+  verify_File_whit_Exit $file_arg
 
   # Scannn the file
   exec_Scanners $file_arg
@@ -897,6 +1002,8 @@ function exec_BADDIES () {
 function exec_SHOW () {
 
    echo -e "$bWHITE├── $bYELLOW¤ Executing \"SHOW\" process...$Reset"
+
+  verify_File_whit_Exit $file_arg
 
   # Scann the file
   exec_Scanners $file_arg

@@ -38,8 +38,11 @@ bWHITE="\033[0;37m"
 Reset="\033[0m"
 
 #triggers :
+triggers_counter=0
+
 trigg_preserv_name=false
 trigg_kitty=false
+trigg_debug=false
 
 # triggers values : 
 
@@ -108,22 +111,33 @@ l_white=""
 #                         |::.|   |::.. . |::.|   | |::.| |::.|::.. . |::.|   |::.. . |                         
 #                         `---'   `-------`--- ---' `---' `---`-------`--- ---`-------'                                                                                                                                  
 
+function debug_Message () {
+  if [[ "$trigg_debug" == true ]]; then
+    echo -e "$1"
+  else 
+    if [[ ! -z $2 ]]; then 
+      echo -e "$2"
+    fi
+  fi
+}
+
 function exit_Code () {
   echo -e "$bWHITE└── ¤ Exiting whit code :  $1 $Reset"
   exit $1
 
-  #TODO : messages for each type of error...
 }
 
 function verify_Dependencies () {
 
   # Dependency : yq
   if ! command -v yq &> /dev/null; then
-    echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Missing Depdencencie : $bCYAN yq $Reset"
+    debug_Message "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Missing Depdencencie : $bCYAN yq $Reset" "$bWHITE├──$bRED ¤ Error : Missing Depdencencie : $bCYAN yq $Reset"
     exit_Code 1
   fi 
 
 }
+
+
 
 
 #______                             
@@ -184,7 +198,7 @@ function verify_Params () {
 
   # prevent double param
   if [[ "$params_used" > 1 ]]; then
-    echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : More than one MAIN Param.$Reset"
+    echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : More than one MAIN Param.$Reset" 
     exit_Code 2
   fi
 
@@ -200,8 +214,37 @@ function verify_Params () {
     exit_Code 3
   fi
 
+}
 
-  # triggers 
+
+
+# _____    _                           
+#|_   _|  (_)                          
+#  | |_ __ _  __ _  __ _  ___ _ __ ___ 
+#  | | '__| |/ _` |/ _` |/ _ \ '__/ __|
+#  | | |  | | (_| | (_| |  __/ |  \__ \
+#  \_/_|  |_|\__, |\__, |\___|_|  |___/
+#             __/ | __/ |              
+#            |___/ |___/               
+function verify_Triggers () {
+
+  index=0
+  for arg in "$@"; do
+
+    ((index++))
+
+    if [ "$index" -le "$arg_position" ]; then
+      continue
+    fi
+
+    case "$arg" in 
+      "--debug")
+        trigg_debug=true
+      ;;
+    esac
+
+  done
+
 }
 
 
@@ -215,14 +258,18 @@ function verify_Params () {
 
 function verify_If_File_Exist () {
 
-  echo -e "$bWHITE│   $bYELLOW│   $bBLUE├── $bMAGN¤ Verifying if file exist... $Reset"
-
+  debug_Message "$bWHITE│   $bYELLOW│   $bBLUE├── $bMAGN¤ Verifying if file exist... $Reset"
+  
   if [ -f "$1" ]; then
-      echo -e "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bGREEN¤ File :$bWHITE $1 $bGREEN: Exist! $Reset"
+
+      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bGREEN¤ File :$bWHITE $1 $bGREEN: Exist! $Reset"
+
   else
-      echo -e "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: doesn't Exist! $Reset"
-      echo -e "$bWHITE│   $bYELLOW│   $bBLUE└────────  $Reset"
-      echo -e "$bWHITE│   $bYELLOW└──────────────  $Reset"
+
+      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: doesn't Exist! $Reset"
+      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE└────────  $Reset"
+      debug_Message "$bWHITE│   $bYELLOW└──────────────  $Reset"
+
       exit_Code 7
   fi
 
@@ -241,7 +288,7 @@ function verify_If_Empty () {
 
 function OsoB16_Scanner () {
 
-  echo -e "$bWHITE│   $bYELLOW│   $bBLUE├── $bCYAN¤ Executing Oso's Base16 scanner... $Reset"
+  debug_Message "$bWHITE│   $bYELLOW│   $bBLUE├── $bCYAN¤ Executing Oso's Base16 scanner... $Reset"
 
   if grep -qE 'background:' "$1" &&
    grep -qE 'foreground:' "$1" &&
@@ -264,8 +311,8 @@ function OsoB16_Scanner () {
    grep -qE 'l_white:' "$1"
   then
 
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│   $bCYAN└──$bGREEN ¤ Oso's Base16 format detected! $Reset"
-
+    debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bCYAN└──$bGREEN ¤ Oso's Base16 format detected! $Reset"
+   
     file_type_detected=true
     file_type="OsoB16"
 
@@ -275,7 +322,7 @@ function OsoB16_Scanner () {
 
 function XResources_Scanner () {
 
-  echo -e "$bWHITE│   $bYELLOW│   $bBLUE├── $bCYAN¤ Executing XResources scanner... $Reset"
+  debug_Message "$bWHITE│   $bYELLOW│   $bBLUE├── $bCYAN¤ Executing XResources scanner... $Reset"
 
   if grep -q "^! special" "$1" &&
     grep -q "^\*\.foreground:" "$1" &&
@@ -315,7 +362,7 @@ function XResources_Scanner () {
     grep -q "^\*\.color15:" "$1"
   then
 
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│   $bCYAN└──$bGREEN ¤ XResources format detected! $Reset"
+    debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bCYAN└──$bGREEN ¤ XResources format detected! $Reset"
 
     file_type_detected=true
     file_type="XResources"
@@ -466,12 +513,11 @@ function print_Colors () {
   gLWhite=$((16#${l_white:2:2}))
   bLWhite=$((16#${l_white:4:2}))
 
-
+  #$bWHITE│   $bYELLOW│   $bBLUE│
+  #$bWHITE│   $bYELLOW│   $bBLUE│
 
   cat <<EOF
-$(printf "$bWHITE│   $bYELLOW│   $bBLUE│                                   
-$bWHITE│   $bYELLOW│   $bBLUE│
-$bWHITE│   $bYELLOW│   $bBLUE│   $Reset BackGround : \e[48;2;${rBackground};${gBackground};${bBackground}m    $Reset  | ForeGround : \e[48;2;${rForeground};${gForeground};${bForeground}m    $Reset 
+$(printf "$bWHITE│   $bYELLOW│   $bBLUE│   $Reset Background : \e[48;2;${rBackground};${gBackground};${bBackground}m    $Reset  | Foreground : \e[48;2;${rForeground};${gForeground};${bForeground}m    $Reset 
 $bWHITE│   $bYELLOW│   $bBLUE│
 $bWHITE│   $bYELLOW│   $bBLUE│   $Reset bBlack     : \e[48;2;${rBBlack};${gBBlack};${bBBlack}m    $Reset  | lBlack     : \e[48;2;${rLBlack};${gLBlack};${bLBlack}m    $Reset
 $bWHITE│   $bYELLOW│   $bBLUE│   $Reset bRed       : \e[48;2;${rBRed};${gBRed};${bBRed}m    $Reset  | lRed       : \e[48;2;${rLRed};${gLRed};${bLRed}m    $Reset
@@ -481,8 +527,6 @@ $bWHITE│   $bYELLOW│   $bBLUE│   $Reset bBlue      : \e[48;2;${rBBlue};${g
 $bWHITE│   $bYELLOW│   $bBLUE│   $Reset bMagenta   : \e[48;2;${rBMagenta};${gBMagenta};${bBMagenta}m    $Reset  | lMagenta   : \e[48;2;${rLMagenta};${gLMagenta};${bLMagenta}m    $Reset
 $bWHITE│   $bYELLOW│   $bBLUE│   $Reset bCyan      : \e[48;2;${rBCyan};${gBCyan};${bBCyan}m    $Reset  | lCyan      : \e[48;2;${rLCyan};${gLCyan};${bLCyan}m    $Reset
 $bWHITE│   $bYELLOW│   $bBLUE│   $Reset bWhite     : \e[48;2;${rBWhite};${gBWhite};${bBWhite}m    $Reset  | lWhite     : \e[48;2;${rLWhite};${gLWhite};${bLWhite}m    $Reset
-$bWHITE│   $bYELLOW│   $bBLUE│
-$bWHITE│   $bYELLOW│   $bBLUE│
 $bWHITE│   $bYELLOW│   $bBLUE└────────────────────────────────────────────
 ")
 EOF
@@ -647,7 +691,14 @@ function exec_Reader () {
 
 function exec_Triggers () {
 
-  echo "test"
+  echo -e "$bWHITE│   $bYELLOW├── $bBLUE¤ Executing triggers...$Reset"
+
+  if [[ $triggers_counter = 0 ]]; then
+    echo -e "$bWHITE│   $bYELLOW│   $bRED└── ¤ No triggers detected...$Reset"
+    echo -e "$bWHITE│   $bYELLOW└──────────────────────────────────$Reset"
+  fi
+
+  exit_Code 0
 
 }
 
@@ -673,6 +724,7 @@ function exec_FILE () {
   print_Colors
 
   # Exec triggers...
+  exec_Triggers
 
 }
 
@@ -760,8 +812,9 @@ echo -e "$bWHITE¤ Wellcome!$Reset"
 
 echo -e "$bWHITE├── $bYELLOW¤ Verifiying params...$Reset"
 verify_Params $@ 
+verify_Triggers $@
 
-echo -e "$bWHITE├── $bYELLOW¤ Verifiying dependencies...$Reset"
+debug_Message "$bWHITE├── $bYELLOW¤ Verifiying dependencies...$Reset"
 verify_Dependencies
 
 exec_Engine

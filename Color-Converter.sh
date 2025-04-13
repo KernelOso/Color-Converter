@@ -103,17 +103,120 @@ l_white=""
 #aaaaaaaa  88"""""       `Y8, ,8P'   88    88        88             a8"     "8a  a8"    `Y88  a8P_____88  I8[    ""  aaaaaaaa  
 #""""""""  88              )888(     88    88        Y8,            8b       d8  8b       88  8PP"""""""   `"Y8ba,   """"""""  
 #          88            ,d8" "8b,   88    88,        Y8a.    .a8P  "8a,   ,a8"  "8a,   ,d88  "8b,   ,aa  aa    ]8I            
-#          88888888888  8P'     `Y8  88    "Y888       `"Y8888Y"'    `"YbbdP"'    `"8bbdP"Y8   `"Ybbd8"'  `"YbbdP"'                      
-# 0 : no errors
-# 1 : missing dependency
-# 2 : more than 1 param
-# 3 : missing arg
-# 4 : missing values
-# 5 : empty file
-# 6 : color-scheme format undetected
-# 7 : file doesn't exist
-# 8 : unaccsesbile file
-# 9 : ussing a trigger like an arg
+#          88888888888  8P'     `Y8  88    "Y888       `"Y8888Y"'    `"YbbdP"'    `"8bbdP"Y8   `"Ybbd8"'  `"YbbdP"'                     
+function exit_Code () {
+  echo -e "$bWHITE└── ¤ Exiting whit code :  $1 $Reset"
+
+  case "$1" in
+
+    # 0 : no errors
+    "0")
+      echo -e "    $bWHITE└── $bGREEN¤ No Errors! $Reset"
+    ;;
+
+    # 1 : missing dependency
+    "1")
+      echo -e "    $bWHITE└── $bRED¤ ERROR : Missing dependencies $Reset"
+    ;;
+
+    # 2 : more than 1 param
+    "2")
+      echo -e "    $bWHITE└── $bRED¤ ERROR : More than 1 param $Reset"
+    ;;
+
+    # 3 : missing arg
+    "3")
+      echo -e "    $bWHITE└── $bRED¤ ERROR : Missing arguments $Reset"
+    ;;
+
+    # 4 : missing values
+    "4")
+      echo -e "    $bWHITE└── $bRED¤ ERROR : Missing data values $Reset"
+    ;;
+
+    # 5 : empty file
+    "5")
+      echo -e "    $bWHITE└── $bRED¤ ERROR : Empty file $Reset"
+    ;;
+
+    # 6 : color-scheme format undetected
+    "6")
+      echo -e "    $bWHITE└── $bRED¤ ERROR : color-scheme format undetected $Reset"
+    ;;
+
+    # 7 : file doesn't exist
+    "7")
+      echo -e "    $bWHITE└── $bRED¤ ERROR : File doesn't exits $Reset"
+    ;;
+
+    # 8 : unaccsesbile file
+    "8")
+      echo -e "    $bWHITE└── $bRED¤ ERROR : Unaccsesible file $Reset"
+    ;;
+
+    # 9 : ussing a trigger like an arg
+    "9")
+      echo -e "    $bWHITE└── $bRED¤ ERROR : Using a trigger like an argument $Reset"
+    ;;
+
+    
+
+  esac
+
+
+
+  exit $1
+
+
+
+}
+
+
+
+#          88        88  88888888888  88           88888888ba      88b           d88                                                    88            
+#          88        88  88           88           88      "8b     888b         d888                                                    88            
+#          88        88  88           88           88      ,8P     88`8b       d8'88                                                    88            
+#          88aaaaaaaa88  88aaaaa      88           88aaaaaa8P'     88 `8b     d8' 88  ,adPPYYba,  8b,dPPYba,   88       88  ,adPPYYba,  88            
+#aaaaaaaa  88""""""""88  88"""""      88           88""""""'       88  `8b   d8'  88  ""     `Y8  88P'   `"8a  88       88  ""     `Y8  88  aaaaaaaa  
+#""""""""  88        88  88           88           88              88   `8b d8'   88  ,adPPPPP88  88       88  88       88  ,adPPPPP88  88  """"""""  
+#          88        88  88           88           88              88    `888'    88  88,    ,88  88       88  "8a,   ,a88  88,    ,88  88            
+#          88        88  88888888888  88888888888  88              88     `8'     88  `"8bbdP"Y8  88       88   `"YbbdP'Y8  `"8bbdP"Y8  88            
+function help_Message () {
+
+  if [[ $trigg_help == true ]]; then
+    echo -e "$bWHITE├── $bCYAN¤ Help Message : $Reset"
+    cat <<EOF
+$(printf "$bWHITE│   $bCYAN╔════════════════════$Reset  
+$bWHITE│   $bCYAN║$Reset  Color-Procesor : A color-scheme converter tool!
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset $bMAGN #Dependencies :
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset    ¤$bMAGN Bash
+$bWHITE│   $bCYAN║$Reset    ¤$bMAGN yq
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset $bBLUE # Usage : 
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset   $bBLUE Color-Converter.sh $bCYAN[help(s)] $bRED[process] $bWHITE| $bRED[process] $bCYAN[help(s)] $Reset
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset $bCYAN ## Helps :
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset   $bCYAN ¤ [ -h | --help ]  $bWHITE :  $bCYAN Show THIS manual.
+$bWHITE│   $bCYAN║$Reset   $bCYAN ¤ [ -d | --debug ] $bWHITE :  $bCYAN Show the extra debbug messages.
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset $bRED ## Processes :
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset   $bRED ¤ SHOW $bWHITE<file>              $bWHITE :$bRED   Only SHOW the information in one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset   $bRED ¤ FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED   Process only one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'FILE' process$bYELLOW triggers :
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN╚════════════════════$Reset
+")
+EOF
+  fi
+}
 
 
                                                                                                                                                                                          
@@ -314,53 +417,6 @@ function verify_Data () {
 }
 
 
-# _   _      _       
-#| | | |    | |      
-#| |_| | ___| |_ __  
-#|  _  |/ _ \ | '_ \ 
-#| | | |  __/ | |_) |
-#\_| |_/\___|_| .__/ 
-#             | |    
-#             |_|    
-function help_Message () {
-
-  if [[ $trigg_help == true ]]; then
-    echo -e "$bWHITE├── $bCYAN¤ Help Message : $Reset"
-    cat <<EOF
-$(printf "$bWHITE│   $bCYAN╔$Reset  
-$bWHITE│   $bCYAN║$Reset  Color-Procesor : A color-scheme converter tool!
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset $bMAGN #Dependencies :
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset    ¤$bMAGN Bash
-$bWHITE│   $bCYAN║$Reset    ¤$bMAGN yq
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset $bBLUE # Usage : 
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset   $bBLUE Color-Converter.sh $bGREEN[help(s)] $bRED[process] $bWHITE| $bCYAN[process] $bGREEN[help(s)] $Reset
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset $bGREEN ## Helps :
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset   $bGREEN ¤ [ -h | --help ]  $bWHITE :  $bGREEN Show THIS manual.
-$bWHITE│   $bCYAN║$Reset   $bGREEN ¤ [ -d | --debug ] $bWHITE :  $bGREEN Show the extra debbug messages.
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset $bRED ## Processes :
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset   $bRED ¤ SHOW $bWHITE<file>              $bWHITE :$bRED   Only SHOW the information in one $bWHITE<file>$bRED.
-$bWHITE│   $bCYAN║$Reset   $bRED ¤ FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED   Process only one $bWHITE<file>$bRED.
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'FILE' process$bYELLOW triggers :
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN╚$Reset
-")
-EOF
-  fi
-}
-
-
-
 
 #______     _                 
 #|  _  \   | |                
@@ -382,19 +438,6 @@ function debug_Message () {
   fi
 }
 
-
-
-# _____     _ _   
-#|  ___|   (_) |  
-#| |____  ___| |_ 
-#|  __\ \/ / | __|
-#| |___>  <| | |_ 
-#\____/_/\_\_|\__|
-function exit_Code () {
-  echo -e "$bWHITE└── ¤ Exiting whit code :  $1 $Reset"
-  exit $1
-
-}
 
 
 #______                          _                 _           
@@ -1100,7 +1143,7 @@ function exec_Engine () {
 #""""""""  88   `8b d8'   88  ,adPPPPP88  88  88       88  """"""""  
 #          88    `888'    88  88,    ,88  88  88       88            
 #          88     `8'     88  `"8bbdP"Y8  88  88       88            
-clear
+
 cat <<EOF
 $(printf "
 $bRED _______       __                   _______                                        

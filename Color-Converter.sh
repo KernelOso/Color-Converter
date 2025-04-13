@@ -6,14 +6,16 @@
 # This project is licensed under the GNU General Public License v3.0.
 # See the LICENSE file for details.
 
-#                           ___ ___ _______ _______ ___ _______ _______  ___     _______ _______                          
-#  ______ ______ ______    |   Y   |   _   |   _   |   |   _   |   _   \|   |   |   _   |   _   |    ______ ______ ______ 
-# |______|______|______|   |.  |   |.  1   |.  l   |.  |.  1   |.  1   /|.  |   |.  1___|   1___|   |______|______|______|
-#                          |.  |   |.  _   |.  _   |.  |.  _   |.  _   \|.  |___|.  __)_|____   |                         
-#                          |:  1   |:  |   |:  |   |:  |:  |   |:  1    |:  1   |:  1   |:  1   |                         
-#                           \:.. ./|::.|:. |::.|:. |::.|::.|:. |::.. .  |::.. . |::.. . |::.. . |                         
-#                            `---' `--- ---`--- ---`---`--- ---`-------'`-------`-------`-------'                         
 
+                                                                                                        
+#       8b           d8                        88              88           88                                   
+#       `8b         d8'                        ""              88           88                                   
+#        `8b       d8'                                         88           88                                   
+#         `8b     d8'  ,adPPYYba,  8b,dPPYba,  88  ,adPPYYba,  88,dPPYba,   88   ,adPPYba,  ,adPPYba,            
+#aaaaaaaa  `8b   d8'   ""     `Y8  88P'   "Y8  88  ""     `Y8  88P'    "8a  88  a8P_____88  I8[    ""  aaaaaaaa  
+#""""""""   `8b d8'    ,adPPPPP88  88          88  ,adPPPPP88  88       d8  88  8PP"""""""   `"Y8ba,   """"""""  
+#            `888'     88,    ,88  88          88  88,    ,88  88b,   ,a8"  88  "8b,   ,aa  aa    ]8I            
+#             `8'      `"8bbdP"Y8  88          88  `"8bbdP"Y8  8Y"Ybbd8"'   88   `"Ybbd8"'  `"YbbdP"'            
 # Param verify
 param_with_args_was_used=false
 arg_position=-1
@@ -38,12 +40,14 @@ bWHITE="\033[0;37m"
 Reset="\033[0m"
 
 #triggers :
-triggers_counter=0
+triggers_used=false
 
-trigg_preserv_name=false
-trigg_kitty=false
 trigg_debug=false
 trigg_help=false
+
+trigg_get=false
+
+trigg_kitty=false
 
 # triggers values : 
 
@@ -86,14 +90,16 @@ l_white=""
 #┴ 
 #┼ 
 
-#                           _______ _______ _______ _______ _______     _______ _______ ______   _______ _______                          
-#  ______ ______ ______    |   _   |   _   |   _   |   _   |   _   \   |   _   |   _   |   _  \ |   _   |   _   |    ______ ______ ______ 
-# |______|______|______|   |.  1___|.  l   |.  l   |.  |   |.  l   /   |.  1___|.  |   |.  |   \|.  1___|   1___|   |______|______|______|
-#                          |.  __)_|.  _   |.  _   |.  |   |.  _   1   |.  |___|.  |   |.  |    |.  __)_|____   |                         
-#                          |:  1   |:  |   |:  |   |:  1   |:  |   |   |:  1   |:  1   |:  1    |:  1   |:  1   |                         
-#                          |::.. . |::.|:. |::.|:. |::.. . |::.|:. |   |::.. . |::.. . |::.. . /|::.. . |::.. . |                         
-#                          `-------`--- ---`--- ---`-------`--- ---'   `-------`-------`------' `-------`-------'                         
-                                                                                                                                         
+
+                                                                                                                    
+#          88888888888               88                ,ad8888ba,                         88                                   
+#          88                        ""    ,d         d8"'    `"8b                        88                                   
+#          88                              88        d8'                                  88                                   
+#          88aaaaa      8b,     ,d8  88  MM88MMM     88              ,adPPYba,    ,adPPYb,88   ,adPPYba,  ,adPPYba,            
+#aaaaaaaa  88"""""       `Y8, ,8P'   88    88        88             a8"     "8a  a8"    `Y88  a8P_____88  I8[    ""  aaaaaaaa  
+#""""""""  88              )888(     88    88        Y8,            8b       d8  8b       88  8PP"""""""   `"Y8ba,   """"""""  
+#          88            ,d8" "8b,   88    88,        Y8a.    .a8P  "8a,   ,a8"  "8a,   ,d88  "8b,   ,aa  aa    ]8I            
+#          88888888888  8P'     `Y8  88    "Y888       `"Y8888Y"'    `"YbbdP"'    `"8bbdP"Y8   `"Ybbd8"'  `"YbbdP"'                      
 # 0 : no errors
 # 1 : missing dependency
 # 2 : more than 1 param
@@ -105,14 +111,156 @@ l_white=""
 # 8 : unaccsesbile file
 # 9 : ussing a trigger like an arg
 
-#                          _______ ___ ___ ______  _______ ___ _______ ______  _______                          
-#                         |   _   |   Y   |   _  \|       |   |   _   |   _  \|   _   |    
-# ______ ______ ______    |.  1___|.  |   |.  |   |.|   | |.  |.  |   |.  |   |   1___|    ______ ______ ______
-#|______|______|______|   |.  __) |.  |   |.  |   `-|.  |-|.  |.  |   |.  |   |____   |   |______|______|______|                      
-#                         |:  |   |:  1   |:  |   | |:  | |:  |:  1   |:  |   |:  1   |                         
-#                         |::.|   |::.. . |::.|   | |::.| |::.|::.. . |::.|   |::.. . |                         
-#                         `---'   `-------`--- ---' `---' `---`-------`--- ---`-------'                                                                                                                                  
 
+                                                                                                        
+#          88888888888                                88                                                 
+#          88                                  ,d     ""                                                 
+#          88                                  88                                                        
+#          88aaaaa  88       88  8b,dPPYba,  MM88MMM  88   ,adPPYba,   8b,dPPYba,   ,adPPYba,            
+#aaaaaaaa  88"""""  88       88  88P'   `"8a   88     88  a8"     "8a  88P'   `"8a  I8[    ""  aaaaaaaa  
+#""""""""  88       88       88  88       88   88     88  8b       d8  88       88   `"Y8ba,   """"""""  
+#          88       "8a,   ,a88  88       88   88,    88  "8a,   ,a8"  88       88  aa    ]8I            
+#          88        `"YbbdP'Y8  88       88   "Y888  88   `"YbbdP"'   88       88  `"YbbdP"'            
+
+
+
+# _____                _        ___  
+#|  ___|              | |      |__ \ 
+#| |__ _ __ ___  _ __ | |_ _   _  ) |
+#|  __| '_ ` _ \| '_ \| __| | | |/ / 
+#| |__| | | | | | |_) | |_| |_| |_|  
+#\____/_| |_| |_| .__/ \__|\__, (_)  
+#               | |         __/ |    
+#               |_|        |___/     
+function verify_If_Empty () {
+
+  if [[ ! -s "$1" ]]; then
+    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
+    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: is empty! $Reset"
+    echo -e "$bWHITE│   $bYELLOW└──────── $Reset"
+    exit_Code 5
+  fi
+
+}
+
+
+
+#______ _ _        _____     _     _  ___  
+#|  ___(_) |      |  ___|   (_)   | ||__ \ 
+#| |_   _| | ___  | |____  ___ ___| |_  ) |
+#|  _| | | |/ _ \ |  __\ \/ / / __| __|/ / 
+#| |   | | |  __/ | |___>  <| \__ \ |_|_|  
+#\_|   |_|_|\___| \____/_/\_\_|___/\__(_)                                       
+function verify_If_File_Exist () {
+
+  debug_Message "$bWHITE│   $bYELLOW│   $bBLUE├── $bMAGN¤ Verifying if file exist... $Reset"
+  
+  if [ -f "$1" ]; then
+
+      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bGREEN¤ File :$bWHITE $1 $bGREEN: Exist! $Reset"
+
+  else
+
+      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: doesn't Exist! $Reset"
+      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE└────────  $Reset"
+      debug_Message "$bWHITE│   $bYELLOW└──────────────  $Reset"
+
+      exit_Code 7
+  fi
+
+}
+
+
+
+# _   _           _  __        ______      _        
+#| | | |         (_)/ _|       |  _  \    | |       
+#| | | | ___ _ __ _| |_ _   _  | | | |__ _| |_ __ _ 
+#| | | |/ _ \ '__| |  _| | | | | | | / _` | __/ _` |
+#\ \_/ /  __/ |  | | | | |_| | | |/ / (_| | || (_| |
+# \___/ \___|_|  |_|_|  \__, | |___/ \__,_|\__\__,_|
+#                        __/ |                      
+#                       |___/                       
+function verify_Data () {
+
+  # Verify data
+  if [ -z "$background" ] || [ "$background" = "null" ] || \
+   [ -z "$foreground" ] || [ "$foreground" = "null" ] || \
+   [ -z "$cursor" ] || [ "$cursor" = "null" ] || \
+   [ -z "$b_black" ] || [ "$b_black" = "null" ] || [ -z "$l_black" ] || [ "$l_black" = "null" ] || \
+   [ -z "$b_red" ] || [ "$b_red" = "null" ] || [ -z "$l_red" ] || [ "$l_red" = "null" ] || \
+   [ -z "$b_green" ] || [ "$b_green" = "null" ] || [ -z "$l_green" ] || [ "$l_green" = "null" ] || \
+   [ -z "$b_yellow" ] || [ "$b_yellow" = "null" ] || [ -z "$l_yellow" ] || [ "$l_yellow" = "null" ] || \
+   [ -z "$b_blue" ] || [ "$b_blue" = "null" ] || [ -z "$l_blue" ] || [ "$l_blue" = "null" ] || \
+   [ -z "$b_magenta" ] || [ "$b_magenta" = "null" ] || [ -z "$l_magenta" ] || [ "$l_magenta" = "null" ] || \
+   [ -z "$b_cyan" ] || [ "$b_cyan" = "null" ] || [ -z "$l_cyan" ] || [ "$l_cyan" = "null" ] || \
+   [ -z "$b_white" ] || [ "$b_white" = "null" ] || [ -z "$l_white" ] || [ "$l_white" = "null" ]; then
+
+    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
+    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR : Missing or null values...$Reset"
+    echo -e "$bWHITE│   $bYELLOW└────────$Reset"
+    exit_Code 4
+
+  fi
+
+}
+
+
+# _   _      _       
+#| | | |    | |      
+#| |_| | ___| |_ __  
+#|  _  |/ _ \ | '_ \ 
+#| | | |  __/ | |_) |
+#\_| |_/\___|_| .__/ 
+#             | |    
+#             |_|    
+function help_Message () {
+
+  if [[ $trigg_help == true ]]; then
+    echo -e "$bWHITE├── $bYELLOW¤ Help Message : $Reset"
+    cat <<EOF
+$(printf "$bWHITE│   $bCYAN╔$Reset  
+$bWHITE│   $bCYAN║$Reset  Color-Procesor : A color-scheme converter tool!
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset $bMAGN #Dependencies :
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset    ¤$bMAGN Bash
+$bWHITE│   $bCYAN║$Reset    ¤$bMAGN yq
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset $bBLUE # Usage : 
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset   $bBLUE Color-Converter.sh $bGREEN[help(s)] $bRED[process] $bWHITE| $bCYAN[process] $bGREEN[help(s)] $Reset
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset $bGREEN ## Helps :
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset   $bGREEN ¤ [ -h | --help ]  $bWHITE :  $bGREEN Show THIS manual.
+$bWHITE│   $bCYAN║$Reset   $bGREEN ¤ [ -d | --debug ] $bWHITE :  $bGREEN Show the extra debbug messages.
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset $bRED ## Processes :
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset   $bRED ¤ SHOW $bWHITE<file>              $bWHITE :$bRED   Only SHOW the information in one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset   $bRED ¤ FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED   Process only one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset    
+$bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'FILE' process$bYELLOW triggers :
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN╚$Reset
+")
+EOF
+  fi
+}
+
+
+
+
+#______     _                 
+#|  _  \   | |                
+#| | | |___| |__  _   _  __ _ 
+#| | | / _ \ '_ \| | | |/ _` |
+#| |/ /  __/ |_) | |_| | (_| |
+#|___/ \___|_.__/ \__,_|\__, |
+#                        __/ |
+#                       |___/ 
 function debug_Message () {
   if [[ "$trigg_debug" == true ]]; then
     echo -e "$1"
@@ -123,23 +271,38 @@ function debug_Message () {
   fi
 }
 
+
+
+# _____     _ _   
+#|  ___|   (_) |  
+#| |____  ___| |_ 
+#|  __\ \/ / | __|
+#| |___>  <| | |_ 
+#\____/_/\_\_|\__|
 function exit_Code () {
   echo -e "$bWHITE└── ¤ Exiting whit code :  $1 $Reset"
   exit $1
 
 }
 
+
+#______                          _                 _           
+#|  _  \                        | |               (_)          
+#| | | |___ _ __   ___ _ __   __| | ___ _ __   ___ _  ___  ___ 
+#| | | / _ \ '_ \ / _ \ '_ \ / _` |/ _ \ '_ \ / __| |/ _ \/ __|
+#| |/ /  __/ |_) |  __/ | | | (_| |  __/ | | | (__| |  __/\__ \
+#|___/ \___| .__/ \___|_| |_|\__,_|\___|_| |_|\___|_|\___||___/
+#          | |                                                 
+#          |_|                                                 
 function verify_Dependencies () {
 
   # Dependency : yq
   if ! command -v yq &> /dev/null; then
-    debug_Message "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Missing Depdencencie : $bCYAN yq $Reset" "$bWHITE├──$bRED ¤ Error : Missing Depdencencie : $bCYAN yq $Reset"
+    echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Missing Depdencencie : $bCYAN yq $Reset"
     exit_Code 1
   fi 
 
 }
-
-
 
 
 #______                             
@@ -233,43 +396,25 @@ function verify_Params () {
 
 }
 
-# _____                                     
-#/  ___|                                    
-#\ `--.  ___ __ _ _ __  _ __   ___ _ __ ___ 
-# `--. \/ __/ _` | '_ \| '_ \ / _ \ '__/ __|
-#/\__/ / (_| (_| | | | | | | |  __/ |  \__ \
-#\____/ \___\__,_|_| |_|_| |_|\___|_|  |___/
 
-function verify_If_File_Exist () {
+                                                                                                                    
+#         ad88888ba                                                                                                  
+#        d8"     "8b                                                                                                 
+#        Y8,                                                                                                         
+#        `Y8aaaaa,     ,adPPYba,  ,adPPYYba,  8b,dPPYba,   8b,dPPYba,    ,adPPYba,  8b,dPPYba,  ,adPPYba,            
+#aaaaaaaa  `"""""8b,  a8"     ""  ""     `Y8  88P'   `"8a  88P'   `"8a  a8P_____88  88P'   "Y8  I8[    ""  aaaaaaaa  
+#""""""""        `8b  8b          ,adPPPPP88  88       88  88       88  8PP"""""""  88           `"Y8ba,   """"""""  
+#        Y8a     a8P  "8a,   ,aa  88,    ,88  88       88  88       88  "8b,   ,aa  88          aa    ]8I            
+#         "Y88888P"    `"Ybbd8"'  `"8bbdP"Y8  88       88  88       88   `"Ybbd8"'  88          `"YbbdP"'   
 
-  debug_Message "$bWHITE│   $bYELLOW│   $bBLUE├── $bMAGN¤ Verifying if file exist... $Reset"
-  
-  if [ -f "$1" ]; then
 
-      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bGREEN¤ File :$bWHITE $1 $bGREEN: Exist! $Reset"
 
-  else
-
-      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE│   $bMAGN└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: doesn't Exist! $Reset"
-      debug_Message "$bWHITE│   $bYELLOW│   $bBLUE└────────  $Reset"
-      debug_Message "$bWHITE│   $bYELLOW└──────────────  $Reset"
-
-      exit_Code 7
-  fi
-
-}
-
-function verify_If_Empty () {
-
-  if [[ ! -s "$1" ]]; then
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: is empty! $Reset"
-    echo -e "$bWHITE│   $bYELLOW└──────── $Reset"
-    exit_Code 5
-  fi
-
-}
-
+# _____            _      ______  __    ____ 
+#|  _  |          ( )     | ___ \/  |  / ___|
+#| | | | ___  ___ |/ ___  | |_/ /`| | / /___ 
+#| | | |/ __|/ _ \  / __| | ___ \ | | | ___ \
+#\ \_/ /\__ \ (_) | \__ \ | |_/ /_| |_| \_/ |
+# \___/ |___/\___/  |___/ \____/ \___/\_____/
 function OsoB16_Scanner () {
 
   debug_Message "$bWHITE│   $bYELLOW│   $bBLUE├── $bCYAN¤ Executing Oso's Base16 scanner... $Reset"
@@ -304,6 +449,14 @@ function OsoB16_Scanner () {
 
 }
 
+
+
+#__   ________                                        
+#\ \ / /| ___ \                                       
+# \ V / | |_/ /___  ___  ___  _   _ _ __ ___ ___  ___ 
+# /   \ |    // _ \/ __|/ _ \| | | | '__/ __/ _ \/ __|
+#/ /^\ \| |\ \  __/\__ \ (_) | |_| | | | (_|  __/\__ \
+#\/   \/\_| \_\___||___/\___/ \__,_|_|  \___\___||___/
 function XResources_Scanner () {
 
   debug_Message "$bWHITE│   $bYELLOW│   $bBLUE├── $bCYAN¤ Executing XResources scanner... $Reset"
@@ -355,6 +508,14 @@ function XResources_Scanner () {
 
 }
 
+
+
+# _____              
+#|  ___|             
+#| |____  _____  ___ 
+#|  __\ \/ / _ \/ __|
+#| |___>  <  __/ (__ 
+#\____/_/\_\___|\___|
 function exec_Scanners () {
 
   echo -e "$bWHITE│   $bYELLOW├── $bBLUE¤ Scanning file :$bWHITE $1 $bBLUE: ...$Reset"
@@ -392,13 +553,16 @@ function exec_Scanners () {
 }
 
 
-#______     _       _            
-#| ___ \   (_)     | |           
-#| |_/ / __ _ _ __ | |_ ___ _ __ 
-#|  __/ '__| | '_ \| __/ _ \ '__|
-#| |  | |  | | | | | ||  __/ |   
-#\_|  |_|  |_|_| |_|\__\___|_|   
 
+                                                                                             
+#          88888888ba               88                                                        
+#          88      "8b              ""                ,d                                      
+#          88      ,8P                                88                                      
+#          88aaaaaa8P'  8b,dPPYba,  88  8b,dPPYba,  MM88MMM  ,adPPYba,  8b,dPPYba,            
+#aaaaaaaa  88""""""'    88P'   "Y8  88  88P'   `"8a   88    a8P_____88  88P'   "Y8  aaaaaaaa  
+#""""""""  88           88          88  88       88   88    8PP"""""""  88          """"""""  
+#          88           88          88  88       88   88,   "8b,   ,aa  88                    
+#          88           88          88  88       88   "Y888  `"Ybbd8"'  88                    
 function print_Colors () {
 
   echo -e "$bWHITE│   $bYELLOW├── $bBLUE¤ Colors : $Reset"
@@ -519,38 +683,25 @@ EOF
 
 
 
-#______               _               
-#| ___ \             | |              
-#| |_/ /___  __ _  __| | ___ _ __ ___ 
-#|    // _ \/ _` |/ _` |/ _ \ '__/ __|
-#| |\ \  __/ (_| | (_| |  __/ |  \__ \
-#\_| \_\___|\__,_|\__,_|\___|_|  |___/
+
+                                                                                                        
+#          88888888ba                                   88                                               
+#          88      "8b                                  88                                               
+#          88      ,8P                                  88                                               
+#          88aaaaaa8P'  ,adPPYba,  ,adPPYYba,   ,adPPYb,88   ,adPPYba,  8b,dPPYba,  ,adPPYba,            
+#aaaaaaaa  88""""88'   a8P_____88  ""     `Y8  a8"    `Y88  a8P_____88  88P'   "Y8  I8[    ""  aaaaaaaa  
+#""""""""  88    `8b   8PP"""""""  ,adPPPPP88  8b       88  8PP"""""""  88           `"Y8ba,   """"""""  
+#          88     `8b  "8b,   ,aa  88,    ,88  "8a,   ,d88  "8b,   ,aa  88          aa    ]8I            
+#          88      `8b  `"Ybbd8"'  `"8bbdP"Y8   `"8bbdP"Y8   `"Ybbd8"'  88          `"YbbdP"'            
 
 
-function verify_Data () {
 
-  # Verify data
-  if [ -z "$background" ] || [ "$background" = "null" ] || \
-   [ -z "$foreground" ] || [ "$foreground" = "null" ] || \
-   [ -z "$cursor" ] || [ "$cursor" = "null" ] || \
-   [ -z "$b_black" ] || [ "$b_black" = "null" ] || [ -z "$l_black" ] || [ "$l_black" = "null" ] || \
-   [ -z "$b_red" ] || [ "$b_red" = "null" ] || [ -z "$l_red" ] || [ "$l_red" = "null" ] || \
-   [ -z "$b_green" ] || [ "$b_green" = "null" ] || [ -z "$l_green" ] || [ "$l_green" = "null" ] || \
-   [ -z "$b_yellow" ] || [ "$b_yellow" = "null" ] || [ -z "$l_yellow" ] || [ "$l_yellow" = "null" ] || \
-   [ -z "$b_blue" ] || [ "$b_blue" = "null" ] || [ -z "$l_blue" ] || [ "$l_blue" = "null" ] || \
-   [ -z "$b_magenta" ] || [ "$b_magenta" = "null" ] || [ -z "$l_magenta" ] || [ "$l_magenta" = "null" ] || \
-   [ -z "$b_cyan" ] || [ "$b_cyan" = "null" ] || [ -z "$l_cyan" ] || [ "$l_cyan" = "null" ] || \
-   [ -z "$b_white" ] || [ "$b_white" = "null" ] || [ -z "$l_white" ] || [ "$l_white" = "null" ]; then
-
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE│$Reset"
-    echo -e "$bWHITE│   $bYELLOW│   $bBLUE└── $bRED¤ ERROR : Missing or null values...$Reset"
-    echo -e "$bWHITE│   $bYELLOW└────────$Reset"
-    exit_Code 4
-
-  fi
-
-}
-
+# _____            _      ______  __    ____ 
+#|  _  |          ( )     | ___ \/  |  / ___|
+#| | | | ___  ___ |/ ___  | |_/ /`| | / /___ 
+#| | | |/ __|/ _ \  / __| | ___ \ | | | ___ \
+#\ \_/ /\__ \ (_) | \__ \ | |_/ /_| |_| \_/ |
+# \___/ |___/\___/  |___/ \____/ \___/\_____/
 function OsoB16_Reader() {
 
   # Save values on variables
@@ -580,6 +731,14 @@ function OsoB16_Reader() {
   verify_Data
 }
 
+
+
+#__   ________                                        
+#\ \ / /| ___ \                                       
+# \ V / | |_/ /___  ___  ___  _   _ _ __ ___ ___  ___ 
+# /   \ |    // _ \/ __|/ _ \| | | | '__/ __/ _ \/ __|
+#/ /^\ \| |\ \  __/\__ \ (_) | |_| | | | (_|  __/\__ \
+#\/   \/\_| \_\___||___/\___/ \__,_|_|  \___\___||___/
 function XResources_Reader () {
 
   # Save values on variables
@@ -617,12 +776,17 @@ function XResources_Reader () {
 }
 
 
-
+# _____              
+#|  ___|             
+#| |____  _____  ___ 
+#|  __\ \/ / _ \/ __|
+#| |___>  <  __/ (__ 
+#\____/_/\_\___|\___|
 function exec_Reader () {
 
   echo -e "$bWHITE│   $bYELLOW├── $bBLUE¤ Reading file :$bWHITE $1 $bBLUE: ...$Reset"
 
-  # Reste variables :
+  # Reset variables :
 
   background=""
   foreground=""
@@ -664,20 +828,22 @@ function exec_Reader () {
 }
 
 
-# _____    _                           
-#|_   _|  (_)                          
-#  | |_ __ _  __ _  __ _  ___ _ __ ___ 
-#  | | '__| |/ _` |/ _` |/ _ \ '__/ __|
-#  | | |  | | (_| | (_| |  __/ |  \__ \
-#  \_/_|  |_|\__, |\__, |\___|_|  |___/
-#             __/ | __/ |              
-#            |___/ |___/               
-
+                                                                                                     
+#     888888888888         88                                                                         
+#          88              ""                                                                         
+#          88                                                                                         
+#          88  8b,dPPYba,  88   ,adPPYb,d8   ,adPPYb,d8   ,adPPYba,  8b,dPPYba,  ,adPPYba,            
+#aaaaaaaa  88  88P'   "Y8  88  a8"    `Y88  a8"    `Y88  a8P_____88  88P'   "Y8  I8[    ""  aaaaaaaa  
+#""""""""  88  88          88  8b       88  8b       88  8PP"""""""  88           `"Y8ba,   """"""""  
+#          88  88          88  "8a,   ,d88  "8a,   ,d88  "8b,   ,aa  88          aa    ]8I            
+#          88  88          88   `"YbbdP"Y8   `"YbbdP"Y8   `"Ybbd8"'  88          `"YbbdP"'            
+#                               aa,    ,88   aa,    ,88                                               
+#                                "Y8bbdP"     "Y8bbdP"                                                
 function exec_Triggers () {
 
   echo -e "$bWHITE│   $bYELLOW├── $bBLUE¤ Executing triggers...$Reset"
 
-  if [[ $triggers_counter = 0 ]]; then
+  if [[ $triggers_used = false ]]; then
     echo -e "$bWHITE│   $bYELLOW│   $bRED└── ¤ No triggers detected...$Reset"
     echo -e "$bWHITE│   $bYELLOW└──────────────────────────────────$Reset"
   fi
@@ -686,12 +852,16 @@ function exec_Triggers () {
 
 }
 
-# _____                    _                 
-#|  ___|                  | |                
-#| |____  _____  ___ _   _| |_ ___  _ __ ___ 
-#|  __\ \/ / _ \/ __| | | | __/ _ \| '__/ __|
-#| |___>  <  __/ (__| |_| | || (_) | |  \__ \
-#\____/_/\_\___|\___|\__,_|\__\___/|_|  |___/
+
+                                                                                                                              
+#          88888888888                                                                                                         
+#          88                                                              ,d                                                  
+#          88                                                              88                                                  
+#          88aaaaa      8b,     ,d8  ,adPPYba,   ,adPPYba,  88       88  MM88MMM  ,adPPYba,   8b,dPPYba,  ,adPPYba,            
+#aaaaaaaa  88"""""       `Y8, ,8P'  a8P_____88  a8"     ""  88       88    88    a8"     "8a  88P'   "Y8  I8[    ""  aaaaaaaa  
+#""""""""  88              )888(    8PP"""""""  8b          88       88    88    8b       d8  88           `"Y8ba,   """"""""  
+#          88            ,d8" "8b,  "8b,   ,aa  "8a,   ,aa  "8a,   ,a88    88,   "8a,   ,a8"  88          aa    ]8I            
+#          88888888888  8P'     `Y8  `"Ybbd8"'   `"Ybbd8"'   `"YbbdP'Y8    "Y888  `"YbbdP"'   88          `"YbbdP"'                                                                                                                                  
 function exec_FILE () {
 
   echo -e "$bWHITE├── $bYELLOW¤ Executing \"FILE\" process...$Reset"
@@ -770,16 +940,15 @@ function exec_Engine () {
 }
 
 
-#                           ___ ___ _______ ___ ______                           
-#  ______ ______ ______    |   Y   |   _   |   |   _  \     ______ ______ ______ 
-# |______|______|______|   |.      |.  1   |.  |.  |   |   |______|______|______|
-#                          |. \_/  |.  _   |.  |.  |   |                         
-#                          |:  |   |:  |   |:  |:  |   |                         
-#                          |::.|:. |::.|:. |::.|::.|   |                         
-#                          `--- ---`--- ---`---`--- ---'                         
-
-
-
+                                                                    
+#          88b           d88              88                         
+#          888b         d888              ""                         
+#          88`8b       d8'88                                         
+#          88 `8b     d8' 88  ,adPPYYba,  88  8b,dPPYba,             
+#aaaaaaaa  88  `8b   d8'  88  ""     `Y8  88  88P'   `"8a  aaaaaaaa  
+#""""""""  88   `8b d8'   88  ,adPPPPP88  88  88       88  """"""""  
+#          88    `888'    88  88,    ,88  88  88       88            
+#          88     `8'     88  `"8bbdP"Y8  88  88       88            
 clear
 cat <<EOF
 $(printf "
@@ -797,7 +966,9 @@ echo -e "$bWHITE¤ Wellcome!$Reset"
 echo -e "$bWHITE├── $bYELLOW¤ Verifiying params...$Reset"
 verify_Params $@ 
 
-debug_Message "$bWHITE├── $bYELLOW¤ Verifiying dependencies...$Reset"
+help_Message 
+
+echo -e "$bWHITE├── $bYELLOW¤ Verifiying dependencies...$Reset"
 verify_Dependencies
 
 exec_Engine

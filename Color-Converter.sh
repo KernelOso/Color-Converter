@@ -1005,10 +1005,34 @@ function exec_Reader () {
 #""""""""  88  88       88   `"Y8ba,     88     ,adPPPPP88  88  88  8PP"""""""  88           `"Y8ba,   """"""""  
 #          88  88       88  aa    ]8I    88,    88,    ,88  88  88  "8b,   ,aa  88          aa    ]8I            
 #          88  88       88  `"YbbdP"'    "Y888  `"8bbdP"Y8  88  88   `"Ybbd8"'  88          `"YbbdP"'            
-                                                                                                                
-                                                                                                                
 
-                                                                                                     
+
+                                                                                                             
+#        I8,        8        ,8I            88                                                                
+#        `8b       d8b       d8'            ""    ,d       ,d                                                 
+#         "8,     ,8"8,     ,8"                   88       88                                                 
+#          Y8     8P Y8     8P  8b,dPPYba,  88  MM88MMM  MM88MMM  ,adPPYba,  8b,dPPYba,  ,adPPYba,            
+#aaaaaaaa  `8b   d8' `8b   d8'  88P'   "Y8  88    88       88    a8P_____88  88P'   "Y8  I8[    ""  aaaaaaaa  
+#""""""""   `8a a8'   `8a a8'   88          88    88       88    8PP"""""""  88           `"Y8ba,   """"""""  
+#            `8a8'     `8a8'    88          88    88,      88,   "8b,   ,aa  88          aa    ]8I            
+#             `8'       `8'     88          88    "Y888    "Y888  `"Ybbd8"'  88          `"YbbdP"'            
+                                                                                                             
+                    
+                                                                                          
+#            ,ad8888ba,                                                                    
+#           d8"'    `"8b                  ,d                                 ,d            
+#          d8'        `8b                 88                                 88            
+#          88          88  88       88  MM88MMM  8b,dPPYba,   88       88  MM88MMM         
+#aaaaaaaa  88          88  88       88    88     88P'    "8a  88       88    88  aaaaaaaa  
+#""""""""  Y8,        ,8P  88       88    88     88       d8  88       88    88  """"""""  
+#           Y8a.    .a8P   "8a,   ,a88    88,    88b,   ,a8"  "8a,   ,a88    88,           
+#            `"Y8888Y"'     `"YbbdP'Y8    "Y888  88`YbbdP"'    `"YbbdP'Y8    "Y888         
+#                                                88                                        
+#                                                88                                        
+
+
+
+
 #     888888888888         88                                                                         
 #          88              ""                                                                         
 #          88                                                                                         
@@ -1084,17 +1108,13 @@ function exec_Triggers () {
 
   echo -e "$bWHITE│   $bRED│   $bCYAN├── $bBLUE¤ Executing triggers...$Reset"
 
-  if [[ $triggers_used = false ]]; then
+  if [[ $triggers_used == false ]]; then
     echo -e "$bWHITE│   $bRED│   $bCYAN│   $bRED└── ¤ No triggers detected...$Reset"
     echo -e "$bWHITE│   $bRED│   $bCYAN└────────$Reset"
     echo -e "$bWHITE│   $bRED└─────────────$Reset"
   fi
 
-  # ejecutar installs
-
-  # toma las variables, y crea directamente el archivo en la ubicacion de la terminal
-
-  # ejecutar converts
+  # si se ejecute el trigger --install, habilita a que se ejecuten los 
 
 }
 
@@ -1112,7 +1132,7 @@ function exec_FILE () {
 
   #get the file
   get_File $file_arg
-  if [[ "$canDownload"  == false ]]; then
+  if [[ "$canDownload"  == false && "$trigg_get" == true ]]; then
     exit_Code 10
   fi
 
@@ -1166,8 +1186,8 @@ function exec_BADDIES () {
 function exec_SHOW () {
 
   #get the file
-  get_File $file_arg
-  if [[ "$canDownload"  == false ]]; then
+  get_File
+  if [[ "$canDownload"  == false && "$trigg_get" == true ]]; then
     exit_Code 10
   fi
 

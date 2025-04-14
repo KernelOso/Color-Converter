@@ -52,7 +52,12 @@ trigg_rm=false
 trigg_install=false
 trigg_convert=false
 
-trigg_kitty=false
+#formats
+output_file=""
+
+formats_used=false
+
+format_kitty=false
 
 # triggers values : 
 
@@ -210,13 +215,14 @@ $bWHITE│   $bCYAN║$Reset    ¤$bCYAN [ -d | --debug ] $bWHITE :  $bCYAN Show
 $bWHITE│   $bCYAN║$Reset    
 $bWHITE│   $bCYAN║$Reset $bRED ## Processes :
 $bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset    ¤$bRED SHOW $bWHITE<file>              $bWHITE :$bRED   Only SHOW the information in one $bWHITE<file>$bRED.
-$bWHITE│   $bCYAN║$Reset    ¤$bRED FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED   Process only one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset    ¤$bRED SHOW $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED Only SHOW the information in one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset    ¤$bRED FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED Process only one $bWHITE<file>$bRED.
 $bWHITE│   $bCYAN║$Reset    
 $bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'FILE' process$bYELLOW triggers :
 $bWHITE│   $bCYAN║$Reset  
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET 
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Romve the $bWHITE<file>$bYELLOW post process. 
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET.
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Remove the $bWHITE<file>$bYELLOW post process. 
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --install [format(s)]   $bWHITE:$bYELLOW Install the color-scheme into the [format(s)](Terminal(s)) selected.
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'SHOW' process$bYELLOW triggers :
 $bWHITE│   $bCYAN║$Reset  
@@ -224,6 +230,8 @@ $bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate tha
 $bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Romve the $bWHITE<file>$bYELLOW post process. 
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset    ¤$bMAGN --kitty $bWHITE:$bMAGN Kitty Terminal : Support : Install
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN╚════════════════════$Reset
 ")
@@ -538,6 +546,14 @@ function verify_Params () {
       "--rm")
         trigg_rm=true
         ;;
+      "--install")
+        trigg_install=true
+        triggers_used=true
+        ;;
+      "--kitty")
+        format_kitty=true
+        formats_used=true
+        ;;
 
         
     esac
@@ -557,9 +573,9 @@ function verify_Params () {
   fi
 
   # verify if args isn't a trigger
-  if [[ "$file_arg" == *"--help"* || "$file_arg" == *"--debug"* || "$file_arg" == *"--get"* || "$file_arg" == *"--rm"* ]]; then
+  if [[ "$file_arg" == *"--help"* || "$file_arg" == *"--debug"* || "$file_arg" == *"--get"* || "$file_arg" == *"--rm"* || "$file_arg" == *"--install"* || "$file_arg" == *"--kitty"* ]]; then
     echo -e "$bWHITE│   $bBLUE└──$bRED ¤ Error : Using a trigger like the <file> arg $Reset"
-    exit_Code 8
+    exit_Code 9
   fi
 
 
@@ -996,7 +1012,65 @@ function exec_Reader () {
 }
 
 
-                                                                                                                
+                                                                                                                                                                                                                         
+#        I8,        8        ,8I            88                                                                
+#        `8b       d8b       d8'            ""    ,d       ,d                                                 
+#         "8,     ,8"8,     ,8"                   88       88                                                 
+#          Y8     8P Y8     8P  8b,dPPYba,  88  MM88MMM  MM88MMM  ,adPPYba,  8b,dPPYba,  ,adPPYba,            
+#aaaaaaaa  `8b   d8' `8b   d8'  88P'   "Y8  88    88       88    a8P_____88  88P'   "Y8  I8[    ""  aaaaaaaa  
+#""""""""   `8a a8'   `8a a8'   88          88    88       88    8PP"""""""  88           `"Y8ba,   """"""""  
+#            `8a8'     `8a8'    88          88    88,      88,   "8b,   ,aa  88          aa    ]8I            
+#             `8'       `8'     88          88    "Y888    "Y888  `"Ybbd8"'  88          `"YbbdP"'            
+
+
+function writter_Kitty () {
+
+  # escribir el archivo en la ubicacion de salida
+  cat > "$1" <<EOF
+# The basic colors
+foreground  #$foreground
+background  #$background
+
+# Cursor colors
+cursor      #$cursor
+
+# black
+color0      #$b_black
+color8      #$l_black
+
+# red
+color1      #$b_red
+color9      #$l_red
+
+# green
+color2      #$b_green
+color10     #$l_green
+
+# yellow
+color3      #$b_yellow
+color11     #$l_yellow
+
+# blue
+color4      #$b_blue
+color12     #$l_blue
+
+# magenta
+color5      #$b_magenta
+color13     #$l_magenta
+
+# cyan
+color6      #$b_cyan
+color14     #$l_cyan
+
+# white
+color7      #$b_white
+color15     #$l_white
+
+EOF
+
+}
+
+
 #          88                                               88  88                                               
 #          88                            ,d                 88  88                                               
 #          88                            88                 88  88                                               
@@ -1007,29 +1081,28 @@ function exec_Reader () {
 #          88  88       88  `"YbbdP"'    "Y888  `"8bbdP"Y8  88  88   `"Ybbd8"'  88          `"YbbdP"'            
 
 
-                                                                                                             
-#        I8,        8        ,8I            88                                                                
-#        `8b       d8b       d8'            ""    ,d       ,d                                                 
-#         "8,     ,8"8,     ,8"                   88       88                                                 
-#          Y8     8P Y8     8P  8b,dPPYba,  88  MM88MMM  MM88MMM  ,adPPYba,  8b,dPPYba,  ,adPPYba,            
-#aaaaaaaa  `8b   d8' `8b   d8'  88P'   "Y8  88    88       88    a8P_____88  88P'   "Y8  I8[    ""  aaaaaaaa  
-#""""""""   `8a a8'   `8a a8'   88          88    88       88    8PP"""""""  88           `"Y8ba,   """"""""  
-#            `8a8'     `8a8'    88          88    88,      88,   "8b,   ,aa  88          aa    ]8I            
-#             `8'       `8'     88          88    "Y888    "Y888  `"Ybbd8"'  88          `"YbbdP"'            
-                                                                                                             
-                    
-                                                                                          
-#            ,ad8888ba,                                                                    
-#           d8"'    `"8b                  ,d                                 ,d            
-#          d8'        `8b                 88                                 88            
-#          88          88  88       88  MM88MMM  8b,dPPYba,   88       88  MM88MMM         
-#aaaaaaaa  88          88  88       88    88     88P'    "8a  88       88    88  aaaaaaaa  
-#""""""""  Y8,        ,8P  88       88    88     88       d8  88       88    88  """"""""  
-#           Y8a.    .a8P   "8a,   ,a88    88,    88b,   ,a8"  "8a,   ,a88    88,           
-#            `"Y8888Y"'     `"YbbdP'Y8    "Y888  88`YbbdP"'    `"YbbdP'Y8    "Y888         
-#                                                88                                        
-#                                                88                                        
 
+# _   ___ _   _         
+#| | / (_) | | |        
+#| |/ / _| |_| |_ _   _ 
+#|    \| | __| __| | | |
+#| |\  \ | |_| |_| |_| |
+#\_| \_/_|\__|\__|\__, |
+#                  __/ |
+#                 |___/ 
+function installer_Kitty () {
+
+
+  # setear el output al de kitty
+  output_file="$HOME/.config/kitty/theme.conf"
+  test=$(basename $output_file)
+
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Installing kitty theme : $test : ... $Reset"
+
+  # mandar a escribir el archivo en esa locacion
+  writter_Kitty "$output_file"
+
+}
 
 
 
@@ -1109,10 +1182,36 @@ function exec_Triggers () {
   echo -e "$bWHITE│   $bRED│   $bCYAN├── $bBLUE¤ Executing triggers...$Reset"
 
   if [[ $triggers_used == false ]]; then
-    echo -e "$bWHITE│   $bRED│   $bCYAN│   $bRED└── ¤ No triggers detected...$Reset"
+    echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└──$bRED ¤ No triggers detected...$Reset"
     echo -e "$bWHITE│   $bRED│   $bCYAN└────────$Reset"
     echo -e "$bWHITE│   $bRED└─────────────$Reset"
+  else 
+
+    # installers
+    if [[ "$trigg_install" == true ]]; then
+
+      echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├──$bYELLOW ¤ Trigger : Installing... $Reset"
+
+      if [[ "$formats_used" == true ]]; then
+
+        # Kitty
+        if [[ "$format_kitty" == true ]]; then
+          installer_Kitty
+        fi
+
+      else
+        debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bRED ¤ No formats to install... $Reset"
+      fi
+
+    fi
+
+    #Converters
+
+    echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└── ¤ All triggers executed! $Reset"
+
   fi
+
+  
 
   # si se ejecute el trigger --install, habilita a que se ejecuten los 
 
@@ -1142,6 +1241,9 @@ function exec_FILE () {
   #Verify the file
   verify_File_whit_Exit $file_arg
 
+  #Save base name
+  bsname="${file_arg%.*}"
+
   # Scannn the file
   exec_Scanners $file_arg
 
@@ -1165,6 +1267,8 @@ function exec_FILE () {
 
   # Exec triggers...
   exec_Triggers
+  echo -e "$bWHITE│   $bRED│   $bCYAN└──────── $Reset"
+  echo -e "$bWHITE│   $bRED└───────────── $Reset"
 
   #remove the file?
   remove_file
@@ -1196,6 +1300,9 @@ function exec_SHOW () {
 
   #Verify the file
   verify_File_whit_Exit $file_arg
+
+  #Save base name
+  bsname="${file_arg%.*}"
 
   # Scann the file
   exec_Scanners $file_arg

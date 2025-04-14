@@ -231,11 +231,34 @@ $bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Romve the $b
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
 $bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset    ¤$bMAGN --kitty $bWHITE:$bMAGN Kitty Terminal : Support : Install
+$bWHITE│   $bCYAN║$Reset    $bMAGN╔════════════════╦════════════════╦════════════════╦════════════════╦════════════════╗
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Format Name    ║ Format param   ║ Input Supp?    ║ Install Supp?  ║ Convert Supp?  ║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Gogh           ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Oso's Base16   ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ XResources     ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN╚════════════════════$Reset
 ")
 EOF
+
+#$bWHITE│   $bCYAN║$Reset    ╔════════════════╦════════════════╦════════════════╦════════════════╦════════════════╗
+#$bWHITE│   $bCYAN║$Reset    ║ Format Name    ║ Format param   ║ Input Supp?    ║ Install Supp?  ║ Convert Supp?  ║
+#$bWHITE│   $bCYAN║$Reset    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+#$bWHITE│   $bCYAN║$Reset    ║ Gogh           ║ NULL           ║ YES            ║ NO             ║ NO             ║
+#$bWHITE│   $bCYAN║$Reset    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+#$bWHITE│   $bCYAN║$Reset    ║ Oso's Base16   ║ NULL           ║ YES            ║ NO             ║ NO             ║
+#$bWHITE│   $bCYAN║$Reset    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+#$bWHITE│   $bCYAN║$Reset    ║ XResources     ║ NULL           ║ YES            ║ NO             ║ NO             ║
+#$bWHITE│   $bCYAN║$Reset    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+#$bWHITE│   $bCYAN║$Reset    ║ Kitty .conf    ║ --kitty        ║ NO             ║ YES            ║ NO             ║
+#$bWHITE│   $bCYAN║$Reset    ╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
+
   fi
 }
 
@@ -1023,9 +1046,16 @@ function exec_Reader () {
 #             `8'       `8'     88          88    "Y888    "Y888  `"Ybbd8"'  88          `"YbbdP"'            
 
 
-function writter_Kitty () {
 
-  # escribir el archivo en la ubicacion de salida
+# _   ___ _   _         
+#| | / (_) | | |        
+#| |/ / _| |_| |_ _   _ 
+#|    \| | __| __| | | |
+#| |\  \ | |_| |_| |_| |
+#\_| \_/_|\__|\__|\__, |
+#                  __/ |
+#                 |___/ 
+function writter_Kitty () {
   cat > "$1" <<EOF
 # The basic colors
 foreground  #$foreground
@@ -1067,9 +1097,125 @@ color7      #$b_white
 color15     #$l_white
 
 EOF
-
 }
 
+
+
+#  ___  _                 _ _   _         
+# / _ \| |               (_) | | |        
+#/ /_\ \ | __ _  ___ _ __ _| |_| |_ _   _ 
+#|  _  | |/ _` |/ __| '__| | __| __| | | |
+#| | | | | (_| | (__| |  | | |_| |_| |_| |
+#\_| |_/_|\__,_|\___|_|  |_|\__|\__|\__, |
+#                                    __/ |
+#                                   |___/ 
+function writter_Alacritty () {
+  cat > "$1" <<EOF
+[colors.primary]
+foreground  =       "#$foreground"
+background  =       "#$background"
+
+[colors.cursor]
+cursor      =       "#$cursor"
+
+[colors.normal]
+black       =       "#$b_black"
+red         =       "#$b_red"
+green       =       "#$b_green"
+yellow      =       "#$b_yellow"
+blue        =       "#$b_blue"
+magenta     =       "#$b_magenta"
+cyan        =       "#$b_cyan"
+white       =       "#$b_white"
+
+[colors.bright]
+black       =       "#$l_black"
+red         =       "#$l_red"
+green       =       "#$l_green"
+yellow      =       "#$l_yellow"
+blue        =       "#$l_blue"
+magenta     =       "#$l_magenta"
+cyan        =       "#$l_cyan"
+white       =       "#$l_white"
+
+EOF
+}
+
+
+# _____            _      ______                  __    ____ 
+#|  _  |          ( )     | ___ \                /  |  / ___|
+#| | | | ___  ___ |/ ___  | |_/ / __ _ ___  ___  `| | / /___ 
+#| | | |/ __|/ _ \  / __| | ___ \/ _` / __|/ _ \  | | | ___ \
+#\ \_/ /\__ \ (_) | \__ \ | |_/ / (_| \__ \  __/ _| |_| \_/ |
+# \___/ |___/\___/  |___/ \____/ \__,_|___/\___| \___/\_____/
+function writter_OsoB16 () {
+  cat > "$1" <<EOF
+background: "$background"
+foreground: "$foreground"
+cursor:     "$cursor"
+
+b_black:    "$b_black"
+b_red:      "$b_red"
+b_green:    "$b_green"
+b_yellow:   "$b_yellow"
+b_blue:     "$b_blue"
+b_magenta:  "$b_magenta"
+b_cyan:     "$b_cyan"
+b_white:    "$b_white"
+
+l_black:    "$l_black"
+l_red:      "$l_red"
+l_green:    "$l_green"
+l_yellow:   "$l_yellow"
+l_blue:     "$l_blue"
+l_magenta:  "$l_magenta"
+l_cyan:     "$l_cyan"
+l_white:    "$l_white"
+
+EOF
+}
+
+function writter_XResources () {
+  cat > "$1" <<EOF
+! special
+*.foreground:   #$foreground
+*.background:   #$background
+*.cursorColor:  #$cursor
+
+! black
+*.color0:       #$b_black
+*.color8:       #$l_black
+
+! red
+*.color1:       #$b_red
+*.color9:       #$l_red
+
+! green
+*.color2:       #$b_green
+*.color10:      #$l_green
+
+! yellow
+*.color3:       #$b_yellow
+*.color11:      #$l_yellow
+
+! blue
+*.color4:       #$b_blue
+*.color12:      #$l_blue
+
+! magenta
+*.color5:       #$b_magenta
+*.color13:      #$l_magenta
+
+! cyan
+*.color6:       #$b_cyan
+*.color14:      #$l_cyan
+
+! white
+*.color7:       #$b_white
+*.color15:      #$l_white
+
+EOF
+}
 
 #          88                                               88  88                                               
 #          88                            ,d                 88  88                                               

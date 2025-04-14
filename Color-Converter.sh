@@ -47,6 +47,7 @@ trigg_debug=false
 trigg_help=false
 
 trigg_get=false
+trigg_rm=false
 
 trigg_install=false
 trigg_convert=false
@@ -215,6 +216,12 @@ $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'FILE' process$bYELLOW triggers :
 $bWHITE│   $bCYAN║$Reset  
 $bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET 
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Romve the $bWHITE<file>$bYELLOW post process. 
+$bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'SHOW' process$bYELLOW triggers :
+$bWHITE│   $bCYAN║$Reset  
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET 
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Romve the $bWHITE<file>$bYELLOW post process. 
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
 $bWHITE│   $bCYAN║$Reset
@@ -528,6 +535,9 @@ function verify_Params () {
       "--get")
         trigg_get=true
         ;;
+      "--rm")
+        trigg_rm=true
+        ;;
 
         
     esac
@@ -547,7 +557,7 @@ function verify_Params () {
   fi
 
   # verify if args isn't a trigger
-  if [[ "$file_arg" == *"--help"* || "$file_arg" == *"--debug"* || "$file_arg" == *"--get"* ]]; then
+  if [[ "$file_arg" == *"--help"* || "$file_arg" == *"--debug"* || "$file_arg" == *"--get"* || "$file_arg" == *"--rm"* ]]; then
     echo -e "$bWHITE│   $bBLUE└──$bRED ¤ Error : Using a trigger like the <file> arg $Reset"
     exit_Code 8
   fi
@@ -1047,6 +1057,23 @@ function get_File () {
 
 
 
+#______                               ______ _ _      
+#| ___ \                              |  ___(_) |     
+#| |_/ /___ _ __ ___   _____   _____  | |_   _| | ___ 
+#|    // _ \ '_ ` _ \ / _ \ \ / / _ \ |  _| | | |/ _ \
+#| |\ \  __/ | | | | | (_) \ V /  __/ | |   | | |  __/
+#\_| \_\___|_| |_| |_|\___/ \_/ \___| \_|   |_|_|\___|
+function remove_file () {
+
+  if [[ "$trigg_rm" == true ]]; then
+
+    rm "$file_arg"
+
+  fi
+}
+
+
+
 # _____              
 #|  ___|             
 #| |____  _____  ___ 
@@ -1119,6 +1146,9 @@ function exec_FILE () {
   # Exec triggers...
   exec_Triggers
 
+  #remove the file?
+  remove_file
+
 }
 
 function exec_THIS () {
@@ -1171,6 +1201,10 @@ function exec_SHOW () {
   print_Colors
   echo -e "$bWHITE│   $bRED│   $bCYAN└─────────────────────────────────────────────"
   echo -e "$bWHITE│   $bRED└──────────────────────────────────────────────────"
+
+
+  #remove the file?
+  remove_file
 
   exit_Code 0
 

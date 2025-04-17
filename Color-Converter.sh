@@ -747,6 +747,14 @@ function exec_Scanners () {
     OsoB16_Scanner $1
   fi
 
+  #Gogh
+
+  #
+
+
+
+
+
   #Format message
   if [[ "$file_type_detected" == true ]]; then
 
@@ -1273,17 +1281,16 @@ function installer_Kitty () {
 # \____/\___|\__| \_|   |_|_|\___|
 function get_File () {
 
-
   if [[ "$trigg_get" == true ]]; then
 
     echo -e "$bWHITE├── $bGREEN¤ Getting file...$Reset"
 
-    status_code=$(curl -s -o /dev/null -w "%{http_code}" "$file_arg")
+    status_code=$(curl -s -o /dev/null -w "%{http_code}" "$1")
     if [[ "$status_code" == 200 ]]; then
 
       bsname=$(basename "$1")
 
-      curl -sSL -o "$bsname" "$file_arg"
+      curl -sSL -o "$bsname" "$1"
 
       file_arg="$bsname"
 
@@ -1329,8 +1336,7 @@ function exec_Triggers () {
 
   if [[ $triggers_used == false ]]; then
     echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└──$bRED ¤ No triggers detected...$Reset"
-    echo -e "$bWHITE│   $bRED│   $bCYAN└────────$Reset"
-    echo -e "$bWHITE│   $bRED└─────────────$Reset"
+    
   else 
 
     # installers
@@ -1413,9 +1419,8 @@ function exec_FILE () {
 
   # Exec triggers...
   exec_Triggers
-  echo -e "$bWHITE│   $bRED│   $bCYAN└──────── $Reset"
-  echo -e "$bWHITE│   $bRED└───────────── $Reset"
-
+  echo -e "$bWHITE│   $bRED│   $bCYAN└─────────$Reset"
+  echo -e "$bWHITE│   $bRED└──────────────$Reset"
   #remove the file?
   remove_file
 
@@ -1436,7 +1441,7 @@ function exec_BADDIES () {
 function exec_SHOW () {
 
   #get the file
-  get_File
+  get_File $file_arg
   if [[ "$canDownload"  == false && "$trigg_get" == true ]]; then
     exit_Code 10
   fi
@@ -1517,7 +1522,6 @@ function exec_Engine () {
 #""""""""  88   `8b d8'   88  ,adPPPPP88  88  88       88  """"""""  
 #          88    `888'    88  88,    ,88  88  88       88            
 #          88     `8'     88  `"8bbdP"Y8  88  88       88            
-
 cat <<EOF
 $(printf "
 $bRED _______       __                   _______                                        
@@ -1529,7 +1533,7 @@ $bRED _______       __                   _______
 \`-------'                          \`---'  $Reset 
 ") 
 EOF
-echo -e "$bWHITE¤ Wellcome!$Reset"
+echo -e "$bWHITE¤ Welcome!$Reset"
 
 echo -e "$bWHITE├── $bBLUE¤ Verifiying params...$Reset"
 verify_Params $@ 

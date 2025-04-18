@@ -26,14 +26,14 @@ file_arg=""
 bsname=""
 
 # esc characters
-bRED="\033[0;31m"
-bGREEN="\033[0;32m"
-bYELLOW="\033[0;33m"
-bBLUE="\033[0;34m"
-bMAGN="\033[0;35m"
-bCYAN="\033[0;36m"
-bWHITE="\033[0;37m"
-Reset="\033[0m"
+cR="\033[0;31m"
+cG="\033[0;32m"
+cY="\033[0;33m"
+cB="\033[0;34m"
+cM="\033[0;35m"
+cC="\033[0;36m"
+cW="\033[0;37m"
+Rs="\033[0m"
 
 #triggers :
 triggers_used=false
@@ -126,62 +126,62 @@ l_white=""
 #          88            ,d8" "8b,   88    88,        Y8a.    .a8P  "8a,   ,a8"  "8a,   ,d88  "8b,   ,aa  aa    ]8I            
 #          88888888888  8P'     `Y8  88    "Y888       `"Y8888Y"'    `"YbbdP"'    `"8bbdP"Y8   `"Ybbd8"'  `"YbbdP"'                     
 function exit_Code () {
-  echo -e "$bWHITE└── ¤ Exiting whit code :  $1 $Reset"
+  echo -e "$cW└── ¤ Exiting whit code :  $1 $Rs"
 
   case "$1" in
 
     # 0 : no errors
     "0")
-      echo -e "    $bWHITE└── $bGREEN¤ No Errors! $Reset"
+      echo -e "    $cW└── $cG¤ No Errors! $Rs"
     ;;
 
     # 1 : missing dependency
     "1")
-      echo -e "    $bWHITE└── $bRED¤ ERROR : Missing dependencies $Reset"
+      echo -e "    $cW└── $cR¤ ERROR : Missing dependencies $Rs"
     ;;
 
     # 2 : more than 1 param
     "2")
-      echo -e "    $bWHITE└── $bRED¤ ERROR : More than 1 param $Reset"
+      echo -e "    $cW└── $cR¤ ERROR : More than 1 param $Rs"
     ;;
 
     # 3 : missing arg
     "3")
-      echo -e "    $bWHITE└── $bRED¤ ERROR : Missing arguments $Reset"
+      echo -e "    $cW└── $cR¤ ERROR : Missing arguments $Rs"
     ;;
 
     # 4 : missing values
     "4")
-      echo -e "    $bWHITE└── $bRED¤ ERROR : Missing data values $Reset"
+      echo -e "    $cW└── $cR¤ ERROR : Missing data values $Rs"
     ;;
 
     # 5 : empty file
     "5")
-      echo -e "    $bWHITE└── $bRED¤ ERROR : Empty file $Reset"
+      echo -e "    $cW└── $cR¤ ERROR : Empty file $Rs"
     ;;
 
     # 6 : color-scheme format undetected
     "6")
-      echo -e "    $bWHITE└── $bRED¤ ERROR : color-scheme format undetected $Reset"
+      echo -e "    $cW└── $cR¤ ERROR : color-scheme format undetected $Rs"
     ;;
 
     # 7 : file doesn't exist
     "7")
-      echo -e "    $bWHITE└── $bRED¤ ERROR : File doesn't exits $Reset"
+      echo -e "    $cW└── $cR¤ ERROR : File doesn't exits $Rs"
     ;;
 
     # 8 : unaccsesbile file
     "8")
-      echo -e "    $bWHITE└── $bRED¤ ERROR : Unaccsesible file $Reset"
+      echo -e "    $cW└── $cR¤ ERROR : Unaccsesible file $Rs"
     ;;
 
     # 9 : ussing a trigger like an arg
     "9")
-      echo -e "    $bWHITE└── $bRED¤ ERROR : Using a trigger like an argument $Reset"
+      echo -e "    $cW└── $cR¤ ERROR : Using a trigger like an argument $Rs"
     ;;
 
     "10")
-      echo -e "    $bWHITE└─ $bRED¤ ERROR : can't access to the file...$Reset"
+      echo -e "    $cW└─ $cR¤ ERROR : can't access to the file...$Rs"
     ;;
 
     
@@ -204,86 +204,86 @@ function exit_Code () {
 function help_Message () {
 
   if [[ $trigg_help == true ]]; then
-    echo -e "$bWHITE├── $bCYAN¤ Help Message : $Reset"
+    echo -e "$cW├── $cC¤ Help Message : $Rs"
     cat <<EOF
-$(printf "$bWHITE│   $bCYAN╔════════════════════$Reset  
-$bWHITE│   $bCYAN║$Reset  Color-Procesor : A color-scheme converter tool!
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset $bMAGN #Dependencies :
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset    ¤$bMAGN Bash
-$bWHITE│   $bCYAN║$Reset    ¤$bMAGN yq
-$bWHITE│   $bCYAN║$Reset    ¤$bMAGN taplo
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset $bBLUE # Usage : 
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset   $bBLUE Color-Converter.sh $bCYAN[help(s)] $bRED[process] $bWHITE| $bRED[process] $bCYAN[help(s)] $Reset
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset $bCYAN ## Helps :
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset    ¤$bCYAN [ -h | --help ]  $bWHITE        :  $bCYAN Show THIS manual.
-$bWHITE│   $bCYAN║$Reset    ¤$bCYAN [ -d | --debug ] $bWHITE        :  $bCYAN Show the extra debug messages.
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset $bRED ## Processes :
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset    ¤$bRED SHOW $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE:$bRED Only SHOW the information in one $bWHITE<file>$bRED.
-$bWHITE│   $bCYAN║$Reset    ¤$bRED FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE:$bRED Process only one $bWHITE<file>$bRED.
-$bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'FILE' process$bYELLOW triggers :
-$bWHITE│   $bCYAN║$Reset  
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get $bWHITE                   :$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET.
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm  $bWHITE                   :$bYELLOW Remove the $bWHITE<file>$bYELLOW post process. 
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --install [format(s)] $bWHITE   :$bYELLOW Install the color-scheme into the [format(s)](Terminal(s))
-$bWHITE│   $bCYAN║$Reset                                $bYELLOW selected.
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --convert [format(s)] $bWHITE   :$bYELLOW Install the color-scheme into the [format(s)](Terminal(s))
-$bWHITE│   $bCYAN║$Reset                                $bYELLOW selected.
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'SHOW' process$bYELLOW triggers :
-$bWHITE│   $bCYAN║$Reset  
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get $bWHITE                   :$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET.
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm  $bWHITE                   :$bYELLOW Remove the $bWHITE<file>$bYELLOW post process. 
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset    ¤$bMAGN --all $bWHITE                   :$bYELLOW Use ALL the avalible formats
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset    $bMAGN╔════════════════╦════════════════╦════════════════╦════════════════╦════════════════╗
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Format Name    ║ Format param   ║ Input Supp?    ║ Install Supp?  ║ Convert Supp?  ║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Gogh           ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Oso's Base16   ║$bGREEN --oso          $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Base16         ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ XResources     ║$bGREEN --xresources   $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Alacritty.toml ║$bGREEN --alacritty    $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Termite        ║$bGREEN --termite      $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Termux         ║$bGREEN --termux       $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Linux TTY      ║$bGREEN --linuxtty     $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
-$bWHITE│   $bCYAN║$Reset    $bMAGN╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
-$bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN╚════════════════════$Reset
+$(printf "$cW│   $cC╔════════════════════$Rs  
+$cW│   $cC║$Rs  Color-Procesor : A color-scheme converter tool!
+$cW│   $cC║$Rs
+$cW│   $cC║$Rs $cM #Dependencies :
+$cW│   $cC║$Rs
+$cW│   $cC║$Rs    ¤$cM Bash
+$cW│   $cC║$Rs    ¤$cM yq
+$cW│   $cC║$Rs    ¤$cM taplo
+$cW│   $cC║$Rs
+$cW│   $cC║$Rs $cB # Usage : 
+$cW│   $cC║$Rs    
+$cW│   $cC║$Rs   $cB Color-Converter.sh $cC[help(s)] $cR[process] $cW| $cR[process] $cC[help(s)] $Rs
+$cW│   $cC║$Rs
+$cW│   $cC║$Rs $cC ## Helps :
+$cW│   $cC║$Rs    
+$cW│   $cC║$Rs    ¤$cC [ -h | --help ]  $cW        :  $cC Show THIS manual.
+$cW│   $cC║$Rs    ¤$cC [ -d | --debug ] $cW        :  $cC Show the extra debug messages.
+$cW│   $cC║$Rs    
+$cW│   $cC║$Rs $cR ## Processes :
+$cW│   $cC║$Rs    
+$cW│   $cC║$Rs    ¤$cR SHOW $cW<file> $cY[trigger(s)] $cW:$cR Only SHOW the information in one $cW<file>$cR.
+$cW│   $cC║$Rs    ¤$cR FILE $cW<file> $cY[trigger(s)] $cW:$cR Process only one $cW<file>$cR.
+$cW│   $cC║$Rs    
+$cW│   $cC║$Rs $cY ###$cR 'FILE' process$cY triggers :
+$cW│   $cC║$Rs  
+$cW│   $cC║$Rs    ¤$cY --get $cW                   :$cY Indicate that the $cW<file>$cY arg is the URL of the file in raw/GET.
+$cW│   $cC║$Rs    ¤$cY --rm  $cW                   :$cY Remove the $cW<file>$cY post process. 
+$cW│   $cC║$Rs    ¤$cY --install [format(s)] $cW   :$cY Install the color-scheme into the [format(s)](Terminal(s))
+$cW│   $cC║$Rs                                $cY selected.
+$cW│   $cC║$Rs    ¤$cY --convert [format(s)] $cW   :$cY Install the color-scheme into the [format(s)](Terminal(s))
+$cW│   $cC║$Rs                                $cY selected.
+$cW│   $cC║$Rs
+$cW│   $cC║$Rs $cY ###$cR 'SHOW' process$cY triggers :
+$cW│   $cC║$Rs  
+$cW│   $cC║$Rs    ¤$cY --get $cW                   :$cY Indicate that the $cW<file>$cY arg is the URL of the file in raw/GET.
+$cW│   $cC║$Rs    ¤$cY --rm  $cW                   :$cY Remove the $cW<file>$cY post process. 
+$cW│   $cC║$Rs
+$cW│   $cC║$Rs $cM ## Formats :
+$cW│   $cC║$Rs
+$cW│   $cC║$Rs    ¤$cM --all $cW                   :$cY Use ALL the avalible formats
+$cW│   $cC║$Rs
+$cW│   $cC║$Rs    $cM╔════════════════╦════════════════╦════════════════╦════════════════╦════════════════╗
+$cW│   $cC║$Rs    $cM║ Format Name    ║ Format param   ║ Input Supp?    ║ Install Supp?  ║ Convert Supp?  ║
+$cW│   $cC║$Rs    $cM╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$cW│   $cC║$Rs    $cM║ Gogh           ║$cR NULL           $cM║$cG YES            $cM║$cR NO             $cM║$cR NO             $cM║
+$cW│   $cC║$Rs    $cM╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$cW│   $cC║$Rs    $cM║ Oso's Base16   ║$cG --oso          $cM║$cG YES            $cM║$cR NO             $cM║$cG YES            $cM║
+$cW│   $cC║$Rs    $cM╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$cW│   $cC║$Rs    $cM║ Base16         ║$cR NULL           $cM║$cG YES            $cM║$cR NO             $cM║$cR NO             $cM║
+$cW│   $cC║$Rs    $cM╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$cW│   $cC║$Rs    $cM║ XResources     ║$cG --xresources   $cM║$cG YES            $cM║$cR NO             $cM║$cG YES            $cM║
+$cW│   $cC║$Rs    $cM╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$cW│   $cC║$Rs    $cM║ Kitty .conf    ║$cG --kitty        $cM║$cG YES            $cM║$cG YES            $cM║$cG YES            $cM║
+$cW│   $cC║$Rs    $cM╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$cW│   $cC║$Rs    $cM║ Alacritty.toml ║$cG --alacritty    $cM║$cG YES            $cM║$cR NO             $cM║$cG YES            $cM║
+$cW│   $cC║$Rs    $cM╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$cW│   $cC║$Rs    $cM║ Termite        ║$cG --termite      $cM║$cR NO             $cM║$cR NO             $cM║$cG YES            $cM║
+$cW│   $cC║$Rs    $cM╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$cW│   $cC║$Rs    $cM║ Termux         ║$cG --termux       $cM║$cR NO             $cM║$cR NO             $cM║$cG YES            $cM║
+$cW│   $cC║$Rs    $cM╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$cW│   $cC║$Rs    $cM║ Linux TTY      ║$cG --linuxtty     $cM║$cR NO             $cM║$cR NO             $cM║$cG YES            $cM║
+$cW│   $cC║$Rs    $cM╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
+$cW│   $cC║$Rs
+$cW│   $cC╚════════════════════$Rs
 ")
 EOF
 
-#$bWHITE│   $bCYAN║$Reset    ╔════════════════╦════════════════╦════════════════╦════════════════╦════════════════╗
-#$bWHITE│   $bCYAN║$Reset    ║ Format Name    ║ Format param   ║ Input Supp?    ║ Install Supp?  ║ Convert Supp?  ║
-#$bWHITE│   $bCYAN║$Reset    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-#$bWHITE│   $bCYAN║$Reset    ║ Gogh           ║ NULL           ║ YES            ║ NO             ║ NO             ║
-#$bWHITE│   $bCYAN║$Reset    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-#$bWHITE│   $bCYAN║$Reset    ║ Oso's Base16   ║ NULL           ║ YES            ║ NO             ║ NO             ║
-#$bWHITE│   $bCYAN║$Reset    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-#$bWHITE│   $bCYAN║$Reset    ║ XResources     ║ NULL           ║ YES            ║ NO             ║ NO             ║
-#$bWHITE│   $bCYAN║$Reset    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-#$bWHITE│   $bCYAN║$Reset    ║ Kitty .conf    ║ --kitty        ║ NO             ║ YES            ║ NO             ║
-#$bWHITE│   $bCYAN║$Reset    ╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
+#$cW│   $cC║$Rs    ╔════════════════╦════════════════╦════════════════╦════════════════╦════════════════╗
+#$cW│   $cC║$Rs    ║ Format Name    ║ Format param   ║ Input Supp?    ║ Install Supp?  ║ Convert Supp?  ║
+#$cW│   $cC║$Rs    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+#$cW│   $cC║$Rs    ║ Gogh           ║ NULL           ║ YES            ║ NO             ║ NO             ║
+#$cW│   $cC║$Rs    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+#$cW│   $cC║$Rs    ║ Oso's Base16   ║ NULL           ║ YES            ║ NO             ║ NO             ║
+#$cW│   $cC║$Rs    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+#$cW│   $cC║$Rs    ║ XResources     ║ NULL           ║ YES            ║ NO             ║ NO             ║
+#$cW│   $cC║$Rs    ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+#$cW│   $cC║$Rs    ║ Kitty .conf    ║ --kitty        ║ NO             ║ YES            ║ NO             ║
+#$cW│   $cC║$Rs    ╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
 
   fi
 }
@@ -310,18 +310,18 @@ EOF
 #               |_|        |___/     
 function verify_If_Empty () {
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN├── $bBLUE¤ Verifying if file is empty... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cM├── $cB¤ Verifying if file is empty... $Rs"
 
   if [[ ! -s "$1" ]]; then
 
     
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN│   $bBLUE└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: is empty! $Reset" "$bWHITE│   $bRED│   $bCYAN├── $bRED¤ ERROR... file :$bWHITE $1 $bRED: is empty! $Reset"   
+    debug_Message "$cW│   $cR│   $cC│   $cM│   $cB└── $cR¤ ERROR... file :$cW $1 $cR: is empty! $Rs" "$cW│   $cR│   $cC├── $cR¤ ERROR... file :$cW $1 $cR: is empty! $Rs"   
     
     fileEmpty=true
 
   else 
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN│   $bBLUE└── $bGREEN¤ File :$bWHITE $1 $bGREEN: is not empty! $Reset"
+    debug_Message "$cW│   $cR│   $cC│   $cM│   $cB└── $cG¤ File :$cW $1 $cG: is not empty! $Rs"
 
     fileEmpty=false
 
@@ -337,17 +337,17 @@ function verify_If_Empty () {
 #\_|   |_|_|\___| \____/_/\_\_|___/\__(_)                                       
 function verify_If_File_Exist () {
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN├── $bBLUE¤ Verifying if file exist... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cM├── $cB¤ Verifying if file exist... $Rs"
   
   if [ -f "$1" ]; then
 
-      debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN│   $bBLUE└── $bGREEN¤ File :$bWHITE $1 $bGREEN: Exist! $Reset"
+      debug_Message "$cW│   $cR│   $cC│   $cM│   $cB└── $cG¤ File :$cW $1 $cG: Exist! $Rs"
 
       fileExist=true
 
   else
 
-      debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN│   $bBLUE└── $bRED¤ ERROR... file :$bWHITE $1 $bRED: doesn't Exist! $Reset" "$bWHITE│   $bRED│   $bCYAN├── $bRED¤ ERROR... file :$bWHITE $1 $bRED: doesn't Exist! $Reset"   
+      debug_Message "$cW│   $cR│   $cC│   $cM│   $cB└── $cR¤ ERROR... file :$cW $1 $cR: doesn't Exist! $Rs" "$cW│   $cR│   $cC├── $cR¤ ERROR... file :$cW $1 $cR: doesn't Exist! $Rs"   
       fileExist=false
 
   fi
@@ -365,17 +365,17 @@ function verify_If_File_Exist () {
 function verify_If_Access () {
 
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN├── $bBLUE¤ Verifying if can access to file... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cM├── $cB¤ Verifying if can access to file... $Rs"
   
   if [  -r "$1" ]; then
 
-      debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN│   $bBLUE└── $bGREEN¤ File :$bWHITE $1 $bGREEN: can be accessed! $Reset"
+      debug_Message "$cW│   $cR│   $cC│   $cM│   $cB└── $cG¤ File :$cW $1 $cG: can be accessed! $Rs"
 
       fileAccess=true
 
   else
 
-      debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN│   $bBLUE└── $bRED¤ ERROR... can't access to file :$bWHITE $1 $bRED: ! $Reset" "$bWHITE│   $bRED│   $bCYAN├── $bRED¤ ERROR... can't access to file :$bWHITE $1 $bRED: ! $Reset"   
+      debug_Message "$cW│   $cR│   $cC│   $cM│   $cB└── $cR¤ ERROR... can't access to file :$cW $1 $cR: ! $Rs" "$cW│   $cR│   $cC├── $cR¤ ERROR... can't access to file :$cW $1 $cR: ! $Rs"   
 
       fileAccess=false
 
@@ -397,9 +397,9 @@ function verify_File_whit_Exit () {
 
   # mensaje debug de : verificando archivo
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN├── $bMAGN¤ Verifying file... $Reset"
+  debug_Message "$cW│   $cR│   $cC├── $cM¤ Verifying file... $Rs"
 
-  # Reset Variables
+  # Rs Variables
   fileExist=false
   fileEmpty=false
   fileAccess=false
@@ -408,9 +408,9 @@ function verify_File_whit_Exit () {
   verify_If_File_Exist $1
   if [[ "$fileExist" == false ]]; then
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN└────────"   "$bWHITE│   $bRED│   $bCYAN└──── "
-    debug_Message "$bWHITE│   $bRED│   $bCYAN└─────────────"        "$bWHITE│   $bRED└─────────"
-    debug_Message "$bWHITE│   $bRED└──────────────────" 
+    debug_Message "$cW│   $cR│   $cC│   $cM└────────"   "$cW│   $cR│   $cC└──── "
+    debug_Message "$cW│   $cR│   $cC└─────────────"        "$cW│   $cR└─────────"
+    debug_Message "$cW│   $cR└──────────────────" 
 
     exit_Code 7
   fi
@@ -419,9 +419,9 @@ function verify_File_whit_Exit () {
   verify_If_Access $1
   if [[ "$fileAccess" == false ]]; then
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN└────────"   "$bWHITE│   $bRED│   $bCYAN└──── "
-    debug_Message "$bWHITE│   $bRED│   $bCYAN└─────────────"        "$bWHITE│   $bRED└─────────"
-    debug_Message "$bWHITE│   $bRED└──────────────────" 
+    debug_Message "$cW│   $cR│   $cC│   $cM└────────"   "$cW│   $cR│   $cC└──── "
+    debug_Message "$cW│   $cR│   $cC└─────────────"        "$cW│   $cR└─────────"
+    debug_Message "$cW│   $cR└──────────────────" 
 
     exit_Code 5
   fi
@@ -430,14 +430,14 @@ function verify_File_whit_Exit () {
   verify_If_Empty $1
   if [[ "$fileEmpty" == true ]]; then
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN└────────"   "$bWHITE│   $bRED│   $bCYAN└──── "
-    debug_Message "$bWHITE│   $bRED│   $bCYAN└─────────────"        "$bWHITE│   $bRED└─────────"
-    debug_Message "$bWHITE│   $bRED└──────────────────" 
+    debug_Message "$cW│   $cR│   $cC│   $cM└────────"   "$cW│   $cR│   $cC└──── "
+    debug_Message "$cW│   $cR│   $cC└─────────────"        "$cW│   $cR└─────────"
+    debug_Message "$cW│   $cR└──────────────────" 
 
     exit_Code 5
   fi
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN└── $bGREEN¤ File verified!" 
+  debug_Message "$cW│   $cR│   $cC│   $cM└── $cG¤ File verified!" 
 
   
 
@@ -522,13 +522,13 @@ function verify_Dependencies () {
 
   # Dependency : yq
   if ! command -v yq &> /dev/null; then
-    echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Missing Depdencencie : $bCYAN yq $Reset"
+    echo -e "$cW│   $cY└──$cR ¤ Error : Missing Depdencencie : $cC yq $Rs"
     exit_Code 1
   fi 
 
   # Dependency : taplo
   if ! command taplo --version &> /dev/null; then
-    echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Missing Depdencencie : $bCYAN taplo $Reset"
+    echo -e "$cW│   $cY└──$cR ¤ Error : Missing Depdencencie : $cC taplo $Rs"
     exit_Code 1
   fi 
 
@@ -657,7 +657,7 @@ function verify_Params () {
 
   # prevent double param
   if [[ "$params_used" > 1 ]]; then
-    echo -e "$bWHITE│   $bBLUE└──$bRED ¤ Error : More than one MAIN Param.$Reset" 
+    echo -e "$cW│   $cB└──$cR ¤ Error : More than one MAIN Param.$Rs" 
     exit_Code 2
   fi
 
@@ -669,14 +669,14 @@ function verify_Params () {
 
   # verify if args isn't a trigger
   if [[ "$file_arg" == *"--help"* || "$file_arg" == *"--debug"* || "$file_arg" == *"--get"* || "$file_arg" == *"--rm"* || "$file_arg" == *"--install"* || "$file_arg" == *"--kitty"* ]]; then
-    echo -e "$bWHITE│   $bBLUE└──$bRED ¤ Error : Using a trigger like the <file> arg $Reset"
+    echo -e "$cW│   $cB└──$cR ¤ Error : Using a trigger like the <file> arg $Rs"
     exit_Code 9
   fi
 
 
   # verify missing args
   if [[ "$param_with_args_was_used" == true && "$file_arg" == "" ]]; then
-    echo -e "$bWHITE│   $bBLUE└──$bRED ¤ Error : Missing Arguments \`$type_of_param <file>\` $Reset"
+    echo -e "$cW│   $cB└──$cR ¤ Error : Missing Arguments \`$type_of_param <file>\` $Rs"
     exit_Code 4
   fi
 
@@ -705,7 +705,7 @@ function verify_Params () {
 # \___/ |___/\___/  |___/ \____/ \___/\_____/
 function OsoB16_Scanner () {
 
-   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing Oso's Base16 scanner... $Reset"
+   debug_Message "$cW│   $cR│   $cC│   $cB├── $cC¤ Executing Oso's Base16 scanner... $Rs"
 
   if grep -qE 'background:' "$1" &&
    grep -qE 'foreground:' "$1" &&
@@ -728,7 +728,7 @@ function OsoB16_Scanner () {
    grep -qE 'l_white:' "$1"
   then
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ Oso's Base16 format detected! $Reset"
+    debug_Message "$cW│   $cR│   $cC│   $cB│   $cC└── $cG¤ Oso's Base16 format detected! $Rs"
    
     file_type_detected=true
     file_type="OsoB16"
@@ -747,7 +747,7 @@ function OsoB16_Scanner () {
 #        \/      /_____/      \/ 
 function gogh_Scanner () {
 
-   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing Gogh scanner... $Reset"
+   debug_Message "$cW│   $cR│   $cC│   $cB├── $cC¤ Executing Gogh scanner... $Rs"
 
   if grep -qE 'background:' "$1" &&
    grep -qE 'foreground:' "$1" &&
@@ -770,7 +770,7 @@ function gogh_Scanner () {
    grep -qE 'color_16:' "$1"
   then
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ Gogh format detected! $Reset"
+    debug_Message "$cW│   $cR│   $cC│   $cB│   $cC└── $cG¤ Gogh format detected! $Rs"
    
     file_type_detected=true
     file_type="Gogh"
@@ -789,7 +789,7 @@ function gogh_Scanner () {
 #        \/      \/     \/     \/           \/ 
 function base16_Scanner () {
 
-   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing Base16 scanner... $Reset"
+   debug_Message "$cW│   $cR│   $cC│   $cB├── $cC¤ Executing Base16 scanner... $Rs"
 
   if grep -qE 'base00:' "$1" &&
    grep -qE 'base01:' "$1" &&
@@ -809,7 +809,7 @@ function base16_Scanner () {
    grep -qE 'base0F:' "$1"
   then
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ Base16 format detected! $Reset"
+    debug_Message "$cW│   $cR│   $cC│   $cB│   $cC└── $cG¤ Base16 format detected! $Rs"
    
     file_type_detected=true
     file_type="Base16"
@@ -828,7 +828,7 @@ function base16_Scanner () {
 #\/   \/\_| \_\___||___/\___/ \__,_|_|  \___\___||___/
 function XResources_Scanner () {
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing XResources scanner... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cB├── $cC¤ Executing XResources scanner... $Rs"
 
   if grep -q "^! special" "$1" &&
     grep -q "^\*\.foreground:" "$1" &&
@@ -868,7 +868,7 @@ function XResources_Scanner () {
     grep -q "^\*\.color15:" "$1"
   then
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ XResources format detected! $Reset"
+    debug_Message "$cW│   $cR│   $cC│   $cB│   $cC└── $cG¤ XResources format detected! $Rs"
 
     file_type_detected=true
     file_type="XResources"
@@ -889,7 +889,7 @@ function XResources_Scanner () {
 #                 |___/ 
 function Kitty_Scanner () {
 
-   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing Kitty scanner... $Reset"
+   debug_Message "$cW│   $cR│   $cC│   $cB├── $cC¤ Executing Kitty scanner... $Rs"
 
   if grep -qE '^\s*foreground' "$1" &&
    grep -qE '^\s*background' "$1" &&
@@ -912,7 +912,7 @@ function Kitty_Scanner () {
    grep -qE '^\s*color15' "$1"
   then
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ Kitty format detected! $Reset"
+    debug_Message "$cW│   $cR│   $cC│   $cB│   $cC└── $cG¤ Kitty format detected! $Rs"
    
     file_type_detected=true
     file_type="Kitty"
@@ -932,7 +932,7 @@ function Kitty_Scanner () {
 #                                   |___/ 
 function Alacritty_Scanner () {
 
-   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing Alacritty scanner... $Reset"
+   debug_Message "$cW│   $cR│   $cC│   $cB├── $cC¤ Executing Alacritty scanner... $Rs"
 
   if grep -qE '^\s*\[colors\.primary\]' "$1" &&
    grep -qE '^\s*foreground\s*=' "$1" &&
@@ -951,7 +951,7 @@ function Alacritty_Scanner () {
    grep -qE '^\s*\[colors\.bright\]' "$1"
   then
 
-    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ Alacritty format detected! $Reset"
+    debug_Message "$cW│   $cR│   $cC│   $cB│   $cC└── $cG¤ Alacritty format detected! $Rs"
    
     file_type_detected=true
     file_type="Alacritty"
@@ -970,7 +970,7 @@ function Alacritty_Scanner () {
 #\____/_/\_\___|\___|
 function exec_Scanners () {
 
-  echo -e "$bWHITE│   $bRED│   $bCYAN├── $bBLUE¤ Scanning file :$bWHITE $1 $bBLUE: ...$Reset"
+  echo -e "$cW│   $cR│   $cC├── $cB¤ Scanning file :$cW $1 $cB: ...$Rs"
   file_type_detected=false
 
   #XResources Scanner
@@ -1006,11 +1006,11 @@ function exec_Scanners () {
   #Format message
   if [[ "$file_type_detected" == true ]]; then
 
-    echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└── $bGREEN¤ :$bWHITE $file_type $bGREEN: Format detected!  $Reset"
+    echo -e "$cW│   $cR│   $cC│   $cB└── $cG¤ :$cW $file_type $cG: Format detected!  $Rs"
 
   else
 
-    echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└── $bRED¤ Can't identify format in file :$bWHITE $1 $bRED...   $Reset"    
+    echo -e "$cW│   $cR│   $cC│   $cB└── $cR¤ Can't identify format in file :$cW $1 $cR...   $Rs"    
 
   fi
 
@@ -1029,7 +1029,7 @@ function exec_Scanners () {
 #          88           88          88  88       88   "Y888  `"Ybbd8"'  88                    
 function print_Colors () {
 
-  echo -e "$bWHITE│   $bRED│   $bCYAN├── $bBLUE¤ Colors : $Reset"
+  echo -e "$cW│   $cR│   $cC├── $cB¤ Colors : $Rs"
 
   # background 
   rBackground=$((16#${background:0:2}))
@@ -1125,21 +1125,18 @@ function print_Colors () {
   gLWhite=$((16#${l_white:2:2}))
   bLWhite=$((16#${l_white:4:2}))
 
-  #$bWHITE│   $bYELLOW│   $bBLUE│
-  #$bWHITE│   $bYELLOW│   $bBLUE│
-
   cat <<EOF
-$(printf "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│ $Reset Background : \e[48;2;${rBackground};${gBackground};${bBackground}m    $Reset | Foreground : \e[48;2;${rForeground};${gForeground};${bForeground}m    $Reset 
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE│
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE│ $Reset bBlack     : \e[48;2;${rBBlack};${gBBlack};${bBBlack}m    $Reset | lBlack     : \e[48;2;${rLBlack};${gLBlack};${bLBlack}m    $Reset
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE│ $Reset bRed       : \e[48;2;${rBRed};${gBRed};${bBRed}m    $Reset | lRed       : \e[48;2;${rLRed};${gLRed};${bLRed}m    $Reset
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE│ $Reset bGreen     : \e[48;2;${rBGreen};${gBGreen};${bBGreen}m    $Reset | lGreen     : \e[48;2;${rLGreen};${gLGreen};${bLGreen}m    $Reset
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE│ $Reset bYellow    : \e[48;2;${rBYellow};${gBYellow};${bBYellow}m    $Reset | lYellow    : \e[48;2;${rLYellow};${gLYellow};${bLYellow}m    $Reset
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE│ $Reset bBlue      : \e[48;2;${rBBlue};${gBBlue};${bBBlue}m    $Reset | lBlue      : \e[48;2;${rLBlue};${gLBlue};${bLBlue}m    $Reset
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE│ $Reset bMagenta   : \e[48;2;${rBMagenta};${gBMagenta};${bBMagenta}m    $Reset | lMagenta   : \e[48;2;${rLMagenta};${gLMagenta};${bLMagenta}m    $Reset
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE│ $Reset bCyan      : \e[48;2;${rBCyan};${gBCyan};${bBCyan}m    $Reset | lCyan      : \e[48;2;${rLCyan};${gLCyan};${bLCyan}m    $Reset
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE│ $Reset bWhite     : \e[48;2;${rBWhite};${gBWhite};${bBWhite}m    $Reset | lWhite     : \e[48;2;${rLWhite};${gLWhite};${bLWhite}m    $Reset
-$bWHITE│   $bRED│   $bCYAN│   $bBLUE└────────────────────────────────────────
+$(printf "$cW│   $cR│   $cC│   $cB│ $Rs Background : \e[48;2;${rBackground};${gBackground};${bBackground}m    $Rs | Foreground : \e[48;2;${rForeground};${gForeground};${bForeground}m    $Rs 
+$cW│   $cR│   $cC│   $cB│
+$cW│   $cR│   $cC│   $cB│ $Rs bBlack     : \e[48;2;${rBBlack};${gBBlack};${bBBlack}m    $Rs | lBlack     : \e[48;2;${rLBlack};${gLBlack};${bLBlack}m    $Rs
+$cW│   $cR│   $cC│   $cB│ $Rs bRed       : \e[48;2;${rBRed};${gBRed};${bBRed}m    $Rs | lRed       : \e[48;2;${rLRed};${gLRed};${bLRed}m    $Rs
+$cW│   $cR│   $cC│   $cB│ $Rs bGreen     : \e[48;2;${rBGreen};${gBGreen};${bBGreen}m    $Rs | lGreen     : \e[48;2;${rLGreen};${gLGreen};${bLGreen}m    $Rs
+$cW│   $cR│   $cC│   $cB│ $Rs bYellow    : \e[48;2;${rBYellow};${gBYellow};${bBYellow}m    $Rs | lYellow    : \e[48;2;${rLYellow};${gLYellow};${bLYellow}m    $Rs
+$cW│   $cR│   $cC│   $cB│ $Rs bBlue      : \e[48;2;${rBBlue};${gBBlue};${bBBlue}m    $Rs | lBlue      : \e[48;2;${rLBlue};${gLBlue};${bLBlue}m    $Rs
+$cW│   $cR│   $cC│   $cB│ $Rs bMagenta   : \e[48;2;${rBMagenta};${gBMagenta};${bBMagenta}m    $Rs | lMagenta   : \e[48;2;${rLMagenta};${gLMagenta};${bLMagenta}m    $Rs
+$cW│   $cR│   $cC│   $cB│ $Rs bCyan      : \e[48;2;${rBCyan};${gBCyan};${bBCyan}m    $Rs | lCyan      : \e[48;2;${rLCyan};${gLCyan};${bLCyan}m    $Rs
+$cW│   $cR│   $cC│   $cB│ $Rs bWhite     : \e[48;2;${rBWhite};${gBWhite};${bBWhite}m    $Rs | lWhite     : \e[48;2;${rLWhite};${gLWhite};${bLWhite}m    $Rs
+$cW│   $cR│   $cC│   $cB└────────────────────────────────────────
 ")
 EOF
 
@@ -1418,7 +1415,7 @@ function Alacritty_Reader () {
 #\____/_/\_\___|\___|
 function exec_Reader () {
 
-  echo -e "$bWHITE│   $bRED│   $bCYAN├── $bBLUE¤ Reading file :$bWHITE $1 $bBLUE: ...$Reset"
+  echo -e "$cW│   $cR│   $cC├── $cB¤ Reading file :$cW $1 $cB: ...$Rs"
 
   # Reset variables :
 
@@ -1818,7 +1815,7 @@ function installer_Kitty () {
   output_file="$HOME/.config/kitty/theme.conf"
   fileOut=$(basename $output_file)
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Installing kitty theme : $fileOut : ... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cM ¤ Installing kitty theme : $fileOut : ... $Rs"
 
   writter_Kitty "$output_file"
 
@@ -1849,7 +1846,7 @@ function converter_Kitty () {
 
   fileOut=$(basename $1)
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting kitty theme : $fileOut : ... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cM ¤ Converting kitty theme : $fileOut : ... $Rs"
 
   writter_Kitty "$1"
 
@@ -1867,7 +1864,7 @@ function converter_XResources () {
 
   fileOut=$(basename $1)
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting XResources theme : $fileOut : ... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cM ¤ Converting XResources theme : $fileOut : ... $Rs"
 
   writter_XResources "$1"
 
@@ -1887,7 +1884,7 @@ function converter_Alacritty () {
 
   fileOut=$(basename $1)
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting Alacritty theme : $fileOut : ... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cM ¤ Converting Alacritty theme : $fileOut : ... $Rs"
 
   writter_Alacritty "$1"
 
@@ -1905,7 +1902,7 @@ function converter_OsoB16 () {
 
   fileOut=$(basename $1)
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting Oso's Base16 theme : $fileOut : ... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cM ¤ Converting Oso's Base16 theme : $fileOut : ... $Rs"
 
   writter_OsoB16 "$1"
 
@@ -1923,7 +1920,7 @@ function converter_Termite () {
 
   fileOut=$(basename $1)
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting Termite theme : $fileOut : ... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cM ¤ Converting Termite theme : $fileOut : ... $Rs"
 
   writter_Termite "$1"
 
@@ -1941,7 +1938,7 @@ function converter_Termux () {
 
   fileOut=$(basename $1)
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting termux theme : $fileOut : ... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cM ¤ Converting termux theme : $fileOut : ... $Rs"
 
   writter_Termux "$1"
 
@@ -1959,7 +1956,7 @@ function converter_LinuxTTY () {
 
   fileOut=$(basename $1)
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting Linux TTY theme : $fileOut : ... $Reset"
+  debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cM ¤ Converting Linux TTY theme : $fileOut : ... $Rs"
 
   writter_LinuxTTY "$1"
 
@@ -1990,7 +1987,7 @@ function get_File () {
 
   if [[ "$trigg_get" == true ]]; then
 
-    echo -e "$bWHITE├── $bGREEN¤ Getting file...$Reset"
+    echo -e "$cW├── $cG¤ Getting file...$Rs"
 
     status_code=$(curl -s -o /dev/null -w "%{http_code}" "$1")
     if [[ "$status_code" == 200 ]]; then
@@ -2005,7 +2002,7 @@ function get_File () {
 
     else 
 
-      echo -e "$bWHITE│   $bGREEN└─ $bRED¤ ERROR : can't access to the file...$Reset"
+      echo -e "$cW│   $cG└─ $cR¤ ERROR : can't access to the file...$Rs"
 
     fi
 
@@ -2052,17 +2049,17 @@ function exec_Triggers () {
     
   fi
 
-  echo -e "$bWHITE│   $bRED│   $bCYAN├── $bBLUE¤ Executing triggers...$Reset"
+  echo -e "$cW│   $cR│   $cC├── $cB¤ Executing triggers...$Rs"
 
   if [[ $triggers_used == false ]]; then
-    echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└──$bRED ¤ No triggers detected...$Reset"
+    echo -e "$cW│   $cR│   $cC│   $cB└──$cR ¤ No triggers detected...$Rs"
     
   else 
 
     # installers
     if [[ "$trigg_install" == true ]]; then
 
-      echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├──$bYELLOW ¤ Trigger : Installing... $Reset"
+      echo -e "$cW│   $cR│   $cC│   $cB├──$cY ¤ Trigger : Installing... $Rs"
 
       if [[ "$formats_used" == true ]]; then
 
@@ -2072,7 +2069,7 @@ function exec_Triggers () {
         fi
 
       else
-        debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bRED ¤ No formats to install... $Reset"
+        debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cR ¤ No formats to install... $Rs"
       fi
 
     fi
@@ -2080,7 +2077,7 @@ function exec_Triggers () {
     #Converters
     if [[ "$trigg_convert" == true ]]; then
 
-      echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├──$bYELLOW ¤ Trigger : convert... $Reset"
+      echo -e "$cW│   $cR│   $cC│   $cB├──$cY ¤ Trigger : convert... $Rs"
 
       if [[ "$formats_used" == true ]]; then
 
@@ -2129,14 +2126,14 @@ function exec_Triggers () {
         
 
       else
-        debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bRED ¤ No formats to convert... $Reset"
+        debug_Message "$cW│   $cR│   $cC│   $cB│   $cY└──$cR ¤ No formats to convert... $Rs"
       fi
 
 
     fi
 
 
-    echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└── ¤ All triggers executed! $Reset"
+    echo -e "$cW│   $cR│   $cC│   $cB└── ¤ All triggers executed! $Rs"
 
   fi
 
@@ -2164,8 +2161,8 @@ function exec_FILE () {
     exit_Code 10
   fi
 
-  echo -e "$bWHITE├── $bRED¤ Executing \"FILE\" process...$Reset"
-  echo -e "$bWHITE│   $bRED├── $bCYAN¤ Proccessing file :$bWHITE $file_arg $bCYAN: ...$Reset"
+  echo -e "$cW├── $cR¤ Executing \"FILE\" process...$Rs"
+  echo -e "$cW│   $cR├── $cC¤ Proccessing file :$cW $file_arg $cC: ...$Rs"
 
   #Verify the file
   verify_File_whit_Exit $file_arg
@@ -2186,9 +2183,9 @@ function exec_FILE () {
 
   # verificar data
   if [[ "$dataVerified" == false ]]; then 
-    echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└── $bRED¤ ERROR : Missing or null values...$Reset"
-    echo -e "$bWHITE│   $bRED│   $bCYAN└────────"
-    echo -e "$bWHITE│   $bRED└─────────────"
+    echo -e "$cW│   $cR│   $cC│   $cB└── $cR¤ ERROR : Missing or null values...$Rs"
+    echo -e "$cW│   $cR│   $cC└────────"
+    echo -e "$cW│   $cR└─────────────"
     exit_Code 4
   fi
 
@@ -2197,8 +2194,8 @@ function exec_FILE () {
 
   # Exec triggers...
   exec_Triggers
-  echo -e "$bWHITE│   $bRED│   $bCYAN└─────────$Reset"
-  echo -e "$bWHITE│   $bRED└──────────────$Reset"
+  echo -e "$cW│   $cR│   $cC└─────────$Rs"
+  echo -e "$cW│   $cR└──────────────$Rs"
 
   #remove the file?
   remove_file
@@ -2207,13 +2204,13 @@ function exec_FILE () {
 
 function exec_THIS () {
 
-  echo -e "$bWHITE├── $bRED¤ Executing \"THIS\" process...$Reset"
+  echo -e "$cW├── $cR¤ Executing \"THIS\" process...$Rs"
 
 }
 
 function exec_BADDIES () {
 
-  echo -e "$bWHITE├── $bRED¤ Executing \"BADDIES\" process...$Reset"
+  echo -e "$cW├── $cR¤ Executing \"BADDIES\" process...$Rs"
 
 }
 
@@ -2225,8 +2222,8 @@ function exec_SHOW () {
     exit_Code 10
   fi
 
-  echo -e "$bWHITE├── $bRED¤ Executing \"SHOW\" process...$Reset"
-  echo -e "$bWHITE│   $bRED├── $bCYAN¤ Proccessing file :$bWHITE $file_arg $bCYAN: ...$Reset"
+  echo -e "$cW├── $cR¤ Executing \"SHOW\" process...$Rs"
+  echo -e "$cW│   $cR├── $cC¤ Proccessing file :$cW $file_arg $cC: ...$Rs"
 
   #Verify the file
   verify_File_whit_Exit $file_arg
@@ -2241,23 +2238,23 @@ function exec_SHOW () {
   if [[ "$file_type_detected" == true ]]; then
     exec_Reader $file_arg $file_type
   else 
-    echo -e "$bWHITE│   $bRED│   $bCYAN└────────" 
-    echo -e "$bWHITE│   $bRED└─────────────" 
+    echo -e "$cW│   $cR│   $cC└────────" 
+    echo -e "$cW│   $cR└─────────────" 
     exit_Code 6
   fi
 
   # verificar data
   if [[ "$dataVerified" == false ]]; then 
-    echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└── $bRED¤ ERROR : Missing or null values...$Reset"
-    echo -e "$bWHITE│   $bRED│   $bCYAN└────────"
-    echo -e "$bWHITE│   $bRED└─────────────"
+    echo -e "$cW│   $cR│   $cC│   $cB└── $cR¤ ERROR : Missing or null values...$Rs"
+    echo -e "$cW│   $cR│   $cC└────────"
+    echo -e "$cW│   $cR└─────────────"
     exit_Code 4
   fi
 
   # Show colors
   print_Colors
-  echo -e "$bWHITE│   $bRED│   $bCYAN└─────────────────────────────────────────────"
-  echo -e "$bWHITE│   $bRED└──────────────────────────────────────────────────"
+  echo -e "$cW│   $cR│   $cC└─────────────────────────────────────────────"
+  echo -e "$cW│   $cR└──────────────────────────────────────────────────"
 
 
   #remove the file?
@@ -2303,23 +2300,23 @@ function exec_Engine () {
 #          88     `8'     88  `"8bbdP"Y8  88  88       88            
 cat <<EOF
 $(printf "
-$bRED _______       __                   _______                                        
+$cR _______       __                   _______                                        
 |   _   .-----|  .-----.----.______|   _   .----.-----.----.-----.-----.-----.----.
 |.  1___|  _  |  |  _  |   _|______|.  1   |   _|  _  |  __|  -__|__ --|  _  |   _|
 |.  |___|_____|__|_____|__|        |.  ____|__| |_____|____|_____|_____|_____|__|  
 |:  1   |                          |:  |                                           
 |::.. . |                          |::.|                                           
-\`-------'                          \`---'  $Reset 
+\`-------'                          \`---'  $Rs 
 ") 
 EOF
-echo -e "$bWHITE¤ Welcome!$Reset"
+echo -e "$cW¤ Welcome!$Rs"
 
-echo -e "$bWHITE├── $bBLUE¤ Verifiying params...$Reset"
+echo -e "$cW├── $cB¤ Verifiying params...$Rs"
 verify_Params $@ 
 
 help_Message 
 
-echo -e "$bWHITE├── $bBLUE¤ Verifiying dependencies...$Reset"
+echo -e "$cW├── $cB¤ Verifiying dependencies...$Rs"
 verify_Dependencies
 
 exec_Engine

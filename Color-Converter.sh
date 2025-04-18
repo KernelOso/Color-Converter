@@ -203,6 +203,7 @@ $bWHITE│   $bCYAN║$Reset $bMAGN #Dependencies :
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset    ¤$bMAGN Bash
 $bWHITE│   $bCYAN║$Reset    ¤$bMAGN yq
+$bWHITE│   $bCYAN║$Reset    ¤$bMAGN taplo
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bBLUE # Usage : 
 $bWHITE│   $bCYAN║$Reset    
@@ -228,7 +229,7 @@ $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'SHOW' process$bYELLOW triggers :
 $bWHITE│   $bCYAN║$Reset  
 $bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET 
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Romve the $bWHITE<file>$bYELLOW post process. 
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Remove the $bWHITE<file>$bYELLOW post process. 
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
 $bWHITE│   $bCYAN║$Reset
@@ -243,7 +244,7 @@ $bWHITE│   $bCYAN║$Reset    $bMAGN║ Base16         ║$bRED NULL          
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ XResources     ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Alacritty.toml ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
@@ -344,7 +345,7 @@ function verify_If_File_Exist () {
 function verify_If_Access () {
 
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN├── $bBLUE¤ Verifying if can acces to file... $Reset"
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bMAGN├── $bBLUE¤ Verifying if can access to file... $Reset"
   
   if [  -r "$1" ]; then
 
@@ -571,7 +572,13 @@ function verify_Params () {
       "--debug")
         trigg_debug=true
         ;;
+      "-d")
+        trigg_debug=true
+        ;;
       "--help")
+        trigg_help=true
+        ;;
+      "-h")
         trigg_help=true
         ;;
       "--get")
@@ -584,11 +591,14 @@ function verify_Params () {
         trigg_install=true
         triggers_used=true
         ;;
+      "--convert")
+        trigg_convert=true
+        triggers_used=true
+        ;;
       "--kitty")
         format_kitty=true
         formats_used=true
         ;;
-
         
     esac
 
@@ -1632,9 +1642,44 @@ function installer_Kitty () {
 
   # setear el output al de kitty
   output_file="$HOME/.config/kitty/theme.conf"
-  test=$(basename $output_file)
+  fileOut=$(basename $output_file)
 
-  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Installing kitty theme : $test : ... $Reset"
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Installing kitty theme : $fileOut : ... $Reset"
+
+  # mandar a escribir el archivo en esa locacion
+  writter_Kitty "$output_file"
+
+}
+
+
+                                                                                                                                             
+#            ,ad8888ba,                                                                                                                       
+#           d8"'    `"8b                                                                   ,d                                                 
+#          d8'                                                                             88                                                 
+#          88              ,adPPYba,   8b,dPPYba,   8b       d8   ,adPPYba,  8b,dPPYba,  MM88MMM  ,adPPYba,  8b,dPPYba,  ,adPPYba,            
+#aaaaaaaa  88             a8"     "8a  88P'   `"8a  `8b     d8'  a8P_____88  88P'   "Y8    88    a8P_____88  88P'   "Y8  I8[    ""  aaaaaaaa  
+#""""""""  Y8,            8b       d8  88       88   `8b   d8'   8PP"""""""  88            88    8PP"""""""  88           `"Y8ba,   """"""""  
+#           Y8a.    .a8P  "8a,   ,a8"  88       88    `8b,d8'    "8b,   ,aa  88            88,   "8b,   ,aa  88          aa    ]8I            
+#            `"Y8888Y"'    `"YbbdP"'   88       88      "8"       `"Ybbd8"'  88            "Y888  `"Ybbd8"'  88          `"YbbdP"'            
+                                                                                                                                             
+
+
+# _   ___ _   _         
+#| | / (_) | | |        
+#| |/ / _| |_| |_ _   _ 
+#|    \| | __| __| | | |
+#| |\  \ | |_| |_| |_| |
+#\_| \_/_|\__|\__|\__, |
+#                  __/ |
+#                 |___/ 
+function converter_Kitty () {
+
+
+  # setear el output al de kitty
+  output_file="$bsname-Kitty.conf"
+  fileOut=$(basename $output_file)
+
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting kitty theme : $fileOut : ... $Reset"
 
   # mandar a escribir el archivo en esa locacion
   writter_Kitty "$output_file"
@@ -1741,6 +1786,24 @@ function exec_Triggers () {
     fi
 
     #Converters
+    if [[ "$trigg_convert" == true ]]; then
+
+      echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├──$bYELLOW ¤ Trigger : convert... $Reset"
+
+      if [[ "$formats_used" == true ]]; then
+
+        # Kitty
+        if [[ "$format_kitty" == true ]]; then
+          converter_Kitty
+        fi
+
+      else
+        debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bRED ¤ No formats to convert... $Reset"
+      fi
+
+
+    fi
+
 
     echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└── ¤ All triggers executed! $Reset"
 

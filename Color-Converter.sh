@@ -60,6 +60,7 @@ format_alacritty=false
 format_osoB16=false
 format_Termite=false
 format_Termux=false
+format_LinuxTTY=false
 
 # triggers values : 
 
@@ -264,6 +265,8 @@ $bWHITE│   $bCYAN║$Reset    $bMAGN╠═════════════
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Termite        ║$bGREEN --termite      $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Termux         ║$bGREEN --termux       $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Linux TTY      ║$bGREEN --linuxtty     $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN╚════════════════════$Reset
@@ -642,6 +645,10 @@ function verify_Params () {
         ;; 
       "--termux")
         format_Termux=true
+        formats_used=true
+        ;; 
+      "--linuxtty")
+        format_LinuxTTY=true
         formats_used=true
         ;; 
     esac
@@ -1751,6 +1758,42 @@ EOF
 
 
 
+# _     _                    _____ _______   __
+#| |   (_)                  |_   _|_   _\ \ / /
+#| |    _ _ __  _   ___  __   | |   | |  \ V / 
+#| |   | | '_ \| | | \ \/ /   | |   | |   \ /  
+#| |___| | | | | |_| |>  <    | |   | |   | |  
+#\_____/_|_| |_|\__,_/_/\_\   \_/   \_/   \_/  
+function writter_LinuxTTY () {
+  cat > "$1" <<EOF
+#!/bin/sh
+if [ "$TERM" = "linux" ]; then
+  /bin/echo -e "
+  \e]P0$b_black
+  \e]P1$b_red
+  \e]P2$b_green
+  \e]P3$b_yellow
+  \e]P4$b_blue
+  \e]P5$b_magenta
+  \e]P6$b_cyan
+  \e]P7$b_white
+  \e]P8$l_black
+  \e]P9$l_red
+  \e]PA$l_green
+  \e]PB$l_yellow
+  \e]PC$l_blue
+  \e]PD$l_magenta
+  \e]PE$l_cyan
+  \e]PF$l_white
+  "
+  # get rid of artifacts
+  clear
+fi
+EOF
+}
+
+
+
 #          88                                               88  88                                               
 #          88                            ,d                 88  88                                               
 #          88                            88                 88  88                                               
@@ -1906,6 +1949,24 @@ function converter_Termux () {
 
 
 
+# _     _                    _____ _______   __
+#| |   (_)                  |_   _|_   _\ \ / /
+#| |    _ _ __  _   ___  __   | |   | |  \ V / 
+#| |   | | '_ \| | | \ \/ /   | |   | |   \ /  
+#| |___| | | | | |_| |>  <    | |   | |   | |  
+#\_____/_|_| |_|\__,_/_/\_\   \_/   \_/   \_/  
+function converter_LinuxTTY () {
+
+  fileOut=$(basename $1)
+
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting Linux TTY theme : $fileOut : ... $Reset"
+
+  writter_LinuxTTY "$1"
+
+} 
+
+
+
 #     888888888888         88                                                                         
 #          88              ""                                                                         
 #          88                                                                                         
@@ -1987,6 +2048,7 @@ function exec_Triggers () {
     format_osoB16=true
     format_Termite=true
     format_Termux=true
+    format_LinuxTTY=true
     
   fi
 
@@ -2057,6 +2119,14 @@ function exec_Triggers () {
           output_file="$bsname-Termux.properties"
           converter_Termux "$output_file"
         fi
+
+        # Linux TTY
+        if [[ "$format_LinuxTTY" == true ]]; then
+          output_file="$bsname-LinuxTTY.sh"
+          converter_LinuxTTY "$output_file"
+        fi
+
+        
 
       else
         debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bRED ¤ No formats to convert... $Reset"

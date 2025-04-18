@@ -25,11 +25,6 @@ type_of_param=""
 file_arg=""
 bsname=""
 
-# File verify
-file_type_detected=false
-file_type=""
-are_missing_values=false
-
 # esc characters
 bRED="\033[0;31m"
 bGREEN="\033[0;32m"
@@ -43,24 +38,26 @@ Reset="\033[0m"
 #triggers :
 triggers_used=false
 
-trigg_debug=false
-trigg_help=false
+  #Helpers
+  trigg_debug=false
+  trigg_help=false
 
-trigg_get=false
-trigg_rm=false
-
-trigg_install=false
-trigg_convert=false
+  #Actions
+  trigg_get=false
+  trigg_rm=false
+  trigg_install=false
+  trigg_convert=false
 
 #formats
 output_file=""
 
 formats_used=false
-trigg_all=false
 
+trigg_all=false
 format_kitty=false
 format_xresources=false
 format_alacritty=false
+format_osoB16=false
 
 # triggers values : 
 
@@ -68,6 +65,10 @@ format_alacritty=false
   original_name=""
 
 #Files verification
+file_type=""
+file_type_detected=false
+are_missing_values=false
+
 fileExist=false
 fileEmpty=false
 fileAccess=false
@@ -623,6 +624,11 @@ function verify_Params () {
         format_alacritty=true
         formats_used=true
         ;; 
+      "--oso")
+        format_osoB16=true
+        formats_used=true
+        ;; 
+        
     esac
 
   done 
@@ -1169,12 +1175,14 @@ function OsoB16_Reader() {
 
 
 
-#  ________              .__     
-# /  _____/  ____   ____ |  |__  
-#/   \  ___ /  _ \ / ___\|  |  \ 
-#\    \_\  (  <_> ) /_/  >   Y  \
-# \______  /\____/\___  /|___|  /
-#        \/      /_____/      \/ 
+# _____             _     
+#|  __ \           | |    
+#| |  \/ ___   __ _| |__  
+#| | __ / _ \ / _` | '_ \ 
+#| |_\ \ (_) | (_| | | | |
+# \____/\___/ \__, |_| |_|
+#              __/ |      
+#             |___/       
 function Gogh_Reader() {
 
   background=$(yq -r '.background' "$1" | sed 's/^#//')
@@ -1205,12 +1213,12 @@ function Gogh_Reader() {
 
 
 
-#__________                      ____  ________
-#\______   \_____    ______ ____/_   |/  _____/
-# |    |  _/\__  \  /  ___// __ \|   /   __  \ 
-# |    |   \ / __ \_\___ \\  ___/|   \  |__\  \
-# |______  /(____  /____  >\___  >___|\_____  /
-#        \/      \/     \/     \/           \/ 
+#______                __    ____ 
+#| ___ \              /  |  / ___|
+#| |_/ / __ _ ___  ___`| | / /___ 
+#| ___ \/ _` / __|/ _ \| | | ___ \
+#| |_/ / (_| \__ \  __/| |_| \_/ |
+#\____/ \__,_|___/\___\___/\_____/
 function Base16_Reader() {
 
   background=$(yq -r '.base00' "$1" | sed 's/^#//')
@@ -1742,7 +1750,22 @@ function converter_Alacritty () {
 
 
 
+# _____            _      ______                __    ____ 
+#|  _  |          ( )     | ___ \              /  |  / ___|
+#| | | | ___  ___ |/ ___  | |_/ / __ _ ___  ___`| | / /___ 
+#| | | |/ __|/ _ \  / __| | ___ \/ _` / __|/ _ \| | | ___ \
+#\ \_/ /\__ \ (_) | \__ \ | |_/ / (_| \__ \  __/| |_| \_/ |
+# \___/ |___/\___/  |___/ \____/ \__,_|___/\___\___/\_____/
+function converter_OsoB16 () {
 
+  fileOut=$(basename $1)
+
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting Oso's Base16 theme : $fileOut : ... $Reset"
+
+  writter_OsoB16 "$1"
+
+}                                                       
+                                                          
 
 
 #     888888888888         88                                                                         
@@ -1823,6 +1846,7 @@ function exec_Triggers () {
     format_kitty=true
     format_xresources=true
     format_alacritty=true
+    format_osoB16=true
     
   fi
 
@@ -1874,6 +1898,12 @@ function exec_Triggers () {
         if [[ "$format_alacritty" == true ]]; then
           output_file="$bsname-Alacritty.toml"
           converter_Alacritty "$output_file"
+        fi
+
+        # Oso's Base16
+        if [[ "$format_osoB16" == true ]]; then
+          output_file="$bsname-osoB16.yaml"
+          converter_OsoB16 "$output_file"
         fi
 
         

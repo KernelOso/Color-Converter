@@ -239,6 +239,8 @@ $bWHITE│   $bCYAN║$Reset    $bMAGN║ Gogh           ║$bRED NULL          
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Oso's Base16   ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Base16         ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ XResources     ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║
@@ -710,6 +712,45 @@ function gogh_Scanner () {
 
 
 
+#__________                      ____  ________
+#\______   \_____    ______ ____/_   |/  _____/
+# |    |  _/\__  \  /  ___// __ \|   /   __  \ 
+# |    |   \ / __ \_\___ \\  ___/|   \  |__\  \
+# |______  /(____  /____  >\___  >___|\_____  /
+#        \/      \/     \/     \/           \/ 
+function base16_Scanner () {
+
+   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing Base16 scanner... $Reset"
+
+  if grep -qE 'base00:' "$1" &&
+   grep -qE 'base01:' "$1" &&
+   grep -qE 'base02:' "$1" &&
+   grep -qE 'base03:' "$1" &&
+   grep -qE 'base04:' "$1" &&
+   grep -qE 'base05:' "$1" &&
+   grep -qE 'base06:' "$1" &&
+   grep -qE 'base07:' "$1" &&
+   grep -qE 'base08:' "$1" &&
+   grep -qE 'base09:' "$1" &&
+   grep -qE 'base0A:' "$1" &&
+   grep -qE 'base0B:' "$1" &&
+   grep -qE 'base0C:' "$1" &&
+   grep -qE 'base0D:' "$1" &&
+   grep -qE 'base0E:' "$1" &&
+   grep -qE 'base0F:' "$1"
+  then
+
+    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ Base16 format detected! $Reset"
+   
+    file_type_detected=true
+    file_type="Base16"
+
+  fi
+
+}
+
+
+
 #__   ________                                        
 #\ \ / /| ___ \                                       
 # \ V / | |_/ /___  ___  ___  _   _ _ __ ___ ___  ___ 
@@ -793,6 +834,11 @@ function exec_Scanners () {
   #Gogh
   if [[ "$file_type_detected" == false ]]; then
     gogh_Scanner $1
+  fi
+
+  #Base16
+  if [[ "$file_type_detected" == false ]]; then
+    base16_Scanner $1
   fi
 
   #Format message
@@ -1025,6 +1071,42 @@ function Gogh_Reader() {
 
 
 
+#__________                      ____  ________
+#\______   \_____    ______ ____/_   |/  _____/
+# |    |  _/\__  \  /  ___// __ \|   /   __  \ 
+# |    |   \ / __ \_\___ \\  ___/|   \  |__\  \
+# |______  /(____  /____  >\___  >___|\_____  /
+#        \/      \/     \/     \/           \/ 
+function Base16_Reader() {
+
+  background=$(yq -r '.base00' "$1" | sed 's/^#//')
+  foreground=$(yq -r '.base07' "$1" | sed 's/^#//')
+  cursor=$(yq -r '.base07' "$1" | sed 's/^#//')
+
+  b_black=$(yq -r '.base00' "$1" )
+  b_red=$(yq -r '.base01' "$1" )
+  b_green=$(yq -r '.base02' "$1" )
+  b_yellow=$(yq -r '.base03' "$1" )
+  b_blue=$(yq -r '.base04' "$1" )
+  b_magenta=$(yq -r '.base05' "$1" )
+  b_cyan=$(yq -r '.base06' "$1" )
+  b_white=$(yq -r '.base07' "$1" )
+
+  l_black=$(yq -r '.base08' "$1" )
+  l_red=$(yq -r '.base09' "$1" )
+  l_green=$(yq -r '.base0A' "$1" )
+  l_yellow=$(yq -r '.base0B' "$1" )
+  l_blue=$(yq -r '.base0C' "$1" )
+  l_magenta=$(yq -r '.base0D' "$1" )
+  l_cyan=$(yq -r '.base0E' "$1" )
+  l_white=$(yq -r '.base0F' "$1" )
+
+  # Verify data
+  verify_Data
+}
+
+
+
 #__   ________                                        
 #\ \ / /| ___ \                                       
 # \ V / | |_/ /___  ___  ___  _   _ _ __ ___ ___  ___ 
@@ -1118,6 +1200,14 @@ function exec_Reader () {
       # Gogh Reader
       Gogh_Reader $1 
       ;;
+
+    "Base16")
+      # Base16 Reader
+      Base16_Reader $1 
+      ;;
+
+
+      
       
   esac
 

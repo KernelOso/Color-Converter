@@ -1303,7 +1303,7 @@ function Kitty_Reader () {
   b_black=$(grep -E '^\s*color0' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
   l_black=$(grep -E '^\s*color8' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
 
-  b_red=$(grep -E '^\s*color1' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  b_red=$(grep -E '^\s*color1\s' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
   l_red=$(grep -E '^\s*color9' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
 
   b_green=$(grep -E '^\s*color2' "$1" | awk '{gsub(/^#/, "", $2); print $2}')

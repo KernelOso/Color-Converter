@@ -80,6 +80,7 @@ canDownload=false
 
 #Baddies 
 actual_Dir=""
+jump_To_Next=false
 
 #colors :
 background=""
@@ -375,7 +376,7 @@ function verify_If_Access () {
 
   else
 
-      debug_Message "$cW│   $cR│   $cC│   $cM│   $cB└── $cR¤ ERROR... can't access to file :$cW $1 $cR: ! $Rs" "$cW│   $cR│   $cC├── $cR¤ ERROR... can't access to file :$cW $1 $cR: ! $Rs"   
+      debug_Message "$cW│   $cR│   $cC│   $cM│   $cB└── $cR¤ ERROR... file :$cW $1 $cR: can't access to file ! $Rs" "$cW│   $cR│   $cC├── $cR¤ ERROR... file :$cW $1 $cR: can't access to file ! $Rs"   
 
       fileAccess=false
 
@@ -439,10 +440,50 @@ function verify_File_whit_Exit () {
 
   debug_Message "$cW│   $cR│   $cC│   $cM└── $cG¤ File verified!" 
 
-  
+}
 
+
+
+# _   _           _  __           ___                       _             
+#| | | |         (_)/ _|         |_  |                     (_)            
+#| | | | ___ _ __ _| |_ _   _      | |_   _ _ __ ___  _ __  _ _ __   __ _ 
+#| | | |/ _ \ '__| |  _| | | |     | | | | | '_ ` _ \| '_ \| | '_ \ / _` |
+#\ \_/ /  __/ |  | | | | |_| | /\__/ / |_| | | | | | | |_) | | | | | (_| |
+# \___/ \___|_|  |_|_|  \__, | \____/ \__,_|_| |_| |_| .__/|_|_| |_|\__, |
+#                        __/ |                       | |             __/ |
+#                       |___/                        |_|            |___/ 
+function verify_File_Jumping () {
+
+  debug_Message "$cW│   $cR│   $cC├── $cM¤ Verifying file... $Rs"
+
+  # Rs Variables
+  fileExist=false
+  fileEmpty=false
+  fileAccess=false
+
+  #Exist?
+  verify_If_File_Exist $1
+  if [[ "$fileExist" == false ]]; then
+    jump_To_Next=true
+  fi
+
+  #Access?
+  verify_If_Access $1
+  if [[ "$fileAccess" == false ]]; then
+    jump_To_Next=true
+  fi
+
+  #Empty?
+  verify_If_Empty $1
+  if [[ "$fileEmpty" == true ]]; then
+    jump_To_Next=true
+  fi
+
+  debug_Message "$cW│   $cR│   $cC│   $cM└── $cG¤ File verified!" 
 
 }
+
+
                                                                                                         
 #          88888888888                                88                                                 
 #          88                                  ,d     ""                                                 
@@ -2053,7 +2094,6 @@ function exec_Triggers () {
 
   if [[ $triggers_used == false ]]; then
     echo -e "$cW│   $cR│   $cC│   $cB└──$cR ¤ No triggers detected...$Rs"
-    
   else 
 
     # installers
@@ -2083,43 +2123,85 @@ function exec_Triggers () {
 
         # Kitty
         if [[ "$format_kitty" == true ]]; then
-          output_file="$bsname-Kitty.conf"
+          
+          if [[ "$type_of_param" == "BADDIES" ]]; then
+            output_file="${1}theme-kitty.conf"
+          else
+            output_file="$bsname-Kitty.conf"
+          fi
+
           converter_Kitty "$output_file"
         fi
 
         # XResources
         if [[ "$format_xresources" == true ]]; then
-          output_file="$bsname-XResources.XResources"
+
+          if [[ "$type_of_param" == "BADDIES" ]]; then
+            output_file="${1}theme-xresources.Xresources"
+          else
+            output_file="$bsname-XResources.XResources"
+          fi
+
           converter_XResources "$output_file"
         fi
 
         # Alacritty
         if [[ "$format_alacritty" == true ]]; then
-          output_file="$bsname-Alacritty.toml"
+
+          if [[ "$type_of_param" == "BADDIES" ]]; then
+            output_file="${1}theme-alacritty.toml"
+          else
+            output_file="$bsname-Alacritty.toml"
+          fi
+
           converter_Alacritty "$output_file"
         fi
 
         # Oso's Base16
         if [[ "$format_osoB16" == true ]]; then
-          output_file="$bsname-osoB16.yaml"
+
+          if [[ "$type_of_param" == "BADDIES" ]]; then
+            output_file="${1}base.yaml"
+          else
+            output_file="$bsname-osoB16.yaml"
+          fi
+          
           converter_OsoB16 "$output_file"
         fi
 
         # Termite
         if [[ "$format_Termite" == true ]]; then
-          output_file="$bsname-Termite"
+
+          if [[ "$type_of_param" == "BADDIES" ]]; then
+            output_file="${1}theme-termite"
+          else
+            output_file="$bsname-Termite"
+          fi
+
           converter_Termite "$output_file"
         fi
 
         # Termux
         if [[ "$format_Termux" == true ]]; then
-          output_file="$bsname-Termux.properties"
+
+          if [[ "$type_of_param" == "BADDIES" ]]; then
+            output_file="${1}theme-termux.properties"
+          else
+            output_file="$bsname-Termux.properties"
+          fi
+
           converter_Termux "$output_file"
         fi
 
         # Linux TTY
         if [[ "$format_LinuxTTY" == true ]]; then
-          output_file="$bsname-LinuxTTY.sh"
+
+          if [[ "$type_of_param" == "BADDIES" ]]; then
+            output_file="${1}theme-TTY.sh"
+          else
+            output_file="$bsname-LinuxTTY.sh"
+          fi
+
           converter_LinuxTTY "$output_file"
         fi
 
@@ -2155,6 +2237,13 @@ function exec_Triggers () {
 #          88888888888  8P'     `Y8  `"Ybbd8"'   `"Ybbd8"'   `"YbbdP'Y8    "Y888  `"YbbdP"'   88          `"YbbdP"'                                                                                                                                  
 function exec_FILE () {
 
+  #______ _ _       ______                            
+  #|  ___(_) |      | ___ \                           
+  #| |_   _| | ___  | |_/ / __ ___   ___ ___  ___ ___ 
+  #|  _| | | |/ _ \ |  __/ '__/ _ \ / __/ _ \/ __/ __|
+  #| |   | | |  __/ | |  | | | (_) | (_|  __/\__ \__ \
+  #\_|   |_|_|\___| \_|  |_|  \___/ \___\___||___/___/
+
   #get the file
   get_File $file_arg
   if [[ "$canDownload"  == false && "$trigg_get" == true ]]; then
@@ -2180,8 +2269,7 @@ function exec_FILE () {
     exit_Code 6
   fi
 
-
-  # verificar data
+  # verify data
   if [[ "$dataVerified" == false ]]; then 
     echo -e "$cW│   $cR│   $cC│   $cB└── $cR¤ ERROR : Missing or null values...$Rs"
     echo -e "$cW│   $cR│   $cC└────────"
@@ -2210,11 +2298,77 @@ function exec_THIS () {
 
 function exec_BADDIES () {
 
+  #______           _     _ _            ______                            
+  #| ___ \         | |   | (_)           | ___ \                           
+  #| |_/ / __ _  __| | __| |_  ___  ___  | |_/ / __ ___   ___ ___  ___ ___ 
+  #| ___ \/ _` |/ _` |/ _` | |/ _ \/ __| |  __/ '__/ _ \ / __/ _ \/ __/ __|
+  #| |_/ / (_| | (_| | (_| | |  __/\__ \ | |  | | | (_) | (_|  __/\__ \__ \
+  #\____/ \__,_|\__,_|\__,_|_|\___||___/ \_|  |_|  \___/ \___\___||___/___/
+
+  # Todo : Error : Baddies doesn't have support to `--get`
+
   echo -e "$cW├── $cR¤ Executing \"BADDIES\" process...$Rs"
+
+  # 1. Iterate each sub-direcotry
+
+  for theme_dir in ./*/; do
+
+    if [ "$theme_dir" == "./0_template/" ]; then
+        continue
+    fi
+
+    actual_file=$theme_dir$file_arg
+    echo -e "$cW│   $cR├── $cC¤ Proccessing file :$cW $actual_file $cC: ...$Rs"
+
+
+    #Verify the file
+    verify_File_Jumping $actual_file
+    # Skipping file
+    if [[ "$jump_To_Next" == true ]]; then
+      debug_Message "$cW│   $cR│   $cC│       $cB└── $cM¤ Skipping file... $Rs" "$cW│   $cR│   $cC└── $cM¤ Skipping file... $Rs"   
+      continue
+    fi
+
+    # 2. read the file like a Oso's Base16 scheme
+
+    # Reading the file...
+    baddie_type="OsoB16"
+    exec_Reader $actual_file $baddie_type
+    # verify data
+    if [[ "$dataVerified" == false ]]; then 
+      echo -e "$cW│   $cR│   $cC│   $cB└── $cR¤ ERROR : Missing or null values...$Rs"
+      echo -e "$cW│   $cR│   $cC│       $cR└── $cM¤ Skipping file...$Rs"
+      continue
+    fi
+
+    # Show colors only on debbug
+    if [[ "$trigg_debug" == true ]]; then
+      print_Colors
+    fi
+
+    # 3. cConvert to all avalible formats
+    triggers_used=true
+    formats_used=true
+    trigg_all=true
+    trigg_convert=true
+    exec_Triggers $theme_dir
+
+    echo -e "$cW│   $cR│   $cC└── $cG¤ File prossesed! $Rs"
+
+  done
+
+  echo -e "$cW│   $cR└──────────────$Rs"
 
 }
 
 function exec_SHOW () {
+
+  # _____ _                    ______                            
+  #/  ___| |                   | ___ \                           
+  #\ `--.| |__   _____      __ | |_/ / __ ___   ___ ___  ___ ___ 
+  # `--. \ '_ \ / _ \ \ /\ / / |  __/ '__/ _ \ / __/ _ \/ __/ __|
+  #/\__/ / | | | (_) \ V  V /  | |  | | | (_) | (_|  __/\__ \__ \
+  #\____/|_| |_|\___/ \_/\_/   \_|  |_|  \___/ \___\___||___/___/
 
   #get the file
   get_File $file_arg

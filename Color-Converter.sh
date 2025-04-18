@@ -243,7 +243,7 @@ $bWHITE│   $bCYAN║$Reset    $bMAGN║ Base16         ║$bRED NULL          
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ XResources     ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN╚════════════════════$Reset
@@ -810,6 +810,50 @@ function XResources_Scanner () {
 
 
 
+# _   ___ _   _         
+#| | / (_) | | |        
+#| |/ / _| |_| |_ _   _ 
+#|    \| | __| __| | | |
+#| |\  \ | |_| |_| |_| |
+#\_| \_/_|\__|\__|\__, |
+#                  __/ |
+#                 |___/ 
+function Kitty_Scanner () {
+
+   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing Kitty scanner... $Reset"
+
+  if grep -qE '^\s*foreground' "$1" &&
+   grep -qE '^\s*background' "$1" &&
+   grep -qE '^\s*cursor' "$1" &&
+   grep -qE '^\s*color0' "$1" &&
+   grep -qE '^\s*color1' "$1" &&
+   grep -qE '^\s*color2' "$1" &&
+   grep -qE '^\s*color3' "$1" &&
+   grep -qE '^\s*color4' "$1" &&
+   grep -qE '^\s*color5' "$1" &&
+   grep -qE '^\s*color6' "$1" &&
+   grep -qE '^\s*color7' "$1" &&
+   grep -qE '^\s*color8' "$1" &&
+   grep -qE '^\s*color9' "$1" &&
+   grep -qE '^\s*color10' "$1" &&
+   grep -qE '^\s*color11' "$1" &&
+   grep -qE '^\s*color12' "$1" &&
+   grep -qE '^\s*color13' "$1" &&
+   grep -qE '^\s*color14' "$1" &&
+   grep -qE '^\s*color15' "$1"
+  then
+
+    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ Kitty format detected! $Reset"
+   
+    file_type_detected=true
+    file_type="Kitty"
+
+  fi
+
+}
+
+
+
 # _____              
 #|  ___|             
 #| |____  _____  ___ 
@@ -839,6 +883,11 @@ function exec_Scanners () {
   #Base16
   if [[ "$file_type_detected" == false ]]; then
     base16_Scanner $1
+  fi
+
+  #Kitty
+  if [[ "$file_type_detected" == false ]]; then
+    Kitty_Scanner $1
   fi
 
   #Format message
@@ -1150,6 +1199,54 @@ function XResources_Reader () {
 }
 
 
+
+# _   ___ _   _         
+#| | / (_) | | |        
+#| |/ / _| |_| |_ _   _ 
+#|    \| | __| __| | | |
+#| |\  \ | |_| |_| |_| |
+#\_| \_/_|\__|\__|\__, |
+#                  __/ |
+#                 |___/ 
+function Kitty_Reader () {
+
+  # Save values on variables
+  background=$(grep -E '^\s*background' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  foreground=$(grep -E '^\s*foreground' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  cursor=$(grep -E '^\s*cursor' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+
+  b_black=$(grep -E '^\s*color0' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  l_black=$(grep -E '^\s*color8' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+
+  b_red=$(grep -E '^\s*color1' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  l_red=$(grep -E '^\s*color9' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+
+  b_green=$(grep -E '^\s*color2' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  l_green=$(grep -E '^\s*color10' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+
+  b_yellow=$(grep -E '^\s*color3' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  l_yellow=$(grep -E '^\s*color11' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+
+  b_blue=$(grep -E '^\s*color4' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  l_blue=$(grep -E '^\s*color12' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+
+  b_magenta=$(grep -E '^\s*color5' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  l_magenta=$(grep -E '^\s*color13' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+
+  b_cyan=$(grep -E '^\s*color6' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  l_cyan=$(grep -E '^\s*color14' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+
+  b_white=$(grep -E '^\s*color7' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+  l_white=$(grep -E '^\s*color15' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
+
+
+  # Verify data
+  verify_Data
+
+}
+
+
+
 # _____              
 #|  ___|             
 #| |____  _____  ___ 
@@ -1205,9 +1302,11 @@ function exec_Reader () {
       # Base16 Reader
       Base16_Reader $1 
       ;;
-
-
-      
+    
+    "Kitty")
+      # Kitty Reader
+      Kitty_Reader $1 
+      ;;
       
   esac
 

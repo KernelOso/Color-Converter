@@ -222,7 +222,8 @@ $bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'FILE' process$bYELLOW triggers :
 $bWHITE│   $bCYAN║$Reset  
 $bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET.
 $bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Remove the $bWHITE<file>$bYELLOW post process. 
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --install [format(s)]   $bWHITE:$bYELLOW Install the color-scheme into the [format(s)](Terminal(s)) selected.
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --install [format(s)]   $bWHITE:$bYELLOW Install the color-scheme into the [format(s)](Terminal(s))
+$bWHITE│   $bCYAN║$Reset                               $bYELLOW selected.
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'SHOW' process$bYELLOW triggers :
 $bWHITE│   $bCYAN║$Reset  
@@ -667,6 +668,48 @@ function OsoB16_Scanner () {
 
 
 
+#  ________              .__     
+# /  _____/  ____   ____ |  |__  
+#/   \  ___ /  _ \ / ___\|  |  \ 
+#\    \_\  (  <_> ) /_/  >   Y  \
+# \______  /\____/\___  /|___|  /
+#        \/      /_____/      \/ 
+function gogh_Scanner () {
+
+   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing Gogh scanner... $Reset"
+
+  if grep -qE 'background:' "$1" &&
+   grep -qE 'foreground:' "$1" &&
+   grep -qE 'cursor:' "$1" &&
+   grep -qE 'color_01:' "$1" &&
+   grep -qE 'color_02:' "$1" &&
+   grep -qE 'color_03:' "$1" &&
+   grep -qE 'color_04:' "$1" &&
+   grep -qE 'color_05:' "$1" &&
+   grep -qE 'color_06:' "$1" &&
+   grep -qE 'color_07:' "$1" &&
+   grep -qE 'color_08:' "$1" &&
+   grep -qE 'color_09:' "$1" &&
+   grep -qE 'color_10:' "$1" &&
+   grep -qE 'color_11:' "$1" &&
+   grep -qE 'color_12:' "$1" &&
+   grep -qE 'color_13:' "$1" &&
+   grep -qE 'color_14:' "$1" &&
+   grep -qE 'color_15:' "$1" &&
+   grep -qE 'color_16:' "$1"
+  then
+
+    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ Gogh format detected! $Reset"
+   
+    file_type_detected=true
+    file_type="Gogh"
+
+  fi
+
+}
+
+
+
 #__   ________                                        
 #\ \ / /| ___ \                                       
 # \ V / | |_/ /___  ___  ___  _   _ _ __ ___ ___  ___ 
@@ -748,12 +791,9 @@ function exec_Scanners () {
   fi
 
   #Gogh
-
-  #
-
-
-
-
+  if [[ "$file_type_detected" == false ]]; then
+    gogh_Scanner $1
+  fi
 
   #Format message
   if [[ "$file_type_detected" == true ]]; then
@@ -949,6 +989,42 @@ function OsoB16_Reader() {
 
 
 
+#  ________              .__     
+# /  _____/  ____   ____ |  |__  
+#/   \  ___ /  _ \ / ___\|  |  \ 
+#\    \_\  (  <_> ) /_/  >   Y  \
+# \______  /\____/\___  /|___|  /
+#        \/      /_____/      \/ 
+function Gogh_Reader() {
+
+  background=$(yq -r '.background' "$1" | sed 's/^#//')
+  foreground=$(yq -r '.foreground' "$1" | sed 's/^#//')
+  cursor=$(yq -r '.cursor' "$1" | sed 's/^#//')
+
+  b_black=$(yq -r '.color_01' "$1" | sed 's/^#//')
+  b_red=$(yq -r '.color_02' "$1" | sed 's/^#//')
+  b_green=$(yq -r '.color_03' "$1" | sed 's/^#//')
+  b_yellow=$(yq -r '.color_04' "$1" | sed 's/^#//')
+  b_blue=$(yq -r '.color_05' "$1" | sed 's/^#//')
+  b_magenta=$(yq -r '.color_06' "$1" | sed 's/^#//')
+  b_cyan=$(yq -r '.color_07' "$1" | sed 's/^#//')
+  b_white=$(yq -r '.color_08' "$1" | sed 's/^#//')
+
+  l_black=$(yq -r '.color_09' "$1" | sed 's/^#//')
+  l_red=$(yq -r '.color_10' "$1" | sed 's/^#//')
+  l_green=$(yq -r '.color_11' "$1" | sed 's/^#//')
+  l_yellow=$(yq -r '.color_12' "$1" | sed 's/^#//')
+  l_blue=$(yq -r '.color_13' "$1" | sed 's/^#//')
+  l_magenta=$(yq -r '.color_14' "$1" | sed 's/^#//')
+  l_cyan=$(yq -r '.color_15' "$1" | sed 's/^#//')
+  l_white=$(yq -r '.color_16' "$1" | sed 's/^#//')
+
+  # Verify data
+  verify_Data
+}
+
+
+
 #__   ________                                        
 #\ \ / /| ___ \                                       
 # \ V / | |_/ /___  ___  ___  _   _ _ __ ___ ___  ___ 
@@ -1036,6 +1112,11 @@ function exec_Reader () {
     "OsoB16")
       # Oso's Base16 Reader
       OsoB16_Reader $1 
+      ;;
+
+    "Gogh")
+      # Gogh Reader
+      Gogh_Reader $1 
       ;;
       
   esac
@@ -1406,6 +1487,7 @@ function exec_FILE () {
     exit_Code 6
   fi
 
+
   # verificar data
   if [[ "$dataVerified" == false ]]; then 
     echo -e "$bWHITE│   $bRED│   $bCYAN│   $bBLUE└── $bRED¤ ERROR : Missing or null values...$Reset"
@@ -1421,6 +1503,7 @@ function exec_FILE () {
   exec_Triggers
   echo -e "$bWHITE│   $bRED│   $bCYAN└─────────$Reset"
   echo -e "$bWHITE│   $bRED└──────────────$Reset"
+
   #remove the file?
   remove_file
 

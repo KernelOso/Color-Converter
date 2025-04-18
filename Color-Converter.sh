@@ -244,6 +244,8 @@ $bWHITE│   $bCYAN║$Reset    $bMAGN╠═════════════
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ XResources     ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Alacritty.toml ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN╚════════════════════$Reset
@@ -500,6 +502,12 @@ function verify_Dependencies () {
   # Dependency : yq
   if ! command -v yq &> /dev/null; then
     echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Missing Depdencencie : $bCYAN yq $Reset"
+    exit_Code 1
+  fi 
+
+  # Dependency : taplo
+  if ! command taplo --version &> /dev/null; then
+    echo -e "$bWHITE│   $bYELLOW└──$bRED ¤ Error : Missing Depdencencie : $bCYAN taplo $Reset"
     exit_Code 1
   fi 
 
@@ -853,6 +861,45 @@ function Kitty_Scanner () {
 }
 
 
+#  ___  _                 _ _   _         
+# / _ \| |               (_) | | |        
+#/ /_\ \ | __ _  ___ _ __ _| |_| |_ _   _ 
+#|  _  | |/ _` |/ __| '__| | __| __| | | |
+#| | | | | (_| | (__| |  | | |_| |_| |_| |
+#\_| |_/_|\__,_|\___|_|  |_|\__|\__|\__, |
+#                                    __/ |
+#                                   |___/ 
+function Alacritty_Scanner () {
+
+   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE├── $bCYAN¤ Executing Alacritty scanner... $Reset"
+
+  if grep -qE '^\s*\[colors\.primary\]' "$1" &&
+   grep -qE '^\s*foreground\s*=' "$1" &&
+   grep -qE '^\s*background\s*=' "$1" &&
+   grep -qE '^\s*\[colors\.cursor\]' "$1" &&
+   grep -qE '^\s*cursor\s*=' "$1" &&
+   grep -qE '^\s*\[colors\.normal\]' "$1" &&
+   grep -qE '^\s*black\s*=' "$1" &&
+   grep -qE '^\s*red\s*=' "$1" &&
+   grep -qE '^\s*green\s*=' "$1" &&
+   grep -qE '^\s*yellow\s*=' "$1" &&
+   grep -qE '^\s*blue\s*=' "$1" &&
+   grep -qE '^\s*magenta\s*=' "$1" &&
+   grep -qE '^\s*cyan\s*=' "$1" &&
+   grep -qE '^\s*white\s*=' "$1" &&
+   grep -qE '^\s*\[colors\.bright\]' "$1"
+  then
+
+    debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bCYAN└── $bGREEN¤ Alacritty format detected! $Reset"
+   
+    file_type_detected=true
+    file_type="Alacritty"
+
+  fi
+
+}
+
+
 
 # _____              
 #|  ___|             
@@ -888,6 +935,11 @@ function exec_Scanners () {
   #Kitty
   if [[ "$file_type_detected" == false ]]; then
     Kitty_Scanner $1
+  fi
+
+  #Alacritty
+  if [[ "$file_type_detected" == false ]]; then
+    Alacritty_Scanner $1
   fi
 
   #Format message
@@ -1247,6 +1299,54 @@ function Kitty_Reader () {
 
 
 
+#  ___  _                 _ _   _         
+# / _ \| |               (_) | | |        
+#/ /_\ \ | __ _  ___ _ __ _| |_| |_ _   _ 
+#|  _  | |/ _` |/ __| '__| | __| __| | | |
+#| | | | | (_| | (__| |  | | |_| |_| |_| |
+#\_| |_/_|\__,_|\___|_|  |_|\__|\__|\__, |
+#                                    __/ |
+#                                   |___/ 
+function Alacritty_Reader () {
+
+  # Save values on variables
+  background=$(taplo get -f $1 'colors.primary.background' | sed 's/^#//')
+  foreground=$(taplo get -f $1 'colors.primary.foreground' | sed 's/^#//')
+
+  cursor=$(taplo get -f $1 'colors.cursor.cursor' | sed 's/^#//')
+
+  b_black=$(taplo get -f $1 'colors.normal.black' | sed 's/^#//')
+  l_black=$(taplo get -f $1 'colors.bright.black' | sed 's/^#//')
+
+  b_red=$(taplo get -f $1 'colors.normal.red' | sed 's/^#//')
+  l_red=$(taplo get -f $1 'colors.bright.red' | sed 's/^#//')
+
+  b_green=$(taplo get -f $1 'colors.normal.green' | sed 's/^#//')
+  l_green=$(taplo get -f $1 'colors.bright.green' | sed 's/^#//')
+
+  b_yellow=$(taplo get -f $1 'colors.normal.yellow' | sed 's/^#//')
+  l_yellow=$(taplo get -f $1 'colors.bright.yellow' | sed 's/^#//')
+
+  b_blue=$(taplo get -f $1 'colors.normal.blue' | sed 's/^#//')
+  l_blue=$(taplo get -f $1 'colors.bright.blue' | sed 's/^#//')
+
+  b_magenta=$(taplo get -f $1 'colors.normal.magenta' | sed 's/^#//')
+  l_magenta=$(taplo get -f $1 'colors.bright.magenta' | sed 's/^#//')
+
+  b_cyan=$(taplo get -f $1 'colors.normal.cyan' | sed 's/^#//')
+  l_cyan=$(taplo get -f $1 'colors.bright.cyan' | sed 's/^#//')
+
+  b_white=$(taplo get -f $1 'colors.normal.white' | sed 's/^#//')
+  l_white=$(taplo get -f $1 'colors.bright.white' | sed 's/^#//')
+
+
+  # Verify data
+  verify_Data
+
+}
+
+
+
 # _____              
 #|  ___|             
 #| |____  _____  ___ 
@@ -1306,6 +1406,11 @@ function exec_Reader () {
     "Kitty")
       # Kitty Reader
       Kitty_Reader $1 
+      ;;
+    
+    "Alacritty")
+      # Kitty Reader
+      Alacritty_Reader $1 
       ;;
       
   esac
@@ -1453,6 +1558,14 @@ l_white:    "$l_white"
 EOF
 }
 
+
+
+#__   ________                                        
+#\ \ / /| ___ \                                       
+# \ V / | |_/ /___  ___  ___  _   _ _ __ ___ ___  ___ 
+# /   \ |    // _ \/ __|/ _ \| | | | '__/ __/ _ \/ __|
+#/ /^\ \| |\ \  __/\__ \ (_) | |_| | | | (_|  __/\__ \
+#\/   \/\_| \_\___||___/\___/ \__,_|_|  \___\___||___/
 function writter_XResources () {
   cat > "$1" <<EOF
 ! special

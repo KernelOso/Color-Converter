@@ -58,6 +58,7 @@ format_kitty=false
 format_xresources=false
 format_alacritty=false
 format_osoB16=false
+format_Termite=false
 
 # triggers values : 
 
@@ -218,36 +219,38 @@ $bWHITE│   $bCYAN║$Reset   $bBLUE Color-Converter.sh $bCYAN[help(s)] $bRED[p
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bCYAN ## Helps :
 $bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset    ¤$bCYAN [ -h | --help ]  $bWHITE :  $bCYAN Show THIS manual.
-$bWHITE│   $bCYAN║$Reset    ¤$bCYAN [ -d | --debug ] $bWHITE :  $bCYAN Show the extra debug messages.
+$bWHITE│   $bCYAN║$Reset    ¤$bCYAN [ -h | --help ]  $bWHITE        :  $bCYAN Show THIS manual.
+$bWHITE│   $bCYAN║$Reset    ¤$bCYAN [ -d | --debug ] $bWHITE        :  $bCYAN Show the extra debug messages.
 $bWHITE│   $bCYAN║$Reset    
 $bWHITE│   $bCYAN║$Reset $bRED ## Processes :
 $bWHITE│   $bCYAN║$Reset    
-$bWHITE│   $bCYAN║$Reset    ¤$bRED SHOW $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED Only SHOW the information in one $bWHITE<file>$bRED.
-$bWHITE│   $bCYAN║$Reset    ¤$bRED FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE :$bRED Process only one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset    ¤$bRED SHOW $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE:$bRED Only SHOW the information in one $bWHITE<file>$bRED.
+$bWHITE│   $bCYAN║$Reset    ¤$bRED FILE $bWHITE<file> $bYELLOW[trigger(s)] $bWHITE:$bRED Process only one $bWHITE<file>$bRED.
 $bWHITE│   $bCYAN║$Reset    
 $bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'FILE' process$bYELLOW triggers :
 $bWHITE│   $bCYAN║$Reset  
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET.
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Remove the $bWHITE<file>$bYELLOW post process. 
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --install [format(s)]   $bWHITE:$bYELLOW Install the color-scheme into the [format(s)](Terminal(s))
-$bWHITE│   $bCYAN║$Reset                               $bYELLOW selected.
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get $bWHITE                   :$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET.
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm  $bWHITE                   :$bYELLOW Remove the $bWHITE<file>$bYELLOW post process. 
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --install [format(s)] $bWHITE   :$bYELLOW Install the color-scheme into the [format(s)](Terminal(s))
+$bWHITE│   $bCYAN║$Reset                                $bYELLOW selected.
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --convert [format(s)] $bWHITE   :$bYELLOW Install the color-scheme into the [format(s)](Terminal(s))
+$bWHITE│   $bCYAN║$Reset                                $bYELLOW selected.
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bYELLOW ###$bRED 'SHOW' process$bYELLOW triggers :
 $bWHITE│   $bCYAN║$Reset  
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get   $bWHITE:$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET 
-$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Remove the $bWHITE<file>$bYELLOW post process. 
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --get $bWHITE                   :$bYELLOW Indicate that the $bWHITE<file>$bYELLOW arg is the URL of the file in raw/GET.
+$bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm  $bWHITE                   :$bYELLOW Remove the $bWHITE<file>$bYELLOW post process. 
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
 $bWHITE│   $bCYAN║$Reset
-$bWHITE│   $bCYAN║$Reset    ¤$bMAGN --all    $bWHITE:$bYELLOW Use ALL the avalible formats
+$bWHITE│   $bCYAN║$Reset    ¤$bMAGN --all $bWHITE                   :$bYELLOW Use ALL the avalible formats
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset    $bMAGN╔════════════════╦════════════════╦════════════════╦════════════════╦════════════════╗
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Format Name    ║ Format param   ║ Input Supp?    ║ Install Supp?  ║ Convert Supp?  ║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Gogh           ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Oso's Base16   ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Oso's Base16   ║$bGREEN --oso          $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Base16         ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
@@ -255,7 +258,9 @@ $bWHITE│   $bCYAN║$Reset    $bMAGN║ XResources     ║$bGREEN --xresources
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ Alacritty.toml ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Alacritty.toml ║$bGREEN --alacritty    $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Termite        ║$bGREEN --termite      $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN╚════════════════════$Reset
@@ -627,8 +632,11 @@ function verify_Params () {
       "--oso")
         format_osoB16=true
         formats_used=true
+        ;;
+      "--termite")
+        format_Termite=true
+        formats_used=true
         ;; 
-        
     esac
 
   done 
@@ -1649,6 +1657,58 @@ function writter_XResources () {
 EOF
 }
 
+
+
+# _____                   _ _       
+#|_   _|                 (_) |      
+#  | | ___ _ __ _ __ ___  _| |_ ___ 
+#  | |/ _ \ '__| '_ ` _ \| | __/ _ \
+#  | |  __/ |  | | | | | | | ||  __/
+#  \_/\___|_|  |_| |_| |_|_|\__\___|
+function writter_Termite () {
+  cat > "$1" <<EOF
+[colors]
+
+# special
+foreground      = #$foreground
+cursor          = #$cursor
+background      = #$background
+
+# black
+color0  = #$b_black
+color8  = #$l_black
+
+# red
+color1  = #$b_red
+color9  = #$l_red
+
+# green
+color2  = #$b_green
+color10 = #$l_green
+
+# yellow
+color3  = #$b_yellow
+color11 = #$l_yellow
+
+# blue
+color4  = #$b_blue
+color12 = #$l_blue
+
+# magenta
+color5  = #$b_magenta
+color13 = #$l_magenta
+
+# cyan
+color6  = #$b_cyan
+color14 = #$l_cyan
+
+# white
+color7  = #$b_white
+color15 = #$l_white
+
+EOF
+}
+
 #          88                                               88  88                                               
 #          88                            ,d                 88  88                                               
 #          88                            88                 88  88                                               
@@ -1764,8 +1824,26 @@ function converter_OsoB16 () {
 
   writter_OsoB16 "$1"
 
-}                                                       
-                                                          
+}  
+
+
+
+# _____                   _ _       
+#|_   _|                 (_) |      
+#  | | ___ _ __ _ __ ___  _| |_ ___ 
+#  | |/ _ \ '__| '_ ` _ \| | __/ _ \
+#  | |  __/ |  | | | | | | | ||  __/
+#  \_/\___|_|  |_| |_| |_|_|\__\___|
+function converter_Termite () {
+
+  fileOut=$(basename $1)
+
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting Termite theme : $fileOut : ... $Reset"
+
+  writter_Termite "$1"
+
+}  
+
 
 
 #     888888888888         88                                                                         
@@ -1906,8 +1984,11 @@ function exec_Triggers () {
           converter_OsoB16 "$output_file"
         fi
 
-        
-        
+        # Termite
+        if [[ "$format_Termite" == true ]]; then
+          output_file="$bsname-Termite"
+          converter_Termite "$output_file"
+        fi
 
       else
         debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bRED ¤ No formats to convert... $Reset"

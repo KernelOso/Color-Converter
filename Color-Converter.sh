@@ -59,6 +59,7 @@ format_xresources=false
 format_alacritty=false
 format_osoB16=false
 format_Termite=false
+format_Termux=false
 
 # triggers values : 
 
@@ -261,6 +262,8 @@ $bWHITE│   $bCYAN║$Reset    $bMAGN╠═════════════
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Alacritty.toml ║$bGREEN --alacritty    $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Termite        ║$bGREEN --termite      $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ Termux         ║$bGREEN --termux       $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN╚════════════════════$Reset
@@ -635,6 +638,10 @@ function verify_Params () {
         ;;
       "--termite")
         format_Termite=true
+        formats_used=true
+        ;; 
+      "--termux")
+        format_Termux=true
         formats_used=true
         ;; 
     esac
@@ -1709,6 +1716,41 @@ color15 = #$l_white
 EOF
 }
 
+
+
+# _____                              
+#|_   _|                             
+#  | | ___ _ __ _ __ ___  _   ___  __
+#  | |/ _ \ '__| '_ ` _ \| | | \ \/ /
+#  | |  __/ |  | | | | | | |_| |>  < 
+#  \_/\___|_|  |_| |_| |_|\__,_/_/\_\
+function writter_Termux () {
+  cat > "$1" <<EOF
+color0=#$b_black
+color1=#$b_red
+color2=#$b_green
+color3=#$b_yellow
+color4=#$b_blue
+color5=#$b_magenta
+color6=#$b_cyan
+color7=#$b_white
+color8=#$l_black
+color9=#$l_red
+color10=#$l_green
+color11=#$l_yellow
+color12=#$l_blue
+color13=#$l_magenta
+color14=#$l_cyan
+color15=#$l_white
+background=#$background
+foreground=#$foreground
+cursor=#$cursor
+
+EOF
+}
+
+
+
 #          88                                               88  88                                               
 #          88                            ,d                 88  88                                               
 #          88                            88                 88  88                                               
@@ -1846,6 +1888,24 @@ function converter_Termite () {
 
 
 
+# _____                              
+#|_   _|                             
+#  | | ___ _ __ _ __ ___  _   ___  __
+#  | |/ _ \ '__| '_ ` _ \| | | \ \/ /
+#  | |  __/ |  | | | | | | |_| |>  < 
+#  \_/\___|_|  |_| |_| |_|\__,_/_/\_\
+function converter_Termux () {
+
+  fileOut=$(basename $1)
+
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting termux theme : $fileOut : ... $Reset"
+
+  writter_Termux "$1"
+
+} 
+
+
+
 #     888888888888         88                                                                         
 #          88              ""                                                                         
 #          88                                                                                         
@@ -1925,6 +1985,8 @@ function exec_Triggers () {
     format_xresources=true
     format_alacritty=true
     format_osoB16=true
+    format_Termite=true
+    format_Termux=true
     
   fi
 
@@ -1988,6 +2050,12 @@ function exec_Triggers () {
         if [[ "$format_Termite" == true ]]; then
           output_file="$bsname-Termite"
           converter_Termite "$output_file"
+        fi
+
+        # Termux
+        if [[ "$format_Termux" == true ]]; then
+          output_file="$bsname-Termux.properties"
+          converter_Termux "$output_file"
         fi
 
       else

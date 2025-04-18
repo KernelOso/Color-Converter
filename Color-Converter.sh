@@ -56,8 +56,10 @@ trigg_convert=false
 output_file=""
 
 formats_used=false
+trigg_all=false
 
 format_kitty=false
+format_xresources=false
 
 # triggers values : 
 
@@ -233,6 +235,8 @@ $bWHITE│   $bCYAN║$Reset    ¤$bYELLOW --rm    $bWHITE:$bYELLOW Remove the $
 $bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset $bMAGN ## Formats :
 $bWHITE│   $bCYAN║$Reset
+$bWHITE│   $bCYAN║$Reset    ¤$bMAGN --all    $bWHITE:$bYELLOW Use ALL the avalible formats
+$bWHITE│   $bCYAN║$Reset
 $bWHITE│   $bCYAN║$Reset    $bMAGN╔════════════════╦════════════════╦════════════════╦════════════════╦════════════════╗
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Format Name    ║ Format param   ║ Input Supp?    ║ Install Supp?  ║ Convert Supp?  ║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
@@ -242,7 +246,7 @@ $bWHITE│   $bCYAN║$Reset    $bMAGN║ Oso's Base16   ║$bRED NULL          
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Base16         ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-$bWHITE│   $bCYAN║$Reset    $bMAGN║ XResources     ║$bRED NULL           $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bRED NO             $bMAGN║
+$bWHITE│   $bCYAN║$Reset    $bMAGN║ XResources     ║$bGREEN --xresources   $bMAGN║$bGREEN YES            $bMAGN║$bRED NO             $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
 $bWHITE│   $bCYAN║$Reset    $bMAGN║ Kitty .conf    ║$bGREEN --kitty        $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║$bGREEN YES            $bMAGN║
 $bWHITE│   $bCYAN║$Reset    $bMAGN╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
@@ -599,6 +603,22 @@ function verify_Params () {
         format_kitty=true
         formats_used=true
         ;;
+      "--all")
+        trigg_all=true
+        formats_used=true
+        ;;
+      "-a")
+        trigg_all=true
+        formats_used=true
+        ;;
+      "--xresources")
+        format_xresources=true
+        formats_used=true
+        ;;
+
+        
+
+        
         
     esac
 
@@ -1639,14 +1659,11 @@ EOF
 #                 |___/ 
 function installer_Kitty () {
 
-
-  # setear el output al de kitty
   output_file="$HOME/.config/kitty/theme.conf"
   fileOut=$(basename $output_file)
 
   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Installing kitty theme : $fileOut : ... $Reset"
 
-  # mandar a escribir el archivo en esa locacion
   writter_Kitty "$output_file"
 
 }
@@ -1674,15 +1691,31 @@ function installer_Kitty () {
 #                 |___/ 
 function converter_Kitty () {
 
-
-  # setear el output al de kitty
   output_file="$bsname-Kitty.conf"
   fileOut=$(basename $output_file)
 
   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting kitty theme : $fileOut : ... $Reset"
 
-  # mandar a escribir el archivo en esa locacion
-  writter_Kitty "$output_file"
+  writter_Kitty "$1$output_file"
+
+}
+
+
+
+#__   ________                                        
+#\ \ / /| ___ \                                       
+# \ V / | |_/ /___  ___  ___  _   _ _ __ ___ ___  ___ 
+# /   \ |    // _ \/ __|/ _ \| | | | '__/ __/ _ \/ __|
+#/ /^\ \| |\ \  __/\__ \ (_) | |_| | | | (_|  __/\__ \
+#\/   \/\_| \_\___||___/\___/ \__,_|_|  \___\___||___/
+function converter_XResources () {
+
+  output_file="$bsname-XResources.XResources"
+  fileOut=$(basename $output_file)
+
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting XResources theme : $fileOut : ... $Reset"
+
+  writter_XResources "$1$output_file"
 
 }
 
@@ -1760,6 +1793,14 @@ function remove_file () {
 #\____/_/\_\___|\___|           
 function exec_Triggers () {
 
+  if [[ $trigg_all == true ]]; then
+
+    # Activate all formats
+    format_kitty=true
+    format_xresources=true
+    
+  fi
+
   echo -e "$bWHITE│   $bRED│   $bCYAN├── $bBLUE¤ Executing triggers...$Reset"
 
   if [[ $triggers_used == false ]]; then
@@ -1796,6 +1837,12 @@ function exec_Triggers () {
         if [[ "$format_kitty" == true ]]; then
           converter_Kitty
         fi
+
+        # XResources
+        if [[ "$format_xresources" == true ]]; then
+          converter_XResources
+        fi
+        
 
       else
         debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bRED ¤ No formats to convert... $Reset"

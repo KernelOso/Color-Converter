@@ -60,6 +60,7 @@ trigg_all=false
 
 format_kitty=false
 format_xresources=false
+format_alacritty=false
 
 # triggers values : 
 
@@ -72,6 +73,9 @@ fileEmpty=false
 fileAccess=false
 dataVerified=false
 canDownload=false
+
+#Baddies 
+actual_Dir=""
 
 #colors :
 background=""
@@ -615,11 +619,10 @@ function verify_Params () {
         format_xresources=true
         formats_used=true
         ;;
-
-        
-
-        
-        
+      "--alacritty")
+        format_alacritty=true
+        formats_used=true
+        ;; 
     esac
 
   done 
@@ -1691,12 +1694,11 @@ function installer_Kitty () {
 #                 |___/ 
 function converter_Kitty () {
 
-  output_file="$bsname-Kitty.conf"
-  fileOut=$(basename $output_file)
+  fileOut=$(basename $1)
 
   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting kitty theme : $fileOut : ... $Reset"
 
-  writter_Kitty "$1$output_file"
+  writter_Kitty "$1"
 
 }
 
@@ -1710,14 +1712,36 @@ function converter_Kitty () {
 #\/   \/\_| \_\___||___/\___/ \__,_|_|  \___\___||___/
 function converter_XResources () {
 
-  output_file="$bsname-XResources.XResources"
-  fileOut=$(basename $output_file)
+  fileOut=$(basename $1)
 
   debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting XResources theme : $fileOut : ... $Reset"
 
-  writter_XResources "$1$output_file"
+  writter_XResources "$1"
 
 }
+
+
+
+#  ___  _                 _ _   _         
+# / _ \| |               (_) | | |        
+#/ /_\ \ | __ _  ___ _ __ _| |_| |_ _   _ 
+#|  _  | |/ _` |/ __| '__| | __| __| | | |
+#| | | | | (_| | (__| |  | | |_| |_| |_| |
+#\_| |_/_|\__,_|\___|_|  |_|\__|\__|\__, |
+#                                    __/ |
+#                                   |___/ 
+function converter_Alacritty () {
+
+  fileOut=$(basename $1)
+
+  debug_Message "$bWHITE│   $bRED│   $bCYAN│   $bBLUE│   $bYELLOW└──$bMAGN ¤ Converting Alacritty theme : $fileOut : ... $Reset"
+
+  writter_Alacritty "$1"
+
+}
+
+
+
 
 
 
@@ -1798,6 +1822,7 @@ function exec_Triggers () {
     # Activate all formats
     format_kitty=true
     format_xresources=true
+    format_alacritty=true
     
   fi
 
@@ -1835,13 +1860,23 @@ function exec_Triggers () {
 
         # Kitty
         if [[ "$format_kitty" == true ]]; then
-          converter_Kitty
+          output_file="$bsname-Kitty.conf"
+          converter_Kitty "$output_file"
         fi
 
         # XResources
         if [[ "$format_xresources" == true ]]; then
-          converter_XResources
+          output_file="$bsname-XResources.XResources"
+          converter_XResources "$output_file"
         fi
+
+        # Alacritty
+        if [[ "$format_alacritty" == true ]]; then
+          output_file="$bsname-Alacritty.toml"
+          converter_Alacritty "$output_file"
+        fi
+
+        
         
 
       else

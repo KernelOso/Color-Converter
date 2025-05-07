@@ -5,8 +5,7 @@ function process () {
   local file="${PROCESS_ARG}"
   
   # Exec : pre-process flags
-    get_file "$file" PROCESS_ARG
-    file="${PROCESS_ARG}"
+    file="$(get_file "$file")"
 
   log_message "$(get_message "processing_file") ${file}" "index" 2 "${COLOR_FILE}"
 

@@ -35,7 +35,7 @@ declare -A messages=(
   # Flags
 
     # --get :
-    [getting_file]="${PREFIX_ACTION} Fetching file:"
+    [getting_file]="${PREFIX_ACTION} Fetching file: ${COLOR_W}"
     [file_getted]="${PREFIX_SUCCESS} File downloaded successfully!"
 
     # --help 

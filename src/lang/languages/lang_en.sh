@@ -43,7 +43,7 @@ declare -A messages=(
     [manual_content]="
 Color-Processor: A tool for managing color themes!
 
-#Dependencies:
+# Dependencies:
 
   ¤ Bash
   ¤ yq
@@ -86,21 +86,21 @@ Color-Processor: A tool for managing color themes!
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
   ║ Gogh           ║ NULL           ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Oso's Base16   ║ --oso          ║ YES            ║ NO             ║ YES            ║
+  ║ Oso's Base16   ║ --oso          ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
   ║ Base16         ║ NULL           ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ XResources     ║ --xresources   ║ YES            ║ NO             ║ YES            ║
+  ║ XResources     ║ --xresources   ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Kitty .conf    ║ --kitty        ║ YES            ║ YES            ║ YES            ║
+  ║ Kitty .conf    ║ --kitty        ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Alacritty.toml ║ --alacritty    ║ YES            ║ NO             ║ YES            ║
+  ║ Alacritty.toml ║ --alacritty    ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Termite        ║ --termite      ║ NO             ║ NO             ║ YES            ║
+  ║ Termite        ║ --termite      ║ NO             ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Termux         ║ --termux       ║ NO             ║ NO             ║ YES            ║
+  ║ Termux         ║ --termux       ║ NO             ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Linux TTY      ║ --linuxtty     ║ NO             ║ NO             ║ YES            ║
+  ║ Linux TTY      ║ --linuxtty     ║ NO             ║ NO             ║ NO             ║
   ╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
   "
 
@@ -143,5 +143,18 @@ Color-Processor: A tool for managing color themes!
     # readers :
     [verifying_reader]="${PREFIX_VERIFICATOR} Verifying reader:${COLOR_W}"
     [executing_reader]="${PREFIX_ACTION} Running reader:${COLOR_W}"
+
+  # file actions
+
+    [executing_file_actions]="${PREFIX_ACTION} Executing proccesses over files ${COLOR_W}"
+
+      # converters :
+      [executing_converters]="${PREFIX_ACTION} Running converters...${COLOR_W}"
+      [executing_conversor]="${PREFIX_STEP} Executing conversor :${COLOR_W}"
+      [no_converters_to_execute]="${PREFIX_ERROR} There's no formats to convert!${COLOR_W}"
+      [file_converted]="${PREFIX_SUCCESS} File converted! :${COLOR_W}"
+      [all_files_converted]="${PREFIX_SUCCESS} All files converted!${COLOR_W}"
+    
+    [all_file_actions_executed]="${PREFIX_SUCCESS} All file process executed! ${COLOR_W}"
 
 )

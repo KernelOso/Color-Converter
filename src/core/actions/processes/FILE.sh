@@ -30,10 +30,12 @@ function process () {
 
   print_colors ${colors[@]}
 
-  # ejecutar flags
-  # TODO : ejecutar acciones.... ( convert / install)
+  # exec flags
+  exec_file_actions "$file" ${colors[@]}
 
-
+  # close lines
+  log_close 2
+  log_close 1
 
   # exec : post-process flags
     remove_file "$file"

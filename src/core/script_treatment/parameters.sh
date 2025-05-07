@@ -36,6 +36,7 @@ function verify_args () {
 
 function load_parameters () {
 
+  log_message "$(get_message "reading_parameters")" "index" 1 "${COLOR_VERIFICATOR}" false
   
   local params=( "$@" )
   local processes_used=0
@@ -43,7 +44,6 @@ function load_parameters () {
   local arg_position=0
   local arguments=()
 
-  log_message "$(get_message "reading_parameters")" "index" 1 "${COLOR_VERIFICATOR}" false
 
   for param in "${params[@]}"; 
   do
@@ -91,6 +91,41 @@ function load_parameters () {
       "--rm")
         FLAG_REMOVE=true
         ;;
+      # FILE flags
+      "--convert"|"-c")
+        FLAG_CONVERT=true
+        ;;
+      "--install"|"-i")
+        FLAG_INSTALL=true
+        ;;
+      
+      # formats
+      "--all"|"-a")
+        FLAG_ALL=true
+        ;;
+      "--kitty")
+        FLAG_FORMATS+=("kitty")
+        ;;
+      "--alacritty")
+        FLAG_FORMATS+=("alacritty")
+        ;;
+      "--oso")
+        FLAG_FORMATS+=("oso")
+        ;;
+      "--xresources")
+        FLAG_FORMATS+=("xresources")
+        ;;
+      "--termite")
+        FLAG_FORMATS+=("termite")
+        ;;
+      "--termux")
+        FLAG_FORMATS+=("termux")
+        ;;
+      "--linux")
+        FLAG_FORMATS+=("linux")
+        ;;
+
+
     esac
 
   done

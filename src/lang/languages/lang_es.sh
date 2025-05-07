@@ -29,13 +29,13 @@ declare -A messages=(
     [Verifying_dependencies]="${PREFIX_VERIFICATOR} Verificando dependencias... "
   
     # Argument Treatment
-    [verifying_args]="${PREFIX_STEP} Verificando el argumento :"
+    [verifying_args]="${PREFIX_STEP} Verificando el argumento :${COLOR_W}"
     [arguments_verified]="${PREFIX_SUCCESS} Argumentos verificados! "
 
   # Flags
 
     # --get :
-    [getting_file]="${PREFIX_ACTION} Obteniendo el arcivo :"
+    [getting_file]="${PREFIX_ACTION} Obteniendo el arcivo :${COLOR_W}"
     [file_getted]="${PREFIX_SUCCESS} El archivo se descargo correctamente! "
 
     # --help 
@@ -84,25 +84,25 @@ Color-Procesor : Una herramienta de manejo de temas de colores!
   ¤ --all                    : Usa TODOS los formatos disponibles
 
   ╔════════════════╦════════════════╦════════════════╦════════════════╦════════════════╗
-  ║ Nombre Formato ║ param Formato  ║ Soprt Entrada? ║ Soprt Instala? ║ Soprt Convers? ║
+  ║ Format Name    ║ Format Param   ║ Input Support? ║ Install Supp?  ║ Convert Supp?  ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
   ║ Gogh           ║ NULL           ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Oso's Base16   ║ --oso          ║ YES            ║ NO             ║ YES            ║
+  ║ Oso's Base16   ║ --oso          ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
   ║ Base16         ║ NULL           ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ XResources     ║ --xresources   ║ YES            ║ NO             ║ YES            ║
+  ║ XResources     ║ --xresources   ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Kitty .conf    ║ --kitty        ║ YES            ║ YES            ║ YES            ║
+  ║ Kitty .conf    ║ --kitty        ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Alacritty.toml ║ --alacritty    ║ YES            ║ NO             ║ YES            ║
+  ║ Alacritty.toml ║ --alacritty    ║ YES            ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Termite        ║ --termite      ║ NO             ║ NO             ║ YES            ║
+  ║ Termite        ║ --termite      ║ NO             ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Termux         ║ --termux       ║ NO             ║ NO             ║ YES            ║
+  ║ Termux         ║ --termux       ║ NO             ║ NO             ║ NO             ║
   ╠════════════════╬════════════════╬════════════════╬════════════════╬════════════════╣
-  ║ Linux TTY      ║ --linuxtty     ║ NO             ║ NO             ║ YES            ║
+  ║ Linux TTY      ║ --linuxtty     ║ NO             ║ NO             ║ NO             ║
   ╚════════════════╩════════════════╩════════════════╩════════════════╩════════════════╝
   "
 
@@ -147,4 +147,16 @@ Color-Procesor : Una herramienta de manejo de temas de colores!
     [verifying_reader]="${PREFIX_VERIFICATOR} Verificando el lector :${COLOR_W}"
     [executing_reader]="${PREFIX_ACTION} Ejecutando el lector :${COLOR_W}"
 
+  # file actions
+
+    [executing_file_actions]="${PREFIX_ACTION} Ejecutando procesos sobre archivos ${COLOR_W}"
+
+      # converters :
+      [executing_converters]="${PREFIX_ACTION} Ejecutando convertidores...${COLOR_W}"
+      [executing_conversor]="${PREFIX_STEP} Ejecutando conversor :${COLOR_W}"
+      [no_converters_to_execute]="${PREFIX_ERROR} No hay formatos a convertir!${COLOR_W}"
+      [file_converted]="${PREFIX_SUCCESS} Archivo convertido! :${COLOR_W}"
+      [all_files_converted]="${PREFIX_SUCCESS} Todos los archivos han sido convertidos!${COLOR_W}"
+
+    [all_file_actions_executed]="${PREFIX_SUCCESS} Todos los procesos ejecutados! ${COLOR_W}"
 )

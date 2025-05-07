@@ -21,7 +21,7 @@ function verify_reader () {
   local format="$1"
   local readers_dir="${SCRIPT_DIR}/core/actions/readers"
 
-  log_message "$(get_message "verifying_reader") ${format}" "index" 3 "${COLOR_VERIFICATOR}" false
+  log_message "$(get_message "verifying_reader") ${format}" "index" 3 "${COLOR_VERIFICATOR}" true
 
   local script="${readers_dir}/${format}.sh"
   if [ ! -f "$script" ]; then

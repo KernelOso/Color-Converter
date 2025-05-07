@@ -47,6 +47,9 @@ function log_message () {
   local level1="${C_LEVEL_1}${SYMB_VER_BAR}${SYMB_TAB}"
   local level2="${C_LEVEL_2}${SYMB_VER_BAR}${SYMB_TAB}"
   local level3="${C_LEVEL_3}${SYMB_VER_BAR}${SYMB_TAB}"
+  local level4="${C_LEVEL_4}${SYMB_VER_BAR}${SYMB_TAB}"
+  local level5="${C_LEVEL_5}${SYMB_VER_BAR}${SYMB_TAB}"
+  local level6="${C_LEVEL_6}${SYMB_VER_BAR}${SYMB_TAB}"
 
   # treat : empty color
   if [[ "$level_color" == "" ]];
@@ -76,6 +79,10 @@ function log_message () {
 
       5)
       level_color="${C_LEVEL_5}"
+      ;;
+
+      6)
+      level_color="${C_LEVEL_6}"
       ;;
 
     esac
@@ -118,6 +125,14 @@ function log_message () {
 
       4)
       level4=" ${SYMB_TAB}"
+      ;;
+
+      5)
+      level5=" ${SYMB_TAB}"
+      ;;
+
+      6)
+      level6=" ${SYMB_TAB}"
       ;;
 
     esac
@@ -168,6 +183,11 @@ function log_message () {
     5)
       C_LEVEL_5="$level_color"
       prefix="${level0}${level1}${level2}${level3}${C_LEVEL_4}${symbol}${C_LEVEL_5}"
+    ;;
+
+    6)
+      C_LEVEL_6="$level_color"
+      prefix="${level0}${level1}${level2}${level3}${level4}${C_LEVEL_5}${symbol}${C_LEVEL_6}"
     ;;
 
   esac
@@ -259,3 +279,5 @@ function manual_bottom () {
   echo -e "${level0}${botom}"
 
 } 
+
+

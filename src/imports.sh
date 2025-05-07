@@ -5,13 +5,12 @@
   source "${SCRIPT_DIR}/libs/parameter_values.sh"
   source "${SCRIPT_DIR}/libs/symbols_values.sh"
 
-# language selection :
-  source "${SCRIPT_DIR}/lang/languages/lang_${USER_LANG}.sh"
-
 #source "${SCRIPT_DIR}/core/"
   source "${SCRIPT_DIR}/core/actions/processes_executor.sh"
   source "${SCRIPT_DIR}/core/actions/readers_executor.sh"
   source "${SCRIPT_DIR}/core/actions/scanners_executor.sh"
+  source "${SCRIPT_DIR}/core/actions/file_actions_executor.sh"
+  source "${SCRIPT_DIR}/core/actions/file_actions/converter_executor.sh"
 
   source "${SCRIPT_DIR}/core/data_helpers/file_verifier/verifications/verify_access.sh"
   source "${SCRIPT_DIR}/core/data_helpers/file_verifier/verifications/verify_exist.sh"
@@ -31,4 +30,7 @@
   source "${SCRIPT_DIR}/core/log.sh"
 
 #source "${SCRIPT_DIR}/lang/"
+  source "${SCRIPT_DIR}/lang/message_getter.sh"
   source "${SCRIPT_DIR}/lang/language_getter.sh"
+
+

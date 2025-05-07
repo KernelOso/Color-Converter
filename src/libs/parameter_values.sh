@@ -23,5 +23,11 @@ FLAG_HELP=false
 FLAG_GET=false
 FLAG_REMOVE=false
 
+# FILE process flags
+FLAG_CONVERT=false
+FLAG_INSTALL=false
 
+# formats flags
+FLAG_ALL=false
+FLAG_FORMATS=()
 

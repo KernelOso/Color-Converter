@@ -8,15 +8,13 @@
 
 #Save the location of the script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-#USER_LANG="${LANG%%_*}"
-USER_LANG="en"
 source "${SCRIPT_DIR}/imports.sh"
 
 function main () {
 
-  local params=( "$@" )
-
   clear
+
+  local params=( "$@" )
 
   log_welcome
 
@@ -28,6 +26,7 @@ function main () {
   verify_Dependencies
 
   exec_processes
+
 }
 
 main "$@"

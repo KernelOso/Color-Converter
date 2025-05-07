@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-source "${SCRIPT_DIR}/core/actions/processes/SHOW.sh"
-
 function exec_processes () {
   
   local process="${PROCESS_TYPE}"
@@ -19,6 +17,9 @@ function exec_processes () {
 
     "FILE")
       #exec_FILE
+      local process="${process_dir}/FILE.sh"
+      source "${process}"
+      process
       ;;
 
     "BADDIES")
@@ -27,6 +28,7 @@ function exec_processes () {
     
     "SHOW")
       local process="${process_dir}/SHOW.sh"
+      source "${process}"
       process
       ;;
 

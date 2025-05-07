@@ -1,10 +1,24 @@
 #!/usr/bin/env bash
 
-function get_message ( ) {
+USER_LANG="${LANG%%_*}"
+#USER_LANG="es"
 
-  local key="$1"
+index=0
+arg_position=0
+for param  in "$@"; do
+  ((index++))
+    case "$param" in
+      "--lang"|"-l")
+        # TODO
+        arg_position=$((index + 1))
+        USER_LANG="${!arg_position}"
+        ;;
+    esac 
+done
 
-  declare -n msg_set="messages"
-  echo "${msg_set[$key]}"  
-
-}
+if [[ -f "${SCRIPT_DIR}/lang/languages/lang_${USER_LANG}.sh" ]];then
+  source "${SCRIPT_DIR}/lang/languages/lang_${USER_LANG}.sh"
+else 
+  USER_LANG=en
+  source "${SCRIPT_DIR}/lang/languages/lang_${USER_LANG}.sh"
+fi

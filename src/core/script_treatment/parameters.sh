@@ -98,34 +98,73 @@ function load_parameters () {
       "--install"|"-i")
         FLAG_INSTALL=true
         ;;
+      # FILE flags
+      "--outdir")
+        FLAG_OUT_DIR=true
+
+        # save argument
+        arg_position=$((index + 1))
+        OUT_DIR_ARG="${!arg_position}"
+        arguments+=("OUT_DIR_ARG")
+        ;;
+      "--mkdir")
+        FLAG_MKDIR=true
+        ;;
+      "--outname")
+        FLAG_OUT_NAME=true
+
+        # save argument
+        arg_position=$((index + 1))
+        OUT_BASENAME_ARG="${!arg_position}"
+        arguments+=("OUT_BASENAME_ARG")
+        ;;
       
       # formats
       "--all"|"-a")
         FLAG_ALL=true
         ;;
       "--kitty")
-        FLAG_FORMATS+=("kitty")
+        if [[ ! $FORMAT_KITTY ]];then
+          FLAG_FORMATS+=("kitty")
+          FORMAT_KITTY=true
+        fi
         ;;
       "--alacritty")
-        FLAG_FORMATS+=("alacritty")
+        if [[ ! $FORMAT_ALACRITTY ]];then
+          FLAG_FORMATS+=("alacritty")
+          FORMAT_ALACRITTY=true
+        fi
         ;;
       "--oso")
-        FLAG_FORMATS+=("oso")
+        if [[ ! $FORMAT_OSO ]];then
+          FLAG_FORMATS+=("oso")
+          FORMAT_OSO=true
+        fi
         ;;
       "--xresources")
-        FLAG_FORMATS+=("xresources")
+        if [[ ! $FORMAT_XRESOURCES ]];then
+          FLAG_FORMATS+=("xresources")
+          FORMAT_XRESOURCES=true
+        fi
         ;;
       "--termite")
-        FLAG_FORMATS+=("termite")
+        if [[ ! $FORMAT_TERMITE ]];then
+          FLAG_FORMATS+=("termite")
+          FORMAT_TERMITE=true
+        fi
         ;;
       "--termux")
-        FLAG_FORMATS+=("termux")
+        if [[ ! $FORMAT_TERMUX ]];then
+          FLAG_FORMATS+=("termux")
+          FORMAT_TERMUX=true
+        fi
         ;;
       "--linux")
-        FLAG_FORMATS+=("linux")
+        if [[ ! $FORMAT_LINUX ]];then
+          FLAG_FORMATS+=("linux")
+          FORMAT_LINUX=true
+        fi
         ;;
-
-
     esac
 
   done

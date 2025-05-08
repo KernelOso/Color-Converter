@@ -10,12 +10,14 @@ EXISTING_FLAGS=(
   "--rm"
 )
 
-# Process
+PROCESS_TYPE=""
+# ARGUMENTS
 
-  # arg treatment
-  PROCESS_TYPE=""
   PROCESS_ARG=""
   FILE_BASENAME=""
+
+  OUT_DIR_ARG=""
+  OUT_BASENAME_ARG=""
 
 #flags triggers
 FLAG_DEBUG=false
@@ -27,7 +29,20 @@ FLAG_REMOVE=false
 FLAG_CONVERT=false
 FLAG_INSTALL=false
 
+FLAG_OUT_DIR=false
+FLAG_MKDIR=false
+
+FLAG_OUT_NAME=false
+
 # formats flags
 FLAG_ALL=false
 FLAG_FORMATS=()
 
+# format triggers (prevent format duplicate in list)
+FORMAT_KITTY=false
+FORMAT_ALACRITTY=false
+FORMAT_OSO=false
+FORMAT_XRESOURCES=false
+FORMAT_TERMITE=false
+FORMAT_TERMUX=false
+FORMAT_LINUX=false

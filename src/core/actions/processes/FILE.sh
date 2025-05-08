@@ -9,12 +9,8 @@ function process () {
 
   log_message "$(get_message "processing_file") ${file}" "index" 2 "${COLOR_FILE}"
 
-  # verify file integriti
+  # verify file integrity
   verify_file_whit_exit "$file"
-
-  # save file (color-scheme) name
-  local file_basename=""
-  file_basename=${file%.*}
 
   # exec scanners :
   local format=""
@@ -25,11 +21,13 @@ function process () {
   verify_reader_whit_exit "$format"
   mapfile -t colors < <(exec_reader "$file" "$format")
 
+  # verify values
   verify_data_whit_exit ${colors[@]}
 
+  # show colors on tui
   print_colors ${colors[@]}
 
-  # exec flags
+  # exec file actions
   exec_file_actions "$file" ${colors[@]}
 
   # close lines

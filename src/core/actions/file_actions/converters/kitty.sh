@@ -2,10 +2,10 @@
 
 function convert () {
 
-  local file="$1"
-
+  local out_dir="$1"
   shift
-  
+  local out_name="$1"
+  shift
   local colors=("$@")
 
   local background="$1"
@@ -30,20 +30,10 @@ function convert () {
   local l_cyan="${18}"
   local l_white="${19}"
 
-
-  local output_dir=""
-  output_dir="$(dirname "$file")/"
-
-  local file_basename=""
-  file_basename="${file##*/}"
-  file_basename="${file_basename%.*}"
-
-
   local format="kitty"
   local output_sufix="-kitty.conf"
 
-  local output_file="${output_dir}${file_basename}${output_sufix}"
-  
+  local output_file="${out_dir}${out_name}${output_sufix}"
 
   log_message "$(get_message "executing_conversor") ${format}" "index" 5 "${COLOR_STEP}" true
 

@@ -148,6 +148,9 @@ Color-Processor: A tool to manage color themes!
 
     [executing_file_actions]="${PREFIX_ACTION} Performing file operations: ${COLOR_W}"
 
+    # --outname flag
+    [basename_set_to]="${PREFIX_STEP} Output name set to: ${COLOR_W}"
+
     # --outdir flag
     [path_set_to]="${PREFIX_STEP} Output path set to: ${COLOR_W}"
     [unexisting_path]="${PREFIX_ERROR} Provided path does not exist: ${COLOR_W}"

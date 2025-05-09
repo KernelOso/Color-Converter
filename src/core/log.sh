@@ -1,21 +1,61 @@
 #!/usr/bin/env bash
 
 
-function log_welcome ( ) {
+function show_banner () {
 
-cat <<EOF
-$(printf "
-${C_LEVEL_0} _______       __                   _______                                        
-|   _   .-----|  .-----.----.______|   _   .----.-----.----.-----.-----.-----.----.
-|.  1___|  _  |  |  _  |   _|______|.  1   |   _|  _  |  __|  -__|__ --|  _  |   _|
-|.  |___|_____|__|_____|__|        |.  ____|__| |_____|____|_____|_____|_____|__|  
-|:  1   |                          |:  |                                           
-|::.. . |                          |::.|                                           
-\`-------'                          \`---'  ${E_RESET} 
-") 
-EOF
+  local sizeX=0
+  local sizeY=0
+  local image=(
+
+  )
+
+  # TODO : duplicate pixelart resolution, using this thing : "▀"
+    # 1. recorrer dos filas de pixeles a la vez
+    # 2. el pixel de la fila superior sera el color del caracter ▀ usando : \e[38;2;RRR;GGG;BBBm
+    # 3. el pixel de la fila inferior sera el color del fondo usando : \e[48;2;RRR;GGG;BBBm
+    # 4. cuando el pixel sea color negro abolsuto (000,000,000), sera transparente
+      # (esto puede ocasionar errores cuando el pixel inferior si tiene color y el pixel superior no, tomar en cuanta al dibujar)
+    # 5. si la altura del pixel art es impar, el programa debera detectar que esta accediendo a valores vacios, por lo tanto, sera transparente el fondo
+  # TODO : add random / easter eggs banner system
+
+
+  source "${SCRIPT_DIR}/resources/image.sh"
+
+  pixel_count=${#image[@]}
+  pixel_count=$((pixel_count / 3))
+
+  local index=0
+  local ascii_art=""
+
+  local value_R=""
+  local value_G=""
+  local value_B=""
+
+  for ((y=1; y<=sizeY; y++)); do
+    for ((x=1; x<=sizeX; x++)); do
+      value_R=${image[index]}
+      ((index++))
+      value_G=${image[index]}
+      ((index++))
+      value_B=${image[index]}
+      ((index++))
+
+      ascii_art="${ascii_art}\e[48;2;${value_R};${value_G};${value_B}m"
+
+      ascii_art="${ascii_art}  \e[0m"
+    done
+    ascii_art="${ascii_art}\n"
+  done
+
+  #remove last line jump
+  ascii_art="${ascii_art%??}"
+
+  echo -e "$ascii_art"
+  #echo  "$ascii_art"
+}
+
+function log_welcome ( ) {
 echo -e "${C_LEVEL_0}¤ / $E_RESET"
-  
 }
 
 function log_close () {

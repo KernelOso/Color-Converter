@@ -16,6 +16,8 @@ function main () {
 
   local params=( "$@" )
 
+  show_banner
+
   log_welcome
 
   #./core/script_treatment.sh

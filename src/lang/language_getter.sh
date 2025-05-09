@@ -9,7 +9,6 @@ for param  in "$@"; do
   ((index++))
     case "$param" in
       "--lang"|"-l")
-        # TODO
         arg_position=$((index + 1))
         USER_LANG="${!arg_position}"
         ;;

@@ -24,6 +24,9 @@ function exec_processes () {
 
     "BADDIES")
       #exec_BADDIES
+      local process="${process_dir}/BADDIES.sh"
+      source "${process}"
+      process
       ;;
     
     "SHOW")

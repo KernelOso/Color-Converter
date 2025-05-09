@@ -34,9 +34,10 @@ function verify_file_whit_exit () {
   local file="$1"
 
   verify_file "$file"
-  if [[ $? -gt 0 ]];
+  local code=$?
+  if [[ $code -gt 0 ]];
   then
-    exit_code $? 
+    exit_code $code
   fi
 
 }

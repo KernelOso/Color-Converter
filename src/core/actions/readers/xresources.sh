@@ -26,6 +26,9 @@ function reader() {
   local l_cyan=""
   local l_white=""
 
+  local format="XResources"
+  log_message "$(get_message "executing_reader") ${format}" "index" 3 "${COLOR_ACTION}" false
+
   # Save values on variables
   background=$(grep '\*.background:' "$1" | awk '{gsub(/^#/, "", $2); print $2}')
   foreground=$(grep '\*.foreground:' "$1" | awk '{gsub(/^#/, "", $2); print $2}')

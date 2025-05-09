@@ -44,9 +44,10 @@ function exec_scanners_whit_exit () {
   local file="$1"
 
   exec_scanners "$file"
-  if [[ $? == 10 ]];
+  local code=$?
+  if [[ $code == 10 ]];
   then
-    exit_code 10 
+    exit_code $code 
   fi
 
 }

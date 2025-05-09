@@ -3,8 +3,8 @@
 function scanner() {
   local file="$1"
   local script_name="XResources"
-  local format_name="XResources"
-  log_message "$(get_message "executing_scanner") ${E_RESET}${script_name}" "index" 4 "${COLOR_STEP}" true
+  local format="xresources"
+  log_message "$(get_message "executing_scanner") ${script_name}" "index" 4 "${COLOR_STEP}" true
     
   if 
     grep -q "^! special" "$file" &&
@@ -44,7 +44,7 @@ function scanner() {
     grep -q "^\*\.color7:" "$file" &&
     grep -q "^\*\.color15:" "$file"
   then
-    log_message "$(get_message "format_detected") ${E_RESET}${script_name}" "last" 5 "${COLOR_SUCCESS}" true
-    echo "$format_name"
+    log_message "$(get_message "format_detected") ${script_name}" "last" 5 "${COLOR_SUCCESS}" true
+    echo "$format"
   fi
 }    

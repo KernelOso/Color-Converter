@@ -26,6 +26,9 @@ function reader() {
   local l_cyan=""
   local l_white=""
 
+  local format="Gogh"
+  log_message "$(get_message "executing_reader") ${format}" "index" 3 "${COLOR_ACTION}" false
+
   # Save values on variables
   background=$(yq -r '.background' "$1" | sed 's/^#//')
   foreground=$(yq -r '.foreground' "$1" | sed 's/^#//')

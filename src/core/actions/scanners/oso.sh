@@ -3,8 +3,8 @@
 function scanner() {
   local file="$1"
   local script_name="Oso's Base16"
-  local format_name="OsoB16"
-  log_message "$(get_message "executing_scanner") ${E_RESET}${script_name}" "index" 4 "${COLOR_STEP}" true
+  local format="oso"
+  log_message "$(get_message "executing_scanner") ${script_name}" "index" 4 "${COLOR_STEP}" true
     
   if 
     grep -qE 'background:' "$file" &&
@@ -27,7 +27,7 @@ function scanner() {
     grep -qE 'l_cyan:' "$file" &&
     grep -qE 'l_white:' "$file"
   then
-    log_message "$(get_message "format_detected") ${E_RESET}${script_name}" "last" 5 "${COLOR_SUCCESS}" true
-    echo "$format_name"
+    log_message "$(get_message "format_detected") ${script_name}" "last" 5 "${COLOR_SUCCESS}" true
+    echo "$format"
   fi
 }

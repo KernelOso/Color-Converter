@@ -26,6 +26,9 @@ function reader() {
   local l_cyan=""
   local l_white=""
 
+  local format="Alacritty"
+  log_message "$(get_message "executing_reader") ${format}" "index" 3 "${COLOR_ACTION}" false
+
   # Save values on variables
   background=$(taplo get -f $1 'colors.primary.background' | sed 's/^#//')
   foreground=$(taplo get -f $1 'colors.primary.foreground' | sed 's/^#//')

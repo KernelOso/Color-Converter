@@ -3,8 +3,8 @@
 function scanner() {
   local file="$1"
   local script_name="Alacritty"
-  local format_name="Alacritty"
-  log_message "$(get_message "executing_scanner") ${E_RESET}${script_name}" "index" 4 "${COLOR_STEP}" true
+  local format="alacritty"
+  log_message "$(get_message "executing_scanner") ${script_name}" "index" 4 "${COLOR_STEP}" true
     
   if 
     grep -qE '^\s*\[colors\.primary\]' "$file" &&
@@ -23,7 +23,7 @@ function scanner() {
     grep -qE '^\s*white\s*=' "$file" &&
     grep -qE '^\s*\[colors\.bright\]' "$file"
   then
-    log_message "$(get_message "format_detected") ${E_RESET}${script_name}" "last" 5 "${COLOR_SUCCESS}" true
-    echo "$format_name"
+    log_message "$(get_message "format_detected") ${script_name}" "last" 5 "${COLOR_SUCCESS}" true
+    echo "$format"
   fi
 }

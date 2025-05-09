@@ -26,28 +26,31 @@ function reader() {
   local l_cyan=""
   local l_white=""
 
+  local format="Oso's Base16"
+  log_message "$(get_message "executing_reader") ${format}" "index" 3 "${COLOR_ACTION}" false
+
   # Save values on variables
-  background=$(yq -r '.base00' "$1" | sed 's/^#//')
-  foreground=$(yq -r '.base07' "$1" | sed 's/^#//')
-  cursor=$(yq -r '.base07' "$1" | sed 's/^#//')
+  background=$(yq -r '.background' "$file" )
+  foreground=$(yq -r '.foreground' "$file" )
+  cursor=$(yq -r '.cursor' "$file" )
 
-  b_black=$(yq -r '.base00' "$1" )
-  b_red=$(yq -r '.base01' "$1" )
-  b_green=$(yq -r '.base02' "$1" )
-  b_yellow=$(yq -r '.base03' "$1" )
-  b_blue=$(yq -r '.base04' "$1" )
-  b_magenta=$(yq -r '.base05' "$1" )
-  b_cyan=$(yq -r '.base06' "$1" )
-  b_white=$(yq -r '.base07' "$1" )
+  b_black=$(yq -r '.b_black' "$file" )
+  b_red=$(yq -r '.b_red' "$file" )
+  b_green=$(yq -r '.b_green' "$file" )
+  b_yellow=$(yq -r '.b_yellow' "$file" )
+  b_blue=$(yq -r '.b_blue' "$file" )
+  b_magenta=$(yq -r '.b_magenta' "$file" )
+  b_cyan=$(yq -r '.b_cyan' "$file" )
+  b_white=$(yq -r '.b_white' "$file" )
 
-  l_black=$(yq -r '.base08' "$1" )
-  l_red=$(yq -r '.base09' "$1" )
-  l_green=$(yq -r '.base0A' "$1" )
-  l_yellow=$(yq -r '.base0B' "$1" )
-  l_blue=$(yq -r '.base0C' "$1" )
-  l_magenta=$(yq -r '.base0D' "$1" )
-  l_cyan=$(yq -r '.base0E' "$1" )
-  l_white=$(yq -r '.base0F' "$1" )
+  l_black=$(yq -r '.l_black' "$file" )
+  l_red=$(yq -r '.l_red' "$file" )
+  l_green=$(yq -r '.l_green' "$file" )
+  l_yellow=$(yq -r '.l_yellow' "$file" )
+  l_blue=$(yq -r '.l_blue' "$file" )
+  l_magenta=$(yq -r '.l_magenta' "$file" )
+  l_cyan=$(yq -r '.l_cyan' "$file" )
+  l_white=$(yq -r '.l_white' "$file" )
 
   # save values
   color_list+=("$background")

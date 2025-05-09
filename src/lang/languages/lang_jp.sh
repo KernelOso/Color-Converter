@@ -131,6 +131,9 @@ Color-Processor：カラーテーマを管理するためのツールです！
     [executing_process]="${PREFIX_PROCESS} プロセスを実行中: ${COLOR_W}"
     [processing_file]="${PREFIX_FILE} ファイルを処理中: ${COLOR_W}"
 
+      # baddies
+      [skipping_file]="${PREFIX_FILE} ファイルをスキップしています... ${COLOR_W}"
+
     # scanners :
     [executing_scanners]="${PREFIX_ACTION} スキャナを起動中..."
     [executing_scanner]="${PREFIX_STEP} スキャナ実行中: ${COLOR_W}"

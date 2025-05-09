@@ -135,6 +135,9 @@ Color-Processor: Uma ferramenta para gerenciar temas de cores!
     [executing_process]="${PREFIX_PROCESS} Executando o processo: ${COLOR_W}"
     [processing_file]="${PREFIX_FILE} Processando o arquivo: ${COLOR_W}"
 
+      # baddies
+      [skipping_file]="${PREFIX_FILE} Pulando o arquivo... ${COLOR_W}"
+
     # scanners :
     [executing_scanners]="${PREFIX_ACTION} Executando scanners..."
     [executing_scanner]="${PREFIX_STEP} Executando scanner: ${COLOR_W}"

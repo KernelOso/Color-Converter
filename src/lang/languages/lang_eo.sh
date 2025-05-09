@@ -133,6 +133,9 @@ Kolora-Provizanto: Ilo por administri koloremajn temojn!
     [executing_process]="${PREFIX_PROCESS} Ekzekutante la proceson: ${COLOR_W}"
     [processing_file]="${PREFIX_FILE} Prilaborante la dosieron: ${COLOR_W}"
 
+      # baddies
+      [skipping_file]="${PREFIX_FILE} Preterlasante dosieron... ${COLOR_W}"
+
     # scanners :
     [executing_scanners]="${PREFIX_ACTION} Ekzekutante skanilojn..."
     [executing_scanner]="${PREFIX_STEP} Ekzekutante skanilon: ${COLOR_W}"

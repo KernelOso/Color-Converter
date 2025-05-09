@@ -133,6 +133,9 @@ Color-Processor: Утилита для управления цветовыми �
     [executing_process]="${PREFIX_PROCESS} Выполняется процесс: ${COLOR_W}"
     [processing_file]="${PREFIX_FILE} Обработка файла: ${COLOR_W}"
 
+      # baddies
+      [skipping_file]="${PREFIX_FILE} Пропускаю файл... ${COLOR_W}"
+
     # scanners :
     [executing_scanners]="${PREFIX_ACTION} Запуск сканеров..."
     [executing_scanner]="${PREFIX_STEP} Запуск сканера: ${COLOR_W}"

@@ -135,6 +135,9 @@ Color-Processor: Eina per gestionar temes de colors!
     [executing_process]="${PREFIX_PROCESS} Executant el procés: ${COLOR_W}"
     [processing_file]="${PREFIX_FILE} Processant el fitxer: ${COLOR_W}"
 
+      # baddies
+      [skipping_file]="${PREFIX_FILE} S'està ometent l'arxiu... ${COLOR_W}"
+
     # scanners :
     [executing_scanners]="${PREFIX_ACTION} Executant escàners..."
     [executing_scanner]="${PREFIX_STEP} Executant escàner: ${COLOR_W}"

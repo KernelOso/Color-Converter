@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-
 function show_banner () {
 
   local sizeX=0
@@ -9,20 +8,162 @@ function show_banner () {
 
   )
 
-  # TODO : duplicate pixelart resolution, using this thing : "▀"
-    # 1. recorrer dos filas de pixeles a la vez
-    # 2. el pixel de la fila superior sera el color del caracter ▀ usando : \e[38;2;RRR;GGG;BBBm
-    # 3. el pixel de la fila inferior sera el color del fondo usando : \e[48;2;RRR;GGG;BBBm
-    # 4. cuando el pixel sea color negro abolsuto (000,000,000), sera transparente
-      # (esto puede ocasionar errores cuando el pixel inferior si tiene color y el pixel superior no, tomar en cuanta al dibujar)
-    # 5. si la altura del pixel art es impar, el programa debera detectar que esta accediendo a valores vacios, por lo tanto, sera transparente el fondo
-  # TODO : add random / easter eggs banner system
-
-
   source "${SCRIPT_DIR}/resources/image.sh"
 
-  pixel_count=${#image[@]}
-  pixel_count=$((pixel_count / 3))
+  local ascii_art=""
+
+  local value_sup_R=""
+  local value_sup_G=""
+  local value_sup_B=""
+
+  local value_inf_R=""
+  local value_inf_G=""
+  local value_inf_B=""
+
+  local sup_pixel_can_show=false
+  local inf_pixel_can_show=false
+
+  # Y bucle :
+  local y_index_sup=0
+  local y_index_inf=0
+
+  local min_index_value_sup_pixel=0
+  local max_index_value_sup_pixel=0
+
+  local min_index_value_inf_pixel=0
+  local max_index_value_inf_pixel=0
+
+  local index_inf=0
+  local index_sup=0
+
+  for ((y = 0; y < sizeY; y += 2)); do
+
+    # save index Y ( superior and inferior pixels)
+    y_index_sup=$y
+    y_index_inf=$((y_index_sup + 1))
+
+    # get the minimal X index for each row
+    # superior
+    index_sup=$(( 0 + ( sizeX * y_index_sup ) * 3 ))
+
+    # inferior
+    index_inf=$(( 0 + ( sizeX * y_index_inf ) * 3))
+
+    for ((x=1; x<=sizeX; x++)); do
+
+      # reset values
+
+        value_sup_R=""
+        value_sup_G=""
+        value_sup_B=""
+
+        value_inf_R=""
+        value_inf_G=""
+        value_inf_B=""
+
+        sup_pixel_can_show=false
+        inf_pixel_can_show=false
+
+      # --- superior pixel ---
+
+      # save superior pixel values
+      value_sup_R=${image[index_sup]}
+      ((index_sup++))
+      value_sup_G=${image[index_sup]}
+      ((index_sup++))
+      value_sup_B=${image[index_sup]}
+      ((index_sup++))
+      
+
+      # --- inferior pixel ---
+
+      # save inferior pixel values
+      value_inf_R=${image[index_inf]}
+      ((index_inf++))
+      value_inf_G=${image[index_inf]}
+      ((index_inf++))
+      value_inf_B=${image[index_inf]}
+      ((index_inf++))
+
+      # --- transparent system ---
+
+      # verify superior pixel
+      if [[ -n "$value_sup_R" && -n "$value_sup_G" && -n "$value_sup_B" ]]; then
+        if [[ "$value_sup_R" == "3" && "$value_sup_G" == "3" && "$value_sup_B" == "3" ]]; 
+        then
+          sup_pixel_can_show=false
+        else
+          sup_pixel_can_show=true
+        fi
+      fi
+
+      # verify inferior pixel
+      if [[ -n "$value_inf_R" && -n "$value_inf_G" && -n "$value_inf_B" ]]; then
+        if [[ "$value_inf_R" == "3" && "$value_inf_G" == "3" && "$value_inf_B" == "3" ]]; 
+        then
+          inf_pixel_can_show=false
+        else
+          inf_pixel_can_show=true
+        fi
+      fi
+
+      # create output
+
+      #when both pixels can show
+      if [[ "$sup_pixel_can_show" == "true" && "$inf_pixel_can_show" == "true" ]]; 
+      then
+        # show both thing
+
+        # background
+        ascii_art="${ascii_art}\e[48;2;${value_inf_R};${value_inf_G};${value_inf_B}m"
+
+        # pixel
+        ascii_art="${ascii_art}\e[38;2;${value_sup_R};${value_sup_G};${value_sup_B}m▀\e[0m"
+      fi
+
+      # when sup pixel can show but inferior don't
+      if [[ "$sup_pixel_can_show" == "true" && "$inf_pixel_can_show" == "false" ]]; 
+      then
+        # show only the sup character
+        ascii_art="${ascii_art}\e[38;2;${value_sup_R};${value_sup_G};${value_sup_B}m▀\e[0m"
+      fi
+
+      # when inf pixel can show but superior don't
+      if [[ "$inf_pixel_can_show" == "true" && "$sup_pixel_can_show" == "false" ]]; 
+      then
+        # show only the inf character
+        ascii_art="${ascii_art}\e[38;2;${value_inf_R};${value_inf_G};${value_inf_B}m▄\e[0m"
+      fi
+
+      #when both are transparent
+      if [[ "$inf_pixel_can_show" == "false" && "$sup_pixel_can_show" == "false" ]]; 
+      then
+        # show a blank space
+        ascii_art="${ascii_art} \e[0m"
+      fi
+
+    done
+
+    # add line jump
+    ascii_art="${ascii_art}\n"
+  done
+
+  #remove last line jump
+  ascii_art="${ascii_art%??}"
+
+  echo -e "$ascii_art"
+  #echo  "$ascii_art"
+}
+
+function show_banner_legacy () {
+
+  local sizeX=0
+  local sizeY=0
+  local image=(
+
+  )
+
+  source "${SCRIPT_DIR}/resources/image.sh"
 
   local index=0
   local ascii_art=""

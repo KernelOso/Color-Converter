@@ -10,6 +10,9 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/imports.sh"
 
+# TODO : cambiar el orden en el que se leen los parametros, deben ir de primero
+  # tambien, investigar la posibilidad de agregar listas de "ejecucion previa" "ejecucion despues", para facilitar la ejecucion de tareas   
+
 function main () {
 
   clear
